@@ -1,0 +1,16 @@
+Tue May 12 16:21:33 COT 2020 : Servidor de red Apache Derby: Se ha iniciado 10.11.1.2 - (1629631) y est? listo para aceptar las conexiones en el puerto 1527
+----------------------------------------------------------------
+Tue May 12 16:21:33 COT 2020:
+ Iniciando instancia a816c00e-0172-0ac3-91f8-ffffa0c73477 de Derby, versi?n The Apache Software Foundation - Apache Derby - 10.11.1.2 - (1629631): 
+en el directorio de base de datos C:\Users\cdgn2\OneDrive\Documents\NetBeansProjects\Bank Application\Bank_App con el cargador de clases sun.misc.Launcher$AppClassLoader@6f94fa3e
+Cargado desde file:/C:/Program%20Files/Java/jdk1.8.0_111/db/lib/derby.jar
+java.vendor=Oracle Corporation
+java.runtime.version=1.8.0_111-b14
+user.dir=C:\Program Files\Java\jdk1.8.0_111\db
+os.name=Windows 10
+os.arch=amd64
+os.version=10.0
+derby.system.home=C:\Users\cdgn2\OneDrive\Documents\NetBeansProjects\Bank Application
+Cargador de clases de base de datos iniciado - derby.database.classpath=''
+----------------------------------------------------------------
+Tue May 12 16:36:36 COT 2020: cerrando motor de Derby
