@@ -15,7 +15,7 @@ import java.util.logging.*;
 public class Conexion {
 
     public static Connection conectar() {
-        String url = "BD\\BankApp.db";//cada uno pone la ruta de la base de datos
+        String url = "BD\\BankApp.db";
         Connection connect = null;
         try {
             connect = DriverManager.getConnection("jdbc:sqlite:" + url);
