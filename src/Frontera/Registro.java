@@ -234,9 +234,9 @@ public class Registro extends javax.swing.JPanel {
                     JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
-                    if (validar.verificarLongitudNombre(usuario) == true) {
+                    if (validar.verificarLongitudNombre(usuario) != true) {
                         longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
-                    } else if (validar.verificarLongitudPassword(contrasenia) == true) {
+                    } else if (validar.verificarLongitudPassword(contrasenia) != true) {
                         longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
                     }
                 }
