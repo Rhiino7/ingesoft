@@ -211,7 +211,7 @@ public class Registro extends javax.swing.JPanel {
         ValidarLogin validar = new ValidarLogin();
         boolean existe = false;
         List<Usuario> lista = dao.obtener();
-        if (!identificacionTF.getText().equals("")) {
+        if (!identificacionTF.getText().equals("")) {//que sea solo numerico
             long identificacion = Long.parseLong(identificacionTF.getText());
             for (int i = 0; i < lista.size(); i++) {
                 if (lista.get(i).getIdentificacion() == identificacion) {
