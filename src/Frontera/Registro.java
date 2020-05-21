@@ -204,7 +204,6 @@ public class Registro extends javax.swing.JPanel {
     private void registrarseBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBActionPerformed
         String nombre = nombreTF.getText();
         String apellido = apellidoTF.getText();
-        long identificacion = Long.parseLong(identificacionTF.getText());
         String usuario = usuarioTF.getText();
         String contrasenia = contraseniaPF.getText();
         String contraseniaConf = repetirContraseniaPF.getText();
@@ -212,43 +211,50 @@ public class Registro extends javax.swing.JPanel {
         ValidarLogin validar = new ValidarLogin();
         boolean existe = false;
         List<Usuario> lista = dao.obtener();
-
-        for (int i = 0; i < lista.size(); i++) {
-            if (lista.get(i).getIdentificacion() == identificacion) {
-                existe = true;
-                break;
+        if (!identificacionTF.getText().equals("")) {
+            long identificacion = Long.parseLong(identificacionTF.getText());
+            for (int i = 0; i < lista.size(); i++) {
+                if (lista.get(i).getIdentificacion() == identificacion) {
+                    existe = true;
+                    break;
+                }
             }
-        }
 
-        if (existe == false) {
-            if (contrasenia.equals(contraseniaConf)) {
-                if (validar.verificarLongitudNombre(usuario) == true && validar.verificarLongitudPassword(contrasenia) == true) {
-                    Usuario user = new Usuario(nombre, apellido, (int) identificacion, usuario, contrasenia);
-                    dao.registrar(user);
-                    nombreTF.setText(null);
-                    apellidoTF.setText(null);
-                    identificacionTF.setText(null);
-                    usuarioTF.setText(null);
-                    contraseniaPF.setText(null);
-                    repetirContraseniaPF.setText(null);
-                    JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
-                    if (validar.verificarLongitudNombre(usuario) != true) {
-                        longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
-                    } else if (validar.verificarLongitudPassword(contrasenia) != true) {
-                        longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
+            if (existe == false) {
+                if (contrasenia.equals(contraseniaConf)) {
+                    if (validar.verificarLongitudNombre(usuario) == true && validar.verificarLongitudPassword(contrasenia) == true) {
+                        Usuario user = new Usuario(nombre, apellido, (int) identificacion, usuario, contrasenia);
+                        dao.registrar(user);
+                        nombreTF.setText(null);
+                        apellidoTF.setText(null);
+                        identificacionTF.setText(null);
+                        usuarioTF.setText(null);
+                        contraseniaPF.setText(null);
+                        repetirContraseniaPF.setText(null);
+                        JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
+                        if (validar.verificarLongitudNombre(usuario) != true) {
+                            longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
+                        } else if (validar.verificarLongitudPassword(contrasenia) != true) {
+                            longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
+                        }
                     }
+                } else {
+                    JOptionPane.showMessageDialog(usuarioTF, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(usuarioTF, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("usuario ya registrado");
             }
         } else {
-            JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
-            longitudesL.setText("usuario ya registrado");
+            if (nombreTF.getText().equals("") || apellidoTF.getText().equals("")
+                    || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
+                    || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals("")) {
+                 JOptionPane.showMessageDialog(usuarioTF, "Campos Vacios", "Error", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("Campos vacios");
+            }
         }
-
-
     }//GEN-LAST:event_registrarseBActionPerformed
 
     private void usuarioTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioTFMouseClicked
