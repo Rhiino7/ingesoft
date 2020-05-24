@@ -1,9 +1,7 @@
 package Control;
 
-import DAO.UsuarioDAO;
-import DAO.SucursalDAO;
-import Entidad.Sucursal;
-import Entidad.Usuario;
+import DAO.*;
+import Entidad.*;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -22,8 +20,10 @@ public class Inicializacion {
 
         UsuarioDAO dao = new UsuarioDAO();
         SucursalDAO sdao = new SucursalDAO();
+        AdminDAO adao = new AdminDAO();
         ArrayList<Usuario> usuarios;
         ArrayList<Sucursal> sucursales = new ArrayList<>();
+        ArrayList<Admin> admins = new ArrayList<>();
         usuarios = new ArrayList<>();
 
         Usuario a = new Usuario("Juan", "Cardona", 1010038260, "juan", "1234");
@@ -35,6 +35,7 @@ public class Inicializacion {
         Sucursal b3 = new Sucursal(3, "Bancolombia", "cll 145 n91-50", "Centro Suba", "123");
         Sucursal b4 = new Sucursal(4, "Bancolombia", "transversal 99 nm 70a-89", "DiverPlaza", "123");
         Sucursal b5 = new Sucursal(5, "Bancolombia", "kr 127 n66-59", "Bulevar", "123");
+        Admin admin = new Admin("admin","12345",0);
 
         usuarios.add(a);
         usuarios.add(b);
@@ -45,6 +46,7 @@ public class Inicializacion {
         sucursales.add(b3);
         sucursales.add(b4);
         sucursales.add(b5);
+        admins.add(admin);
 
         //sistema.setUsuarios(usuarios);
         /*
@@ -56,11 +58,18 @@ public class Inicializacion {
         }
          */
  
-        for (Sucursal s : sucursales) {
+        /*for (Sucursal s : sucursales) {
             System.out.println(s.getId_sucursal());
             System.out.println(s.getNombre_s() + s.getLugar_s());
             System.out.println("--------------");
             sdao.registrar(s);
+        }*/
+        
+        for (Admin ad : admins) {
+            System.out.println(a.getUsuario());
+            System.out.println(a.getContrasenia());
+            System.out.println("--------------");
+            adao.registrar(ad);
         }
          
     }

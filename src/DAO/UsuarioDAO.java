@@ -77,7 +77,7 @@ public class UsuarioDAO {
         //System.out.println("identifiacion:" + u.getIdentificacion());
         for (int i = 0; i < usuarios.size(); i++) {
             System.out.println(usuarios.get(i).getIdentificacion());
-            if (usuarios.get(i).getUsuario().equals(u.getUsuario())) {
+            if (usuarios.get(i).getUsuario().equals(u.getUsuario()) && usuarios.get(i).getContrasenia().equals(u.getContrasenia())) {
                 validacion = true;
                 
             }

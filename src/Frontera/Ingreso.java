@@ -3,6 +3,7 @@ package Frontera;
 
 import java.awt.Color;
 import Control.ValidarLogin;
+import Entidad.Admin;
 import Entidad.Usuario;
 import Frontera.PrincipalFrame;
 import javax.swing.JOptionPane;
@@ -114,12 +115,15 @@ public class Ingreso extends javax.swing.JPanel {
     private void ingresarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresarBActionPerformed
         //aqui toca poner ventanas emergentes diciendo contraseña incorrecta o no existe
         Usuario usuario = new Usuario();
+        Admin admin = new Admin();
         usuario.setUsuario(usuarioTF.getText());
+        admin.setUsuario(usuarioTF.getText());
         usuario.setContrasenia(contraseniaPF.getText());
+        admin.setContrasenia(contraseniaPF.getText());
 
         ValidarLogin validar = new ValidarLogin();
 
-        int resultado = validar.verificarLogin(usuario);
+        int resultado = validar.verificarLogin(usuario,admin);
 
         if (resultado == 0) {
             //longitud nombre incorrecta

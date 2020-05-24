@@ -211,9 +211,13 @@ public class Registro extends javax.swing.JPanel {
         ValidarLogin validar = new ValidarLogin();
         boolean existe = false;
         List<Usuario> lista = dao.obtener();
-        if (!identificacionTF.getText().equals("")) {//que sea solo numerico
-            long identificacion = Long.parseLong(identificacionTF.getText());
-            for (int i = 0; i < lista.size(); i++) {
+        if (!identificacionTF.getText().equals("")&&!(nombreTF.getText().equals("") || apellidoTF.getText().equals("")
+                    || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
+                    || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals(""))) {//que sea solo numerico
+
+            try {
+                long identificacion = Long.parseLong(identificacionTF.getText());
+                for (int i = 0; i < lista.size(); i++) {
                 if (lista.get(i).getIdentificacion() == identificacion) {
                     existe = true;
                     break;
@@ -246,6 +250,10 @@ public class Registro extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
                 longitudesL.setText("usuario ya registrado");
+            }
+            }catch(Exception e){
+                JOptionPane.showMessageDialog(usuarioTF, "Identificación invalida", "Error", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("Identificacion debe ser un numero");
             }
         } else {
             if (nombreTF.getText().equals("") || apellidoTF.getText().equals("")
