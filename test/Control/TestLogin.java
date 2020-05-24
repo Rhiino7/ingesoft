@@ -5,6 +5,7 @@
  */
 package Control;
 
+import Entidad.Admin;
 import Entidad.Usuario;
 import static Frontera.PrincipalFrame.sistema;
 import java.util.ArrayList;
@@ -141,9 +142,9 @@ public class TestLogin {
 
     @Test
     public void testAdmin() {
-        Usuario u = new Usuario();
-        u.setUsuario("CarlosKC26");
-        u.setContrasenia("Carlosdgn2000");
-        assertEquals(validarLogin.verificarLogin(u), ADMINISTRADOR_AUTORIZADO);
+        Admin a = new Admin();
+        a.setUsuario("admin");
+        a.setContrasenia("12345");
+        assertEquals(validarLogin.verificarLogin(a), ADMINISTRADOR_AUTORIZADO);
     }
 }
