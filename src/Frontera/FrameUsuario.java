@@ -5,20 +5,25 @@
  */
 package Frontera;
 
+import Entidad.Usuario;
+
 /**
  *
  * @author cdgn2
  */
 public class FrameUsuario extends javax.swing.JFrame {
     
-    private Agendar agendar = new Agendar();
+    private Usuario usuario; //Para facilitar se le pasa el usuario que ingreso sesion.
+    private Agendar agendar;
     private Citaciones citas = new Citaciones();
     
     int estado = 0;
     /**
      * Creates new form FrameUsuario
      */
-    public FrameUsuario() {
+    public FrameUsuario(Usuario usuario) {
+        this.usuario = usuario;
+        agendar = new Agendar(usuario);
         initComponents();
     }
 
@@ -35,6 +40,8 @@ public class FrameUsuario extends javax.swing.JFrame {
         jToolBar1 = new javax.swing.JToolBar();
         agendarB = new javax.swing.JButton();
         citacionesB = new javax.swing.JButton();
+        filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 0));
+        cerrarSesionB = new javax.swing.JButton();
         principalUsuarioPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -64,6 +71,18 @@ public class FrameUsuario extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(citacionesB);
+        jToolBar1.add(filler1);
+
+        cerrarSesionB.setText("Cerrar Sesión");
+        cerrarSesionB.setFocusable(false);
+        cerrarSesionB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cerrarSesionB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cerrarSesionB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionBActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(cerrarSesionB);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -113,10 +132,20 @@ public class FrameUsuario extends javax.swing.JFrame {
         principalUsuarioPanel.setVisible(true);
     }//GEN-LAST:event_citacionesBActionPerformed
 
+    private void cerrarSesionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBActionPerformed
+        this.setVisible(false);
+        PrincipalFrame principalFrame = new PrincipalFrame();
+        principalFrame.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_cerrarSesionBActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton agendarB;
+    private javax.swing.JButton cerrarSesionB;
     private javax.swing.JButton citacionesB;
+    private javax.swing.Box.Filler filler1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel principalUsuarioPanel;

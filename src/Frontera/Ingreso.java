@@ -10,12 +10,16 @@ import javax.swing.JOptionPane;
 import javax.swing.WindowConstants;
 
 public class Ingreso extends javax.swing.JPanel {
+    
+    //Una manera de que se cierre la ventana:
+    private PrincipalFrame principalFrame;
 
     /**
      * Creates new form FirstPanel
      */
-    public Ingreso() {
+    public Ingreso(PrincipalFrame principalFrame) {
         initComponents();
+        this.principalFrame = principalFrame;
     }
 
     @SuppressWarnings("unchecked")
@@ -143,11 +147,13 @@ public class Ingreso extends javax.swing.JPanel {
         } else if (resultado == 3) {
             //Bienvenido
             System.out.println("Bienvenido");
-            FrameUsuario frameUsuario = new FrameUsuario();
+            FrameUsuario frameUsuario = new FrameUsuario(usuario);
             frameUsuario.setVisible(true);
-            PrincipalFrame principalFrame = new PrincipalFrame();
-            principalFrame.setVisible(false);
-            principalFrame.removeAll();
+            principalFrame.dispose();
+            
+//            PrincipalFrame principalFrame = new PrincipalFrame();
+//            principalFrame.setVisible(false);
+//            principalFrame.removeAll();
         } else {
             //Bienvenido Administrador
             System.out.println("Bienvenido Administrador");

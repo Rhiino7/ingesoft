@@ -10,7 +10,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class PrincipalFrame extends javax.swing.JFrame {
 
     public Registro registro = new Registro();
-    public Ingreso ingreso = new Ingreso();
+    public Ingreso ingreso = new Ingreso(this);
     //private Agendar agendar = new Agendar();
     
     public static Sistema sistema = new Sistema();

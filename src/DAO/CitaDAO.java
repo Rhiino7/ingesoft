@@ -21,7 +21,7 @@ public class CitaDAO {
         Statement stm = null;
         Connection con = null;
 
-        String sql = "INSERT INTO BRANCH values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        String sql = "INSERT INTO APPOINTMENT values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
@@ -46,7 +46,8 @@ public class CitaDAO {
         Statement stm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM USER ORDER BY ID_USER";
+        //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
+        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_USER";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -108,21 +109,47 @@ public class CitaDAO {
         }
         return actualizar;
     }
-
-    public boolean eliminar(Cita c) {
-        Connection co = null;
-        Statement stm = null;
-        boolean eliminar = false;
-        String sql = "DELETE FROM APPOINTMENT WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();
-        try {
-            co = Conexion.conectar();
-            stm = co.createStatement();
-            stm.execute(sql);
-            eliminar = true;
-        } catch (SQLException e) {
-            System.out.println("Error metodo eliminar");
-            e.printStackTrace();
+    
+//No tiene un identificador para poder borrarlo :v
+    
+//    public boolean eliminar(Cita c) {
+//        Connection co = null;
+//        Statement stm = null;
+//        boolean eliminar = false;
+//        String sql = "DELETE FROM APPOINTMENT WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();
+//        try {
+//            co = Conexion.conectar();
+//            stm = co.createStatement();
+//            stm.execute(sql);
+//            eliminar = true;
+//        } catch (SQLException e) {
+//            System.out.println("Error metodo eliminar");
+//            e.printStackTrace();
+//        }
+//        return eliminar;
+//    }
+    
+    public boolean verificarDisponibilidad(Cita cita){
+        List<Cita> citas = this.obtener();
+        for (Cita c : citas){
+            if (c.getSucursal().getId_sucursal() == cita.getSucursal().getId_sucursal() 
+                    && c.getFecha().toString().equals(cita.getFecha().toString()) 
+                    && c.getHora().toString().equals(cita.getHora().toString())){
+                return false;
+            }
         }
-        return eliminar;
+        return true;
+    }
+    
+    public boolean verificarTengaMasCitasSucursal (Cita cita){
+        List<Cita> citas = this.obtener();
+        for (Cita c : citas){
+            if (c.getSucursal().getId_sucursal() == cita.getSucursal().getId_sucursal() 
+                    && c.getUsuario().getIdentificacion() == cita.getUsuario().getIdentificacion()) {
+                return true;
+            }
+        }
+        return false;
     }
 }
+

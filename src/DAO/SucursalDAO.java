@@ -41,7 +41,7 @@ public class SucursalDAO {
         Statement stm = null;
         ResultSet rs = null;
 
-        String sql = "SELECT * FROM USER ORDER BY ID_USER";
+        String sql = "SELECT * FROM BRANCH ORDER BY ID_BRANCH";
 
         List<Sucursal> listaSucursal = new ArrayList<Sucursal>();
 
