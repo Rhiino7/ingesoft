@@ -19,7 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 public class Agendar extends javax.swing.JPanel {
-    
+
     private Usuario usuario; //Se meteria en el constructor de Agendar y de FrameUsuario para poder asignarlo en cita
     private SucursalDAO sdao = new SucursalDAO();
     private UsuarioDAO udao = new UsuarioDAO();
@@ -27,13 +27,18 @@ public class Agendar extends javax.swing.JPanel {
 
     public Agendar(Usuario usuario) {
         initComponents();
+        dateSet();
         this.usuario = usuario;
         List<Sucursal> sucursales = sdao.obtener();
-        for (Sucursal s : sucursales){
+        for (Sucursal s : sucursales) {
             sucursalCB.addItem(s.getLugar_s());
         }
     }
 
+    public void dateSet(){
+        fechaDC.getJCalendar().setMinSelectableDate(new Date());
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -76,7 +81,7 @@ public class Agendar extends javax.swing.JPanel {
         });
 
         motivoCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        motivoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creacion cuenta bancaria", "", "Cambio o perdida de tarjeta", "Otros" }));
+        motivoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creacion cuenta bancaria", "creditos de vivienda", "Cambio o perdida de tarjeta","Creditos de Negocio","Inversiones","Seguros","Productos Complementarios","Asesoria", "Otros" }));
 
         jLabel4.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel4.setText("Motivo");
@@ -110,21 +115,16 @@ public class Agendar extends javax.swing.JPanel {
                         .addComponent(jLabel2)
                         .addGroup(layout.createSequentialGroup()
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel4)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(18, 18, 18)))
+                                .addComponent(jLabel3)
+                                .addComponent(jLabel1)
+                                .addComponent(jLabel4))
+                            .addGap(18, 18, 18)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(sucursalCB, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(fechaDC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(motivoCB, 0, 214, Short.MAX_VALUE)
                                 .addComponent(horaS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(190, Short.MAX_VALUE))
+                .addContainerGap(178, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,40 +159,39 @@ public class Agendar extends javax.swing.JPanel {
 
     private void agendarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendarBActionPerformed
 
-        
         //long id_usuario = ;
         String nombre_sucursal = (String) sucursalCB.getSelectedItem();
         Date fecha = fechaDC.getDate();
-        if (fecha == null){
+        if (fecha == null) {
             fecha = new Date(1900, 1, 1);
         }
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
         String fecha2 = f.format(fecha);
         String hora = horaS.getSelectedItem().toString();
         ValidarSolicitarCita validarSolicitudCita = new ValidarSolicitarCita();
-        
+
         //Conseguir cual Sucursal es
         List<Sucursal> sucursales = sdao.obtener();
         Sucursal sucursal = new Sucursal();
-        for (Sucursal s : sucursales){
-            if (s.getLugar_s().equals(nombre_sucursal)){
+        for (Sucursal s : sucursales) {
+            if (s.getLugar_s().equals(nombre_sucursal)) {
                 sucursal = s;
                 break;
             }
         }
-        
+
         //Conseguir cual Usuario es
         List<Usuario> usuarios = udao.obtener();
-        for (Usuario u : usuarios){
-            if (u.getUsuario().equals(usuario.getUsuario())){ //No deberian haber dos nombres de usuario iguales
+        for (Usuario u : usuarios) {
+            if (u.getUsuario().equals(usuario.getUsuario())) { //No deberian haber dos nombres de usuario iguales
                 usuario = u;
                 break;
             }
         }
-        
+
         //Se crea la cita
-        Cita cita = new Cita(sucursal, usuario,LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
-        
+        Cita cita = new Cita(sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
+
         //System.out.println("" + nombre_sucursal + fecha2 +  hora);
         //hacer que perdure en cita(entidad)
         //llaves primarias
@@ -205,8 +204,7 @@ public class Agendar extends javax.swing.JPanel {
 //            }
 //        });
 //        dialog.setVisible(true);
-
-        switch (validarSolicitudCita.verificarSolicitarCita(cita)){
+        switch (validarSolicitudCita.verificarSolicitarCita(cita)) {
             case 0:
 //                System.out.println("Cita registrada exitosamente");
 //                System.out.println(fecha2);
