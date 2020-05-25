@@ -151,5 +151,41 @@ public class CitaDAO {
         }
         return false;
     }
+    
+    public boolean actualizarEstado (Cita c, Estado e){
+        switch(e) {
+            case PENDIENTE:
+                c.setEstado(0);
+                this.actualizar(c);
+                break;
+            case APROBADA:
+                c.setEstado(1);
+                this.actualizar(c);
+                break;
+            case CANCELADA:
+                c.setEstado(2);
+                this.actualizar(c);
+                break;
+            case RECHAZADA:
+                c.setEstado(3);
+                this.actualizar(c);
+                break;
+            case CUMPLIDA:
+                c.setEstado(4);
+                this.actualizar(c);
+                break;
+            default:
+                System.out.println("Estado invalido");
+                return false;
+        }
+        return true;
+    }
 }
 
+enum Estado{
+    PENDIENTE,
+    APROBADA,
+    CANCELADA,
+    RECHAZADA,
+    CUMPLIDA
+}
