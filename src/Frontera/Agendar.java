@@ -158,13 +158,6 @@ public class Agendar extends javax.swing.JPanel {
 
     private void agendarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_agendarBActionPerformed
 
-        //Temporal :v
-        List<Cita> citas = cdao.obtener();
-        for (Cita c : citas){
-            c.toString();
-            System.out.println("\n");
-        }
-        
         
         //long id_usuario = ;
         String nombre_sucursal = (String) sucursalCB.getSelectedItem();
@@ -179,7 +172,7 @@ public class Agendar extends javax.swing.JPanel {
         
         //Conseguir cual Sucursal es
         List<Sucursal> sucursales = sdao.obtener();
-        Sucursal sucursal = sucursales.get(0);
+        Sucursal sucursal = new Sucursal();
         for (Sucursal s : sucursales){
             if (s.getLugar_s().equals(nombre_sucursal)){
                 sucursal = s;
@@ -214,15 +207,17 @@ public class Agendar extends javax.swing.JPanel {
 
         switch (validarSolicitudCita.verificarSolicitarCita(cita)){
             case 0:
-                System.out.println("Cita registrada exitosamente");
-                System.out.println(fecha2);
+//                System.out.println("Cita registrada exitosamente");
+//                System.out.println(fecha2);
+//                System.out.println(cita.toString());
                 cdao.registrar(cita);
-                System.out.println(cita.toString());
                 JOptionPane.showMessageDialog(agendarB, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
                 break;
             case 1:
+                System.out.println("Error 1");
                 break;
             case 2:
+                System.out.println("Error 2");
                 break;
             case 3:
                 JOptionPane.showMessageDialog(agendarB, "Fecha nula", "Error", JOptionPane.ERROR_MESSAGE);

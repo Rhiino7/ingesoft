@@ -47,7 +47,7 @@ public class CitaDAO {
         ResultSet rs = null;
 
         //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
-        String sql = "SELECT * FROM APPOINTMENT";
+        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_USER";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -132,7 +132,9 @@ public class CitaDAO {
     public boolean verificarDisponibilidad(Cita cita){
         List<Cita> citas = this.obtener();
         for (Cita c : citas){
-            if (c.getSucursal() == cita.getSucursal() && c.getFecha().toString().equals(cita.getFecha().toString()) && c.getHora().toString().equals(cita.getHora().toString())){
+            if (c.getSucursal().getId_sucursal() == cita.getSucursal().getId_sucursal() 
+                    && c.getFecha().toString().equals(cita.getFecha().toString()) 
+                    && c.getHora().toString().equals(cita.getHora().toString())){
                 return false;
             }
         }
@@ -142,7 +144,8 @@ public class CitaDAO {
     public boolean verificarTengaMasCitasSucursal (Cita cita){
         List<Cita> citas = this.obtener();
         for (Cita c : citas){
-            if (c.getSucursal() == cita.getSucursal() && c.getUsuario() == cita.getUsuario()) {
+            if (c.getSucursal().getId_sucursal() == cita.getSucursal().getId_sucursal() 
+                    && c.getUsuario().getIdentificacion() == cita.getUsuario().getIdentificacion()) {
                 return true;
             }
         }

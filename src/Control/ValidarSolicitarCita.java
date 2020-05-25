@@ -44,8 +44,12 @@ public class ValidarSolicitarCita {
             System.out.println("La fecha es anterior a la fecha actual");
             return 4;
         }
-        if (!cdao.verificarDisponibilidad(cita)) return 5;
-        if (cdao.verificarTengaMasCitasSucursal(cita)) return 6;
+        if (!cdao.verificarDisponibilidad(cita)) {
+            return 5;
+        }
+        if (cdao.verificarTengaMasCitasSucursal(cita)) {
+            return 6;
+        }
         return 0;
     }
 }
