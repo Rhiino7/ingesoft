@@ -59,4 +59,14 @@ public class Cita {
     public void setEstado(int estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return "sucursalID: " + sucursal.getId_sucursal()
+                + "\nusuarioID: " + usuario.getIdentificacion()
+                + "\nfecha: " + fecha.toString()
+                + "\nhora: " + hora.toString();
+    }
+    
+    
 }
