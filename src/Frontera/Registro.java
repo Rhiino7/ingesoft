@@ -5,7 +5,7 @@
  */
 package Frontera;
 
-import Control.ValidarLogin;
+import Control.ValidarRegistro;
 import DAO.UsuarioDAO;
 import Entidad.Usuario;
 import java.util.List;
@@ -207,62 +207,176 @@ public class Registro extends javax.swing.JPanel {
         String usuario = usuarioTF.getText();
         String contrasenia = contraseniaPF.getText();
         String contraseniaConf = repetirContraseniaPF.getText();
-        UsuarioDAO dao = new UsuarioDAO();
-        ValidarLogin validar = new ValidarLogin();
-        boolean existe = false;
-        List<Usuario> lista = dao.obtener();
-        if (!identificacionTF.getText().equals("")&&!(nombreTF.getText().equals("") || apellidoTF.getText().equals("")
-                    || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
-                    || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals(""))) {//que sea solo numerico
 
-            try {
-                long identificacion = Long.parseLong(identificacionTF.getText());
-                for (int i = 0; i < lista.size(); i++) {
-                if (lista.get(i).getIdentificacion() == identificacion) {
-                    existe = true;
-                    break;
+        ValidarRegistro validar = new ValidarRegistro();
+        boolean registroCorrecto = validar.registroCompleto(nombre, apellido, identificacionTF.getText(), usuario, contrasenia, contraseniaConf);
+        boolean longNombre = validar.verificarLongitudNombre(nombre);
+        boolean longApellido = validar.verificarLongitudApellido(apellido);
+        boolean longPassword = validar.verificarLongitudPassword(contrasenia);
+        boolean identNumerico = validar.identificacionNumerica(identificacionTF.getText());
+        boolean nombreNumerico = validar.nombreNumerico(nombre);
+        boolean apellidoNumerico = validar.apellidoNumerico(apellido);
+        System.out.println("Nombre: "+nombre+"nombreNumerico: "+ nombreNumerico);
+        System.out.println("Apellido: "+apellido+" apellidoNumerico: "+ apellidoNumerico);
+        if(registroCorrecto){
+            if (!longNombre) {
+                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
+                if (validar.verificarLongitudNombre(usuario) != true) {
+                    longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
+                } else if (validar.verificarLongitudPassword(contrasenia) != true) {
+                    longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
                 }
-            }
+            }else{
+                UsuarioDAO dao = new UsuarioDAO();
+                boolean existe = false;
+                List<Usuario> lista = dao.obtener();
 
-            if (existe == false) {
-                if (contrasenia.equals(contraseniaConf)) {
-                    if (validar.verificarLongitudNombre(usuario) == true && validar.verificarLongitudPassword(contrasenia) == true) {
-                        Usuario user = new Usuario(nombre, apellido, (int) identificacion, usuario, contrasenia);
-                        dao.registrar(user);
-                        nombreTF.setText(null);
-                        apellidoTF.setText(null);
-                        identificacionTF.setText(null);
-                        usuarioTF.setText(null);
-                        contraseniaPF.setText(null);
-                        repetirContraseniaPF.setText(null);
-                        JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
-                    } else {
-                        JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
-                        if (validar.verificarLongitudNombre(usuario) != true) {
-                            longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
-                        } else if (validar.verificarLongitudPassword(contrasenia) != true) {
-                            longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
+                if (validar.identificacionNumerica(identificacionTF.getText())) {
+                    long identificacion = Long.parseLong(identificacionTF.getText());
+                    for (int i = 0; i < lista.size(); i++) {
+                        if (lista.get(i).getIdentificacion() == identificacion) {
+                            existe = true;
+                            break;
                         }
                     }
+
+                    if (!existe && registroCorrecto) {
+                        if (contrasenia.equals(contraseniaConf)) {
+                            if (validar.verificarUsuarioYPassword(usuario, contrasenia)) {
+                                JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
+                                Usuario user = new Usuario(nombre, apellido, (int) identificacion, usuario, contrasenia);
+                                dao.registrar(user);
+                                nombreTF.setText(null);
+                                apellidoTF.setText(null);
+                                identificacionTF.setText(null);
+                                usuarioTF.setText(null);
+                                contraseniaPF.setText(null);
+                                repetirContraseniaPF.setText(null);
+                            } else {
+                                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
+                                if (validar.verificarLongitudNombre(usuario) != true) {
+                                    longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
+                                } else if (validar.verificarLongitudPassword(contrasenia) != true) {
+                                    longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
+                                }
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(usuarioTF, "Contraseñas no coinciden", "Error", JOptionPane.ERROR_MESSAGE);
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
+                        longitudesL.setText("usuario ya registrado");
+                    }
                 } else {
-                    JOptionPane.showMessageDialog(usuarioTF, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(usuarioTF, "Identificación invalida", "Error", JOptionPane.ERROR_MESSAGE);
+                    longitudesL.setText("Identificacion debe ser un numero");
+                } 
+            }  
+        }else {
+            if (!longNombre) {
+                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del nombre", "Nombre no valido", JOptionPane.ERROR_MESSAGE);
+                if (validar.verificarLongitudNombre(usuario) != true) {
+                    longitudesL.setText("El nombre debe tener entre 3 y 11 caracteres");
                 }
-            } else {
-                JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
-                longitudesL.setText("usuario ya registrado");
             }
-            }catch(Exception e){
-                JOptionPane.showMessageDialog(usuarioTF, "Identificación invalida", "Error", JOptionPane.ERROR_MESSAGE);
-                longitudesL.setText("Identificacion debe ser un numero");
+            if (!longApellido) {
+                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del apellido", "Apellido no valido", JOptionPane.ERROR_MESSAGE);
+                if (validar.verificarLongitudApellido(apellido) != true) {
+                    longitudesL.setText("El apellido debe tener entre 3 y 11 caracteres");
+                }
             }
-        } else {
+            if (!longPassword) {
+                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud de la contraseña", "Contraseña no valida", JOptionPane.ERROR_MESSAGE);
+                if (validar.verificarLongitudPassword(contrasenia) != true) {
+                    longitudesL.setText("La contraseña debe tener entre 4 y 12 caracteres");
+                }
+            }
+            if (!identNumerico) {
+                JOptionPane.showMessageDialog(usuarioTF, "La identificacion tiene que ser un numero", "Identificacion no valida", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("La identificacion debe ser numerica.");
+            }
+            System.out.println(nombreNumerico);
+            if (nombreNumerico) {
+                JOptionPane.showMessageDialog(usuarioTF, "El nombre tienen que ser letras", "Nombre no valido", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("El nombre no debe contener numeros.");
+            }else if(!nombreNumerico && !registroCorrecto){
+                JOptionPane.showMessageDialog(usuarioTF, "El nombre tienen que ser solo letras", "Nombre no valido", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("El nombre no debe contener numeros.");
+            }
+            System.out.println(apellidoNumerico);
+            if (apellidoNumerico) {
+                JOptionPane.showMessageDialog(usuarioTF, "El apellido tienen que ser letras", "Apellido no valido", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("El apellido no debe contener numeros.");
+            }else if(!apellidoNumerico && !registroCorrecto){
+                JOptionPane.showMessageDialog(usuarioTF, "El apellido tienen que ser solo letras", "Apellido no valido", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("El apellido no debe contener numeros.");
+            }
+            
+            
+            
             if (nombreTF.getText().equals("") || apellidoTF.getText().equals("")
                     || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
                     || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals("")) {
-                 JOptionPane.showMessageDialog(usuarioTF, "Campos Vacios", "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(usuarioTF, "Campos Vacios", "Error", JOptionPane.ERROR_MESSAGE);
                 longitudesL.setText("Campos vacios");
             }
         }
+        
+
+        
+        
+//        if (!identificacionTF.getText().equals("") && !(nombreTF.getText().equals("") || apellidoTF.getText().equals("")
+//                || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
+//                || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals(""))) {//que sea solo numerico
+//
+//            if (validar.identificacionNumerica(identificacionTF.getText())) {
+//                long identificacion = Long.parseLong(identificacionTF.getText());
+//                for (int i = 0; i < lista.size(); i++) {
+//                    if (lista.get(i).getIdentificacion() == identificacion) {
+//                        existe = true;
+//                        break;
+//                    }
+//                }
+//
+//                if (existe == false) {
+//                    JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
+//                    if (contrasenia.equals(contraseniaConf)) {
+//                        if (validar.verificarUsuarioYPassword(usuario, contrasenia)) {
+//                            Usuario user = new Usuario(nombre, apellido, (int) identificacion, usuario, contrasenia);
+//                            dao.registrar(user);
+//                            nombreTF.setText(null);
+//                            apellidoTF.setText(null);
+//                            identificacionTF.setText(null);
+//                            usuarioTF.setText(null);
+//                            contraseniaPF.setText(null);
+//                            repetirContraseniaPF.setText(null);
+//                        } else {
+//                            JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
+//                            if (validar.verificarLongitudNombre(usuario) != true) {
+//                                longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
+//                            } else if (validar.verificarLongitudPassword(contrasenia) != true) {
+//                                longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
+//                            }
+//                        }
+//                    } else {
+//                        JOptionPane.showMessageDialog(usuarioTF, "Contraseña incorrecta", "Error", JOptionPane.ERROR_MESSAGE);
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(usuarioTF, "El usuario ya esta registrado", "Error", JOptionPane.ERROR_MESSAGE);
+//                    longitudesL.setText("usuario ya registrado");
+//                }
+//            } else {
+//                JOptionPane.showMessageDialog(usuarioTF, "Identificación invalida", "Error", JOptionPane.ERROR_MESSAGE);
+//                longitudesL.setText("Identificacion debe ser un numero");
+//            }
+//        } else {
+//            if (nombreTF.getText().equals("") || apellidoTF.getText().equals("")
+//                    || identificacionTF.getText().equals("") || usuarioTF.getText().equals("")
+//                    || contraseniaPF.getText().equals("") || repetirContraseniaPF.getText().equals("")) {
+//                JOptionPane.showMessageDialog(usuarioTF, "Campos Vacios", "Error", JOptionPane.ERROR_MESSAGE);
+//                longitudesL.setText("Campos vacios");
+//            }
+//        }
     }//GEN-LAST:event_registrarseBActionPerformed
 
     private void usuarioTFMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_usuarioTFMouseClicked
