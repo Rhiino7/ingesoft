@@ -255,7 +255,7 @@ public class Registro extends javax.swing.JPanel {
                             } else {
                                 JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario y la contraseña", "Usuario o contraseña no validos", JOptionPane.ERROR_MESSAGE);
                                 if (validar.verificarLongitudNombre(usuario) != true) {
-                                    longitudesL.setText("la nombre debe tener entre 3 y 11 caracteres");
+                                    longitudesL.setText("el nombre debe tener entre 3 y 11 caracteres");
                                 } else if (validar.verificarLongitudPassword(contrasenia) != true) {
                                     longitudesL.setText("la contraseña debe tener entre 4 y 13 caracteres");
                                 }
@@ -310,6 +310,10 @@ public class Registro extends javax.swing.JPanel {
             }else if(!apellidoNumerico && !registroCorrecto){
                 JOptionPane.showMessageDialog(usuarioTF, "El apellido tienen que ser solo letras", "Apellido no valido", JOptionPane.ERROR_MESSAGE);
                 longitudesL.setText("El apellido no debe contener numeros.");
+            }
+            if(validar.verificarLongitudNombre(usuario)){
+                JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario", "Usuario no valido", JOptionPane.ERROR_MESSAGE);
+                longitudesL.setText("El usuario debe tener entre 3 y 11 caracteres");
             }
             
             

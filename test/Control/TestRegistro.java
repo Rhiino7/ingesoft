@@ -29,7 +29,7 @@ public class TestRegistro {
     private int DATOS_INCORRECTOS = 2;
     private int USUARIO_AUTORIZADO = 3;
     private int ADMINISTRADOR_AUTORIZADO = 4;
-    private int REGISTRO_COMPLETO = 5;
+    private boolean REGISTRO_COMPLETO = true;
     private boolean USUARIO_Y_PASSWORD = true;
     private boolean NOMBRE_NO_EXISTE = true;
     private boolean APELLIDO_NO_EXISTE = true;
@@ -140,7 +140,7 @@ public class TestRegistro {
         u.setIdentificacion(1013678232);
         u.setUsuario("csolano");
         u.setContrasenia("12345");
-        assertEquals(validarRegistro.registroCompleto(u), REGISTRO_COMPLETO);
+        assertEquals(validarRegistro.registroCompleto(u), !REGISTRO_COMPLETO);
     }
 
     @Test
@@ -163,26 +163,26 @@ public class TestRegistro {
     public void testExistenciaNombre() {
         Usuario u = new Usuario();
         u.setNombre("");
-        assertEquals(validarRegistro.verificarExistenciaNombre(u.getNombre()), NOMBRE_NO_EXISTE);
+        assertEquals(validarRegistro.existe(u.getNombre()), !NOMBRE_NO_EXISTE);
     }
     
     @Test
     public void testExistenciaApellido() {
         Usuario u = new Usuario();
         u.setApellido("");
-        assertEquals(validarRegistro.verificarExistenciaApellido(u.getApellido()), APELLIDO_NO_EXISTE);
+        assertEquals(validarRegistro.existe(u.getApellido()), !APELLIDO_NO_EXISTE);
     }
     
     @Test
     public void testExistenciaIdentificacion() {
-        assertEquals(validarRegistro.verificarExistenciaIdentificacion(1234), !IDENTIFICACION_NO_EXISTE);
+        assertEquals(validarRegistro.existe(Integer.toString(1234)), IDENTIFICACION_NO_EXISTE);
     }
     
     @Test
     public void testExistenciaPassword() {
         Usuario u = new Usuario();
         u.setContrasenia("12345");
-        assertEquals(validarRegistro.verificarExistenciaPassword(u.getContrasenia()), !PASSWORD_NO_EXISTE);
+        assertEquals(validarRegistro.existe(u.getContrasenia()), PASSWORD_NO_EXISTE);
     }
     
     @Test
