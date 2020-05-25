@@ -50,6 +50,12 @@ public class ValidarSolicitarCita {
         if (cdao.verificarTengaMasCitasSucursal(cita)) {
             return 6;
         }
+
+        for (Cita a : cdao.obtener()){
+            if (a.getUsuario()==cita.getUsuario()) {
+                return 7;
+            }
+        }
         return 0;
     }
 }
