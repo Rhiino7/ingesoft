@@ -18,7 +18,7 @@ public class SucursalDAO {
         Connection con = null;
 
         String sql = "INSERT INTO BRANCH values('" + s.getId_sucursal() + "','" + s.getNombre_s()
-                + "','" + s.getDireccion() + "','" + s.getLugar_s() + "','" + s.getContrasenia_s() + "');";
+                + "','" + s.getDireccion() + "','" + s.getLugar_s() + "','";
 
         System.out.println(sql);
         try {
@@ -57,7 +57,6 @@ public class SucursalDAO {
                 s.setNombre_s(rs.getString(2));
                 s.setDireccion(rs.getString(3));
                 s.setLugar_s(rs.getString(4));
-                s.setContrasenia_s(rs.getString(5));
                 listaSucursal.add(s);
             }
             stm.close();
@@ -91,7 +90,7 @@ public class SucursalDAO {
         boolean actualizar = false;
         String sql = "UPDATE BRANCH SET ID_BRANCH='" + s.getId_sucursal() + "',NAME_B='"
                 + s.getNombre_s() + "',ADDRESS='" + s.getDireccion() + "',PLACE='"
-                + s.getLugar_s() + "',PASSWORD_B='" + s.getContrasenia_s() + "'"
+                + s.getLugar_s() + "'"
                 + "WHERE ID_BRANCH=" + s.getId_sucursal();
         try {
             co = Conexion.conectar();

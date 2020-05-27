@@ -52,7 +52,7 @@ public class ValidarSolicitarCita {
         }
 
         for (Cita a : cdao.obtener()){
-            if (a.getUsuario()==cita.getUsuario()) {
+            if (a.getUsuario().getIdentificacion()==cita.getUsuario().getIdentificacion()) {
                 return 7;
             }
         }
