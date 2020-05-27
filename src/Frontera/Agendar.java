@@ -230,6 +230,9 @@ public class Agendar extends javax.swing.JPanel {
             case 6:
                 JOptionPane.showMessageDialog(agendarB, "Usted ya tiene una cita en esta sucursal", "Error", JOptionPane.ERROR_MESSAGE);
                 break;
+            case 7:
+                JOptionPane.showMessageDialog(agendarB, "Usted ya tiene una cita programada o en espera de aprobacion", "Error", JOptionPane.ERROR_MESSAGE);
+                break;
         }
     }//GEN-LAST:event_agendarBActionPerformed
 

@@ -7,7 +7,6 @@ public class Sucursal {
     private String nombre_s;
     private String direccion;
     private String lugar_s;
-    private String contrasenia_s;
 
     public Sucursal() {
     }
@@ -17,7 +16,6 @@ public class Sucursal {
         this.nombre_s = nombre_s;
         this.direccion = direccion;
         this.lugar_s = lugar_s;
-        this.contrasenia_s = contrasenia_s;
     }
 
     public int getId_sucursal() {
@@ -51,15 +49,5 @@ public class Sucursal {
     public void setLugar_s(String lugar_s) {
         this.lugar_s = lugar_s;
     }
-
-    public void setContrasenia_s(String contrasenia_s) {
-        this.contrasenia_s = contrasenia_s;
-    }
-
-    public String getContrasenia_s() {
-        return contrasenia_s;
-    }
- 
-    
     
 }
