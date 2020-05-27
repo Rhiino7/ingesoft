@@ -64,8 +64,8 @@ public class Autorizar extends javax.swing.JPanel {
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
         jTable1.setRowSorter(tr);
 
-        String textDate = dateToString.format(jDateChooser1.getDate());
-        String textHour = hourToString.format(jSpinner1.getValue());
+//        String textDate = dateToString.format(jDateChooser1.getDate());
+//        String textHour = hourToString.format(jSpinner1.getValue());
         String textID   = identificacionTextField.getText();
 
 
