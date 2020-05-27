@@ -25,6 +25,7 @@ public class FrameUsuario extends javax.swing.JFrame {
         this.usuario = usuario;
         agendar = new Agendar(usuario);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

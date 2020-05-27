@@ -16,8 +16,10 @@ public class FrameAdmin extends javax.swing.JFrame {
     /**
      * Creates new form FrameUsuario
      */
-    public FrameAdmin() {
+    public FrameAdmin()
+    {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -102,7 +104,7 @@ public class FrameAdmin extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(principalAdminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(principalAdminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
                 .addContainerGap())
         );
 

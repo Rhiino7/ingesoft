@@ -152,25 +152,25 @@ public class CitaDAO {
         return false;
     }
     
-    public boolean actualizarEstado (Cita c, Estado e){
+    public boolean actualizarEstado (Cita c, String e){
         switch(e) {
-            case PENDIENTE:
+            case "PENDIENTE":
                 c.setEstado(0);
                 this.actualizar(c);
                 break;
-            case APROBADA:
+            case "APROBADA":
                 c.setEstado(1);
                 this.actualizar(c);
                 break;
-            case CANCELADA:
+            case "CANCELADA":
                 c.setEstado(2);
                 this.actualizar(c);
                 break;
-            case RECHAZADA:
+            case "RECHAZADA":
                 c.setEstado(3);
                 this.actualizar(c);
                 break;
-            case CUMPLIDA:
+            case "CUMPLIDA":
                 c.setEstado(4);
                 this.actualizar(c);
                 break;
@@ -182,10 +182,3 @@ public class CitaDAO {
     }
 }
 
-enum Estado{
-    PENDIENTE,
-    APROBADA,
-    CANCELADA,
-    RECHAZADA,
-    CUMPLIDA
-}

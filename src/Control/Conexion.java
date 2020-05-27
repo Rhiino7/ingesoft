@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Control;
 
 import java.sql.Connection;
@@ -15,15 +10,17 @@ import java.util.logging.*;
 public class Conexion {
 
     public static Connection conectar() {
+
         String url = "BD\\BankApp.db";
         Connection connect = null;
+
         try {
             connect = DriverManager.getConnection("jdbc:sqlite:" + url);
             if (connect != null) {
                 System.out.println("Conectado");
             }
         } catch (SQLException ex) {
-            System.err.println("no se pudo encontrar la base de datos" + ex.getMessage());
+            System.err.println("No se pudo encontrar la base de datos "+ '\n' + ex.getMessage());
         }
         return connect;
     }

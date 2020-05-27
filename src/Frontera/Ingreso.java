@@ -149,7 +149,7 @@ public class Ingreso extends javax.swing.JPanel {
             System.out.println("Bienvenido");
             FrameUsuario frameUsuario = new FrameUsuario(usuario);
             frameUsuario.setVisible(true);
-            principalFrame.dispose();
+            this.principalFrame.dispose();
             
 //            PrincipalFrame principalFrame = new PrincipalFrame();
 //            principalFrame.setVisible(false);
@@ -159,9 +159,8 @@ public class Ingreso extends javax.swing.JPanel {
             System.out.println("Bienvenido Administrador");
             FrameAdmin frameAdmin = new FrameAdmin();
             frameAdmin.setVisible(true);
-            PrincipalFrame principalFrame = new PrincipalFrame();
-            principalFrame.setVisible(false);
-            principalFrame.removeAll();
+            this.principalFrame.setVisible(false);
+            this.principalFrame.removeAll();
         }
     }//GEN-LAST:event_ingresarBActionPerformed
 
