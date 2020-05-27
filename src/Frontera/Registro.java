@@ -311,7 +311,7 @@ public class Registro extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(usuarioTF, "El apellido tienen que ser solo letras", "Apellido no valido", JOptionPane.ERROR_MESSAGE);
                 longitudesL.setText("El apellido no debe contener numeros.");
             }
-            if(validar.verificarLongitudNombre(usuario)){
+            if(!validar.verificarLongitudNombre(usuario)){
                 JOptionPane.showMessageDialog(usuarioTF, "Verifique la longitud del usuario", "Usuario no valido", JOptionPane.ERROR_MESSAGE);
                 longitudesL.setText("El usuario debe tener entre 3 y 11 caracteres");
             }
