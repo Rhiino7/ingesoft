@@ -22,7 +22,7 @@ public class CitaDAO {
         Connection con = null;
 
         String sql = "INSERT INTO APPOINTMENT values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
-                + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getEstado() + "');";
+                + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
 
@@ -47,7 +47,8 @@ public class CitaDAO {
         ResultSet rs = null;
 
         //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
-        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_USER";
+        //Ahora si tiene ID :)
+        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_APPOINTMENT";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -62,21 +63,24 @@ public class CitaDAO {
 
                 Cita c = new Cita();
 
-                int sID = rs.getInt(1);
+                c.setId_cita(rs.getInt(1));
+
+                int sID = rs.getInt(2);
                 for (Sucursal s : sucursales){
                     if (s.getId_sucursal() == sID) c.setSucursal(s);
                 }
 
-                int uID = rs.getInt(2);
+                int uID = rs.getInt(3);
                 for (Usuario u : usuarios){
                     if (u.getIdentificacion() == uID) c.setUsuario(u);
                 }
 
-                c.setFecha(LocalDate.parse(rs.getString(3)));
+                c.setFecha(LocalDate.parse(rs.getString(4)));
 
-                String[] hora = rs.getString(4).split(":");
+                String[] hora = rs.getString(5).split(":");
                 c.setHora(LocalTime.of(Integer.parseInt(hora[0]), Integer.parseInt(hora[1])));
-                c.setEstado(rs.getInt(5));
+                c.setMotivo(rs.getInt(6));
+                c.setEstado(rs.getInt(7));
                 listaCita.add(c);
             }
             stm.close();

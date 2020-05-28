@@ -2,6 +2,7 @@ package Frontera;
 
 import DAO.CitaDAO;
 import Entidad.Cita;
+import Entidad.Usuario;
 
 import java.text.DateFormat;
 import java.text.Format;
@@ -28,6 +29,33 @@ public class Autorizar extends javax.swing.JPanel {
 
     public void showUsersinTable()
     {
+        Object [][] citasMatrix = new Object[citasList.size()][8];
+
+        Cita citaEx;
+
+        for (int i = 0; i < citasList.size(); i++)
+        {
+            citaEx = citasList.get(i);
+
+            citasMatrix[i][0] = citasList.get(i).getUsuario().getNombre();
+            citasMatrix[i][1] = citasList.get(i).getUsuario().getApellido();
+            citasMatrix[i][2] = citasList.get(i).getUsuario().getIdentificacion();
+            citasMatrix[i][3] = citasList.get(i).getFecha();
+            citasMatrix[i][4] = citasList.get(i).getHora();
+            citasMatrix[i][5] = citasList.get(i).getSucursal();
+            citasMatrix[i][6] = null;
+            citasMatrix[i][7] = citasList.get(i).getEstado();
+        }
+
+        jTable1.setModel(new DefaultTableModel(
+                citasMatrix,
+                new Object[]
+                {
+                        "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                }
+        ));
+
+        /*
         DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
 
         Object[] fila = new Object[8];
@@ -45,6 +73,7 @@ public class Autorizar extends javax.swing.JPanel {
 
             tModel.addRow(fila);
         }
+        */
     }
 
     public void filtrarTable(String search)
