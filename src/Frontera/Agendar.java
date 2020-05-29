@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.SpinnerDateModel;
 import java.util.Calendar;
@@ -24,6 +25,7 @@ public class Agendar extends javax.swing.JPanel {
     private SucursalDAO sdao = new SucursalDAO();
     private UsuarioDAO udao = new UsuarioDAO();
     private CitaDAO cdao = new CitaDAO();
+    private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
 
     public Agendar(Usuario usuario) {
         initComponents();
@@ -190,7 +192,9 @@ public class Agendar extends javax.swing.JPanel {
         }
 
         //Se crea la cita
-        Cita cita = new Cita(sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
+        Cita cita = new Cita(citasList.size() + 1, sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
+
+        System.out.println(cita);
 
         //System.out.println("" + nombre_sucursal + fecha2 +  hora);
         //hacer que perdure en cita(entidad)
