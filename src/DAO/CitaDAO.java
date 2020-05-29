@@ -21,7 +21,7 @@ public class CitaDAO {
         Statement stm = null;
         Connection con = null;
 
-        String sql = "INSERT INTO APPOINTMENT values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        String sql = "INSERT INTO APPOINTMENT values('" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);

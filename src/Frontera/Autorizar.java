@@ -18,7 +18,7 @@ public class Autorizar extends javax.swing.JPanel {
 
     CitaDAO citaDAO = new CitaDAO();
     ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
-    int selectedRow = 0;
+    int selectedIDCita = 0;
 
 
     public Autorizar()
@@ -29,7 +29,7 @@ public class Autorizar extends javax.swing.JPanel {
 
     public void showUsersinTable()
     {
-        Object [][] citasMatrix = new Object[citasList.size()][8];
+        Object [][] citasMatrix = new Object[citasList.size()][9];
 
         Cita citaEx;
 
@@ -37,21 +37,25 @@ public class Autorizar extends javax.swing.JPanel {
         {
             citaEx = citasList.get(i);
 
-            citasMatrix[i][0] = citasList.get(i).getUsuario().getNombre();
-            citasMatrix[i][1] = citasList.get(i).getUsuario().getApellido();
-            citasMatrix[i][2] = citasList.get(i).getUsuario().getIdentificacion();
-            citasMatrix[i][3] = citasList.get(i).getFecha();
-            citasMatrix[i][4] = citasList.get(i).getHora();
-            citasMatrix[i][5] = citasList.get(i).getSucursal();
-            citasMatrix[i][6] = null;
-            citasMatrix[i][7] = citasList.get(i).getEstado();
+            citasMatrix[i][0] = citasList.get(i).getId_cita();
+            citasMatrix[i][1] = citasList.get(i).getUsuario().getNombre();
+            citasMatrix[i][2] = citasList.get(i).getUsuario().getApellido();
+            citasMatrix[i][3] = citasList.get(i).getUsuario().getIdentificacion();
+            citasMatrix[i][4] = citasList.get(i).getFecha();
+            citasMatrix[i][5] = citasList.get(i).getHora();
+            citasMatrix[i][6] = citasList.get(i).getSucursal();
+            citasMatrix[i][7] = citasList.get(i).getMotivo();
+            citasMatrix[i][8] = citasList.get(i).getEstado();
         }
 
-        jTable1.setModel(new DefaultTableModel(
+        jTable1.setModel
+        (
+            new DefaultTableModel
+            (
                 citasMatrix,
                 new Object[]
                 {
-                        "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                        "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
                 }
         ));
 
@@ -141,14 +145,14 @@ public class Autorizar extends javax.swing.JPanel {
 
             },
             new String [] {
-                "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false, true
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -253,7 +257,7 @@ public class Autorizar extends javax.swing.JPanel {
                                 .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jCheckBox1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGap(18, 18, 18)
                                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
@@ -302,10 +306,10 @@ public class Autorizar extends javax.swing.JPanel {
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -326,22 +330,24 @@ public class Autorizar extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
     {
-        Cita c = citasList.get(selectedRow);
+        Cita c = citasList.get(selectedIDCita - 1);
         citaDAO.actualizarEstado(c,"APROBADA");
         showUsersinTable();
     }
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)
     {
-        Cita c = citasList.get(selectedRow);
+        Cita c = citasList.get(selectedIDCita - 1);
         citaDAO.actualizarEstado(c,"RECHAZADA");
         showUsersinTable();
     }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt)
     {
-        selectedRow = jTable1.getSelectedRow();
-        System.out.println(selectedRow);
+        int selectedRow = jTable1.getSelectedRow();
+        String idCitaTabla = jTable1.getValueAt(selectedRow,0).toString();
+        selectedIDCita  =  Integer.parseInt(idCitaTabla);
+        System.out.println(selectedIDCita);
     }
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt)
