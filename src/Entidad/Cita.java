@@ -25,16 +25,6 @@ public class Cita {
         this.estado = estado;
     }
 
-    public Cita(int id_cita, Sucursal sucursal, Usuario usuario, LocalDate fecha, LocalTime hora, int motivo, int estado) {
-        this.id_cita = id_cita;
-        this.sucursal = sucursal;
-        this.usuario = usuario;
-        this.fecha = fecha;
-        this.hora = hora;
-        this.motivo = motivo;
-        this.estado = estado;
-    }
-    
     public int getId_cita() {
         return id_cita;
     }

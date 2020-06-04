@@ -192,8 +192,7 @@ public class Agendar extends javax.swing.JPanel {
         }
 
         //Se crea la cita
-        //Cita cita = new Cita(citasList.size() + 1, sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
-        Cita cita = new Cita(citasList.size() + 1, sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora),motivoCB.getSelectedIndex(),0);
+        Cita cita = new Cita(citasList.size() + 1, sucursal, usuario, LocalDate.parse(fecha2), LocalTime.parse(hora), 0);
 
         System.out.println(cita);
 

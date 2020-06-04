@@ -13,69 +13,29 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.table.*;
 
+
 public class Autorizar extends javax.swing.JPanel {
 
     CitaDAO citaDAO = new CitaDAO();
     ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
     int selectedIDCita = 0;
 
-    public Autorizar() {
+
+    public Autorizar()
+    {
         initComponents();
         showUsersinTable();
     }
 
-    public void showUsersinTable() {
-        Object[][] citasMatrix = new Object[citasList.size()][9];
+    public void showUsersinTable()
+    {
+        Object [][] citasMatrix = new Object[citasList.size()][9];
 
         Cita citaEx;
 
-        for (int i = 0; i < citasList.size(); i++) {
+        for (int i = 0; i < citasList.size(); i++)
+        {
             citaEx = citasList.get(i);
-            String estado = "none";
-            String motivo = "otro";
-            //estados
-            if (citasList.get(i).getEstado() == 0) {
-                estado = "Pendiente";
-            } else if (citasList.get(i).getEstado() == 1) {
-                estado = "Aprobada";
-            } else if (citasList.get(i).getEstado() == 2) {
-                estado = "Cancelada";
-            } else if (citasList.get(i).getEstado() == 3) {
-                estado = "Rechazada";
-            } else if (citasList.get(i).getEstado() == 4) {
-                estado = "Cumplida";
-            }
-
-            //motivo
-            /*
-            0.Creacion cuenta bancaria
-            1.creditos de vivienda
-            2.Cambio o perdida de tarjeta
-            3.Creditos de Negocio
-            4.Inversiones
-            5.Seguros
-            6.Productos Complementarios
-            7.Asesoria
-            8.Otros*/
-            if (citasList.get(i).getMotivo() == 0) {
-                motivo = "Creacion cuenta bancaria";
-            } else if (citasList.get(i).getMotivo() == 1) {
-                motivo = "Creditos de vivienda";
-            } else if (citasList.get(i).getMotivo() == 2) {
-                motivo = "Cambio o perdida de tarjeta";
-            } else if (citasList.get(i).getMotivo() == 3) {
-                motivo = "Creditos de Negocio";
-            } else if (citasList.get(i).getMotivo() == 4) {
-                motivo = "Inversiones";
-            } else if (citasList.get(i).getMotivo() == 5) {
-                motivo = "Seguros";
-            } else if (citasList.get(i).getMotivo() == 6) {
-                motivo = "Productos Complementarios";
-            } else if (citasList.get(i).getMotivo() == 7) {
-                motivo = "Asesoria";
-            } else {
-                motivo = "otro";
-            }
 
             citasMatrix[i][0] = citasList.get(i).getId_cita();
             citasMatrix[i][1] = citasList.get(i).getUsuario().getNombre();
@@ -83,18 +43,21 @@ public class Autorizar extends javax.swing.JPanel {
             citasMatrix[i][3] = citasList.get(i).getUsuario().getIdentificacion();
             citasMatrix[i][4] = citasList.get(i).getFecha();
             citasMatrix[i][5] = citasList.get(i).getHora();
-            citasMatrix[i][6] = citasList.get(i).getSucursal().getLugar_s();
-            citasMatrix[i][7] = motivo;
-            citasMatrix[i][8] = estado;
+            citasMatrix[i][6] = citasList.get(i).getSucursal();
+            citasMatrix[i][7] = citasList.get(i).getMotivo();
+            citasMatrix[i][8] = citasList.get(i).getEstado();
         }
 
-        jTable1.setModel(
-                new DefaultTableModel(
-                        citasMatrix,
-                        new Object[]{
-                            "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
-                        }
-                ));
+        jTable1.setModel
+        (
+            new DefaultTableModel
+            (
+                citasMatrix,
+                new Object[]
+                {
+                        "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                }
+        ));
 
         /*
         DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
@@ -114,17 +77,19 @@ public class Autorizar extends javax.swing.JPanel {
 
             tModel.addRow(fila);
         }
-         */
+        */
     }
 
-    public void filtrarTable(String search) {
-        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+    public void filtrarTable(String search)
+    {
+        DefaultTableModel table = (DefaultTableModel)jTable1.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
         jTable1.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(search));
     }
 
-    public void searchInTable() {
+    public void searchInTable()
+    {
 
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
         SimpleDateFormat hourToString = new SimpleDateFormat("HH:mm");
@@ -134,7 +99,8 @@ public class Autorizar extends javax.swing.JPanel {
 
 //        String textDate = dateToString.format(jDateChooser1.getDate());
 //        String textHour = hourToString.format(jSpinner1.getValue());
-        String textID = identificacionTextField.getText();
+        String textID   = identificacionTextField.getText();
+
 
         tr.setRowFilter(RowFilter.regexFilter(textID));
     }
@@ -357,45 +323,56 @@ public class Autorizar extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt)
+    {
 
     }
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt)
+    {
         Cita c = citasList.get(selectedIDCita - 1);
-        citaDAO.actualizarEstado(c, "APROBADA");
+        citaDAO.actualizarEstado(c,"APROBADA");
         showUsersinTable();
     }
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt)
+    {
         Cita c = citasList.get(selectedIDCita - 1);
-        citaDAO.actualizarEstado(c, "RECHAZADA");
+        citaDAO.actualizarEstado(c,"RECHAZADA");
         showUsersinTable();
     }
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt)
+    {
         int selectedRow = jTable1.getSelectedRow();
-        String idCitaTabla = jTable1.getValueAt(selectedRow, 0).toString();
-        selectedIDCita = Integer.parseInt(idCitaTabla);
+        String idCitaTabla = jTable1.getValueAt(selectedRow,0).toString();
+        selectedIDCita  =  Integer.parseInt(idCitaTabla);
         System.out.println(selectedIDCita);
     }
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {
-
+    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt)
+    {
+        
     }
-
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {
+    
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt)
+    {
         String search = jTextField1.getText();
         filtrarTable(search);
     }
 
-    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt) {
+    private void searchButtonActionPerformed(java.awt.event.ActionEvent evt)
+    {
         searchInTable();
     }
 
-    public void identificacionTextFieldKeyReleased(java.awt.event.KeyEvent evt) {
+    public void identificacionTextFieldKeyReleased(java.awt.event.KeyEvent evt)
+    {
 
     }
+
+
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
