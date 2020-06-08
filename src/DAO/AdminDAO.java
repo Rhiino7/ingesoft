@@ -82,7 +82,9 @@ public class AdminDAO {
         boolean validacion = false;
         //System.out.println("identifiacion:" + a.getIdentificacion());
         for (int i = 0; i < admins.size(); i++) {
-            System.out.println(admins.get(i).getIdentificacion());
+//            System.out.println(admins.get(i).getIdentificacion());
+                System.out.println(admins.get(i).getUsuario());
+                System.out.println(admins.get(i).getContrasenia());
             if (admins.get(i).getUsuario().equals(a.getUsuario()) && admins.get(i).getContrasenia().equals(a.getContrasenia())) {
                 validacion = true;
             }

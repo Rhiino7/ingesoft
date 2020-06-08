@@ -7,6 +7,7 @@ package Frontera;
 
 import Control.ValidarRegistro;
 import DAO.UsuarioDAO;
+import Entidad.Admin;
 import Entidad.Usuario;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -204,6 +205,7 @@ public class Registro extends javax.swing.JPanel {
     private void registrarseBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBActionPerformed
         String nombre = nombreTF.getText();
         String apellido = apellidoTF.getText();
+        String id = identificacionTF.getText();
         String usuario = usuarioTF.getText();
         String contrasenia = contraseniaPF.getText();
         String contraseniaConf = repetirContraseniaPF.getText();
@@ -229,22 +231,34 @@ public class Registro extends javax.swing.JPanel {
             }else{
                 UsuarioDAO dao = new UsuarioDAO();
                 boolean existe = false;
+                boolean usuarioExiste = false;
+                boolean adminExiste = false;
                 /*List<Usuario> lista = dao.obtener();
                 */
 
-                
+                Usuario u = new Usuario(nombre, apellido, Integer.parseInt(id), usuario, contrasenia);
+                Admin admin = new Admin(usuario, contrasenia, Long.parseLong(id));
                 
                 if (validar.identificacionNumerica(identificacionTF.getText())) {
                     long identificacion = Long.parseLong(identificacionTF.getText());
-                    for (int i = 0; i < lista.size(); i++) {
-                        if (lista.get(i).getIdentificacion() == identificacion) {
-                            existe = true;
-                            break;
-                        }
+                    int adminE = validar.verificarRegistro(admin);
+                    int usuarioE = validar.verificarRegistro(u, admin);
+                    if(usuarioE ==  3){
+                         usuarioExiste = true;
                     }
+                    if(adminE ==  4){
+                        adminExiste = true;
+                    }
+//                    for (int i = 0; i < lista.size(); i++) {
+//                        if (lista.get(i).getIdentificacion() == identificacion) {
+//                            existe = true;
+//                            break;
+//                        }
+//                    }
+                    System.out.println(adminExiste);
+                    System.out.println(usuarioExiste);
 
-
-                    if (!existe && registroCorrecto) {
+                    if (!adminExiste &&  registroCorrecto) {
                         if (contrasenia.equals(contraseniaConf)) {
                             if (validar.verificarUsuarioYPassword(usuario, contrasenia)) {
                                 JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
