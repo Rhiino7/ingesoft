@@ -255,10 +255,8 @@ public class Registro extends javax.swing.JPanel {
 //                            break;
 //                        }
 //                    }
-                    System.out.println(adminExiste);
-                    System.out.println(usuarioExiste);
 
-                    if (!adminExiste &&  registroCorrecto) {
+                    if (registroCorrecto && (!usuarioExiste && !adminExiste)) {
                         if (contrasenia.equals(contraseniaConf)) {
                             if (validar.verificarUsuarioYPassword(usuario, contrasenia)) {
                                 JOptionPane.showMessageDialog(usuarioTF, "Registro Exitoso", "Registro", JOptionPane.INFORMATION_MESSAGE);
