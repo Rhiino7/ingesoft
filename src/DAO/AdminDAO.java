@@ -20,6 +20,7 @@ import java.util.List;
  * @author cdgn2
  */
 public class AdminDAO {
+    
      public boolean registrar(Admin admin) {
         boolean registrar = false;
         Statement stm = null;

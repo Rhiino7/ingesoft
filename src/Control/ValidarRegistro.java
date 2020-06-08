@@ -70,10 +70,10 @@ public class ValidarRegistro {
     public boolean registroCompleto(String nombre, String apellido, String identificacion, String usuario, String password, String password2){
         boolean vN = existe(nombre);
         boolean vLN = verificarLongitudNombre(nombre);
-        boolean vNaN = nombreNumerico(nombre);
+        boolean vNaN = !nombreNumerico(nombre);
         boolean vA = existe(apellido);
         boolean vLA = verificarLongitudApellido(apellido);
-        boolean vAaN = apellidoNumerico(apellido);
+        boolean vAaN = !apellidoNumerico(apellido);
         boolean vI = existe(identificacion);
         boolean vIaN = identificacionNumerica(identificacion);
         boolean vU = existe(password);

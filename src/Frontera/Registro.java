@@ -229,8 +229,11 @@ public class Registro extends javax.swing.JPanel {
             }else{
                 UsuarioDAO dao = new UsuarioDAO();
                 boolean existe = false;
-                List<Usuario> lista = dao.obtener();
+                /*List<Usuario> lista = dao.obtener();
+                */
 
+                
+                
                 if (validar.identificacionNumerica(identificacionTF.getText())) {
                     long identificacion = Long.parseLong(identificacionTF.getText());
                     for (int i = 0; i < lista.size(); i++) {
@@ -239,6 +242,7 @@ public class Registro extends javax.swing.JPanel {
                             break;
                         }
                     }
+
 
                     if (!existe && registroCorrecto) {
                         if (contrasenia.equals(contraseniaConf)) {

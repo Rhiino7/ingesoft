@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import DAO.ComplimentDAO.*;
 
 public class CitaDAO {
 
@@ -21,7 +22,7 @@ public class CitaDAO {
         Statement stm = null;
         Connection con = null;
 
-        String sql = "INSERT INTO APPOINTMENT values('" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        String sql = "INSERT INTO APPOINTMENT values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
@@ -48,7 +49,7 @@ public class CitaDAO {
 
         //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
         //Ahora si tiene ID :)
-        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_APPOINTMENT";
+        String sql = "SELECT * FROM APPOINTMENT ORDER BY DATE";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -157,6 +158,7 @@ public class CitaDAO {
     }
     
     public boolean actualizarEstado (Cita c, String e){
+        ComplimentDAO com = new ComplimentDAO();
         switch(e) {
             case "PENDIENTE":
                 c.setEstado(0);
@@ -168,21 +170,42 @@ public class CitaDAO {
                 break;
             case "CANCELADA":
                 c.setEstado(2);
-                this.actualizar(c);
+                com.registrar(c);
+                this.eliminar(c);
                 break;
             case "RECHAZADA":
                 c.setEstado(3);
-                this.actualizar(c);
+                com.registrar(c);
+                this.eliminar(c);
                 break;
             case "CUMPLIDA":
                 c.setEstado(4);
-                this.actualizar(c);
+                com.registrar(c);
+                this.eliminar(c);
                 break;
             default:
                 System.out.println("Estado invalido");
                 return false;
         }
         return true;
+        
+    }
+    
+    public boolean eliminar(Cita c) {
+        Connection co = null;
+        Statement stm = null;
+        boolean eliminar = false;
+        String sql = "DELETE FROM APPOINTMENT WHERE ID_APPOINTMENT=" + c.getId_cita();
+        try {
+            co = Conexion.conectar();
+            stm = co.createStatement();
+            stm.execute(sql);
+            eliminar = true;
+        } catch (SQLException e) {
+            System.out.println("Error metodo eliminar");
+            e.printStackTrace();
+        }
+        return eliminar;
     }
 }
 
