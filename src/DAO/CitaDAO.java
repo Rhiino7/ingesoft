@@ -18,11 +18,17 @@ import DAO.ComplimentDAO.*;
 public class CitaDAO {
 
     public boolean registrar(Cita c){
+        
+        CitaDAO citaDAO = new CitaDAO();
+        ComplimentDAO complimentDAO = new ComplimentDAO();
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        
         boolean registrar = false;
         Statement stm = null;
         Connection con = null;
 
-        String sql = "INSERT INTO APPOINTMENT values('" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        String sql = "INSERT INTO APPOINTMENT values('"+ citasList.size()+1 +"','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
@@ -99,7 +105,7 @@ public class CitaDAO {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
-        String sql = "UPDATE APPOINTMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
+        String sql = "UPDATE APPOINTMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
                 + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();

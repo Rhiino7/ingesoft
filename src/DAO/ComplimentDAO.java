@@ -25,11 +25,15 @@ import DAO.CitaDAO.*;
  */
 public class ComplimentDAO {
     public boolean registrar(Cita c){
+
+        ComplimentDAO complimentDAO = new ComplimentDAO();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        
         boolean registrar = false;
         Statement stm = null;
         Connection con = null;
 
-        String sql = "INSERT INTO COMPLIMENT values('" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        String sql = "INSERT INTO COMPLIMENT values('" + complimentList.size()+1 + "','" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);

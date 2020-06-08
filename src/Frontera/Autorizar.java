@@ -1,6 +1,7 @@
 package Frontera;
 
 import DAO.CitaDAO;
+import DAO.ComplimentDAO;
 import Entidad.Cita;
 import Entidad.Usuario;
 import java.awt.event.ActionEvent;
@@ -17,7 +18,9 @@ import javax.swing.table.*;
 public class Autorizar extends javax.swing.JPanel {
 
     CitaDAO citaDAO = new CitaDAO();
+    ComplimentDAO complimentDAO = new ComplimentDAO();
     ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+    ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
     int selectedIDCita = 0;
 
     public Autorizar() {
@@ -386,9 +389,18 @@ public class Autorizar extends javax.swing.JPanel {
     }
 
     private void aprobarBActionPerformed(java.awt.event.ActionEvent evt) {
-        Cita c = citasList.get(selectedIDCita - 1);
-        citaDAO.actualizarEstado(c, "APROBADA");
-        showUsersinTable();
+        try{
+            Cita c = citasList.get(selectedIDCita - 1);
+            citaDAO.actualizarEstado(c, "APROBADA");
+            showUsersinTable();
+        }catch(Exception e){
+            for (Cita c : complimentList){
+                //@ToDo
+            }
+            Cita c = complimentList.get(selectedIDCita - 1);
+            citaDAO.actualizarEstado(c, "APROBADA");
+            showUsersinTable();
+        }
     }
 
     private void rechazarBActionPerformed(java.awt.event.ActionEvent evt) {
