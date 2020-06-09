@@ -163,14 +163,10 @@ public class ComplimentDAO {
             case "CANCELADA":
                 c.setEstado(2);
                 this.actualizar(c);
-                cit.registrar(c);
-                this.eliminar(c);
                 break;
             case "RECHAZADA":
                 c.setEstado(3);
                 this.actualizar(c);
-                cit.registrar(c);
-                this.eliminar(c);
                 break;
             case "CUMPLIDA":
                 c.setEstado(4);
