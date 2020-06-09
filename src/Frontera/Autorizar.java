@@ -447,7 +447,7 @@ public class Autorizar extends javax.swing.JPanel {
         int cita = 0;
         int comp = 0;
         boolean uwu = false;
-        for (int i = 0; i < selectedIDCita + complimentList.size(); i++) {
+        for (int i = 0; i < selectedIDCita; i++) {
             showUsersinTable();
             System.out.println("cita:" + cita);
             System.out.println("compliment:" + comp);
@@ -501,7 +501,7 @@ public class Autorizar extends javax.swing.JPanel {
         int cita = 0;
         int comp = 0;
         boolean uwu=false;
-        for (int i = 0; i < selectedIDCita + complimentList.size(); i++) {
+        for (int i = 0; i < selectedIDCita; i++) {
             showUsersinTable();
             System.out.println("cita:" + cita);
             System.out.println("compliment:" + comp);
@@ -557,7 +557,7 @@ public class Autorizar extends javax.swing.JPanel {
             System.out.println("compliment:" + comp);
             System.out.println("i:" + i);
             System.out.println("selectedIDCita:" + selectedIDCita);
-            if(citasList.size()!=0) {
+            if(citasList.size()!=0 && cita < citasList.size()) {
                 if (citasList.get(cita).getId_cita() == selectedIDCita) {
                     Cita c = citasList.get(cita);
                     citaDAO.actualizarEstado(c, "RECHAZADA");
@@ -573,15 +573,13 @@ public class Autorizar extends javax.swing.JPanel {
             if(uwu){
                 i = selectedIDCita;
             }
-            try {
+            if(complimentList.size()!=0 && comp < complimentList.size()) {
                 if (complimentList.get(comp).getId_cita() == selectedIDCita) {
                     Cita c = complimentList.get(cita);
                     complimentDAO.actualizarEstado(c, "RECHAZADA");
                     uwu=true;
                     System.out.println(uwu);
                 }
-            } catch (Exception d) {
-                
             }
             System.out.println(uwu);
             if(uwu){
