@@ -98,20 +98,20 @@ public class Autorizar extends javax.swing.JPanel {
                 cita++;
             } else {
 
-                if (complimentList.get(comp).getEstado() == 0) {
-                    estado = "Pendiente";
-                } else if (complimentList.get(comp).getEstado() == 1) {
-                    estado = "Aprobada";
-                } else if (complimentList.get(comp).getEstado() == 2) {
-                    estado = "Cancelada";
-                } else if (complimentList.get(comp).getEstado() == 3) {
-                    estado = "Rechazada";
-                } else if (complimentList.get(comp).getEstado() == 4) {
-                    estado = "Cumplida";
-                }
+                    if (complimentList.get(comp).getEstado() == 0) {
+                        estado = "Pendiente";
+                    } else if (complimentList.get(comp).getEstado() == 1) {
+                        estado = "Aprobada";
+                    } else if (complimentList.get(comp).getEstado() == 2) {
+                        estado = "Cancelada";
+                    } else if (complimentList.get(comp).getEstado() == 3) {
+                        estado = "Rechazada";
+                    } else if (complimentList.get(comp).getEstado() == 4) {
+                        estado = "Cumplida";
+                    }
 
-                //motivo
-                /*
+                    //motivo
+                    /*
             0.Creacion cuenta bancaria
             1.creditos de vivienda
             2.Cambio o perdida de tarjeta
@@ -121,36 +121,37 @@ public class Autorizar extends javax.swing.JPanel {
             6.Productos Complementarios
             7.Asesoria
             8.Otros*/
-                if (complimentList.get(comp).getMotivo() == 0) {
-                    motivo = "Creacion cuenta bancaria";
-                } else if (complimentList.get(comp).getMotivo() == 1) {
-                    motivo = "Creditos de vivienda";
-                } else if (complimentList.get(comp).getMotivo() == 2) {
-                    motivo = "Cambio o perdida de tarjeta";
-                } else if (complimentList.get(comp).getMotivo() == 3) {
-                    motivo = "Creditos de Negocio";
-                } else if (complimentList.get(comp).getMotivo() == 4) {
-                    motivo = "Inversiones";
-                } else if (complimentList.get(comp).getMotivo() == 5) {
-                    motivo = "Seguros";
-                } else if (complimentList.get(comp).getMotivo() == 6) {
-                    motivo = "Productos Complementarios";
-                } else if (complimentList.get(comp).getMotivo() == 7) {
-                    motivo = "Asesoria";
-                } else {
-                    motivo = "otro";
-                }
+                    if (complimentList.get(comp).getMotivo() == 0) {
+                        motivo = "Creacion cuenta bancaria";
+                    } else if (complimentList.get(comp).getMotivo() == 1) {
+                        motivo = "Creditos de vivienda";
+                    } else if (complimentList.get(comp).getMotivo() == 2) {
+                        motivo = "Cambio o perdida de tarjeta";
+                    } else if (complimentList.get(comp).getMotivo() == 3) {
+                        motivo = "Creditos de Negocio";
+                    } else if (complimentList.get(comp).getMotivo() == 4) {
+                        motivo = "Inversiones";
+                    } else if (complimentList.get(comp).getMotivo() == 5) {
+                        motivo = "Seguros";
+                    } else if (complimentList.get(comp).getMotivo() == 6) {
+                        motivo = "Productos Complementarios";
+                    } else if (complimentList.get(comp).getMotivo() == 7) {
+                        motivo = "Asesoria";
+                    } else {
+                        motivo = "otro";
+                    }
 
-                citasMatrix[i][0] = complimentList.get(comp).getId_cita();
-                citasMatrix[i][1] = complimentList.get(comp).getUsuario().getNombre();
-                citasMatrix[i][2] = complimentList.get(comp).getUsuario().getApellido();
-                citasMatrix[i][3] = complimentList.get(comp).getUsuario().getIdentificacion();
-                citasMatrix[i][4] = complimentList.get(comp).getFecha();
-                citasMatrix[i][5] = complimentList.get(comp).getHora();
-                citasMatrix[i][6] = complimentList.get(comp).getSucursal().getLugar_s();
-                citasMatrix[i][7] = motivo;
-                citasMatrix[i][8] = estado;
-                comp++;
+                    citasMatrix[i][0] = complimentList.get(comp).getId_cita();
+                    citasMatrix[i][1] = complimentList.get(comp).getUsuario().getNombre();
+                    citasMatrix[i][2] = complimentList.get(comp).getUsuario().getApellido();
+                    citasMatrix[i][3] = complimentList.get(comp).getUsuario().getIdentificacion();
+                    citasMatrix[i][4] = complimentList.get(comp).getFecha();
+                    citasMatrix[i][5] = complimentList.get(comp).getHora();
+                    citasMatrix[i][6] = complimentList.get(comp).getSucursal().getLugar_s();
+                    citasMatrix[i][7] = motivo;
+                    citasMatrix[i][8] = estado;
+                    comp++;
+
             }
         }
 
@@ -461,24 +462,24 @@ public class Autorizar extends javax.swing.JPanel {
                     citaDAO.eliminar(c);
                     citasList = (ArrayList<Cita>) citaDAO.obtener();
                     complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-                    uwu=true;
+                    uwu = true;
                 }
             } catch (Exception e) {
 
             }
-            if(uwu){
+            if (uwu) {
                 i = selectedIDCita;
             }
             try {
                 if (complimentList.get(comp).getId_cita() == selectedIDCita) {
                     Cita c = complimentList.get(cita);
                     complimentDAO.actualizarEstado(c, "CUMPLIDA");
-                    uwu=true;
+                    uwu = true;
                 }
             } catch (Exception d) {
-                
+
             }
-            if(uwu){
+            if (uwu) {
                 i = selectedIDCita;
             }
             if (citasList.get(cita).getId_cita() == i + 1) {
@@ -500,7 +501,7 @@ public class Autorizar extends javax.swing.JPanel {
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         int cita = 0;
         int comp = 0;
-        boolean uwu=false;
+        boolean uwu = false;
         for (int i = 0; i < selectedIDCita; i++) {
             showUsersinTable();
             System.out.println("cita:" + cita);
@@ -511,12 +512,12 @@ public class Autorizar extends javax.swing.JPanel {
                 if (citasList.get(cita).getId_cita() == selectedIDCita) {
                     Cita c = citasList.get(cita);
                     citaDAO.actualizarEstado(c, "APROBADA");
-                    uwu=true;
+                    uwu = true;
                 }
             } catch (Exception e) {
 
             }
-            if(uwu){
+            if (uwu) {
                 i = selectedIDCita;
             }
             try {
@@ -527,12 +528,12 @@ public class Autorizar extends javax.swing.JPanel {
                     complimentDAO.eliminar(c);
                     citasList = (ArrayList<Cita>) citaDAO.obtener();
                     complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-                    uwu=true;
+                    uwu = true;
                 }
             } catch (Exception d) {
-                
+
             }
-            if(uwu){
+            if (uwu) {
                 i = selectedIDCita;
             }
             if (citasList.get(cita).getId_cita() == i + 1) {
@@ -557,7 +558,7 @@ public class Autorizar extends javax.swing.JPanel {
             System.out.println("compliment:" + comp);
             System.out.println("i:" + i);
             System.out.println("selectedIDCita:" + selectedIDCita);
-            if(citasList.size()!=0 && cita < citasList.size()) {
+            if (citasList.size() != 0 && cita < citasList.size()) {
                 if (citasList.get(cita).getId_cita() == selectedIDCita) {
                     Cita c = citasList.get(cita);
                     citaDAO.actualizarEstado(c, "RECHAZADA");
@@ -565,24 +566,21 @@ public class Autorizar extends javax.swing.JPanel {
                     citaDAO.eliminar(c);
                     citasList = (ArrayList<Cita>) citaDAO.obtener();
                     complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-                    uwu=true;
+                    uwu = true;
                     System.out.println(uwu);
                 }
             }
-            System.out.println(uwu);
-            if(uwu){
-                i = selectedIDCita;
-            }
-            if(complimentList.size()!=0 && comp < complimentList.size()) {
+            if (complimentList.size() != 0 && comp < citasList.size()) {
                 if (complimentList.get(comp).getId_cita() == selectedIDCita) {
                     Cita c = complimentList.get(cita);
                     complimentDAO.actualizarEstado(c, "RECHAZADA");
-                    uwu=true;
+                    uwu = true;
                     System.out.println(uwu);
                 }
             }
+
             System.out.println(uwu);
-            if(uwu){
+            if (uwu) {
                 i = selectedIDCita;
             }
             if (citasList.get(cita).getId_cita() == i + 1) {
