@@ -16,10 +16,10 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class Autorizar extends javax.swing.JPanel {
-    
+
     CitaDAO citaDAO = new CitaDAO();
     ComplimentDAO complimentDAO = new ComplimentDAO();
-    
+
     int selectedIDCita = 0;
 
     public Autorizar() {
@@ -28,20 +28,20 @@ public class Autorizar extends javax.swing.JPanel {
     }
 
     public void showUsersinTable() {
-        
+
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-        Object[][] citasMatrix = new Object[citasList.size()+complimentList.size()][9];
-        
+        Object[][] citasMatrix = new Object[citasList.size() + complimentList.size()][9];
+
         int cita = 0;
         int comp = 0;
         String estado = "none";
         String motivo = "otro";
-        
+
         for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
 
-            if (citasList.get(cita).getId_cita()==i+1) {
-                
+            if (citasList.get(cita).getId_cita() == i + 1) {
+
                 if (citasList.get(cita).getEstado() == 0) {
                     estado = "Pendiente";
                 } else if (citasList.get(cita).getEstado() == 1) {
@@ -94,10 +94,10 @@ public class Autorizar extends javax.swing.JPanel {
                 citasMatrix[i][6] = citasList.get(cita).getSucursal().getLugar_s();
                 citasMatrix[i][7] = motivo;
                 citasMatrix[i][8] = estado;
-                
+
                 cita++;
-            }else{
-                
+            } else {
+
                 if (complimentList.get(comp).getEstado() == 0) {
                     estado = "Pendiente";
                 } else if (complimentList.get(comp).getEstado() == 1) {
@@ -441,29 +441,53 @@ public class Autorizar extends javax.swing.JPanel {
 
     private void efectuadaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efectuadaBActionPerformed
         // TODO add your handling code here:
+        showUsersinTable();
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         int cita = 0;
         int comp = 0;
-        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
-            if (citasList.get(cita).getId_cita()==selectedIDCita){
-                Cita c = citasList.get(cita);
-                citaDAO.actualizarEstado(c, "CUMPLIDA");
-                complimentDAO.registrar(c);
-                citaDAO.eliminar(c);
-                showUsersinTable();
-                break;
-            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
-                Cita c = complimentList.get(cita);
-                complimentDAO.actualizarEstado(c, "CUMPLIDA");
-                showUsersinTable();
-                break;
-            }else if (citasList.get(cita).getId_cita()==i+1) {
+        boolean uwu = false;
+        for (int i = 0; i < selectedIDCita + complimentList.size(); i++) {
+            showUsersinTable();
+            System.out.println("cita:" + cita);
+            System.out.println("compliment:" + comp);
+            System.out.println("i:" + i);
+            System.out.println("selectedIDCita:" + selectedIDCita);
+            try {
+                if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                    Cita c = citasList.get(cita);
+                    citaDAO.actualizarEstado(c, "CUMPLIDA");
+                    complimentDAO.registrar(c);
+                    citaDAO.eliminar(c);
+                    citasList = (ArrayList<Cita>) citaDAO.obtener();
+                    complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+                    uwu=true;
+                }
+            } catch (Exception e) {
+
+            }
+            if(uwu){
+                i = selectedIDCita;
+            }
+            try {
+                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                    Cita c = complimentList.get(cita);
+                    complimentDAO.actualizarEstado(c, "CUMPLIDA");
+                    uwu=true;
+                }
+            } catch (Exception d) {
+                
+            }
+            if(uwu){
+                i = selectedIDCita;
+            }
+            if (citasList.get(cita).getId_cita() == i + 1) {
                 cita++;
-            }else{
+            } else {
                 comp++;
             }
         }
+        showUsersinTable();
     }//GEN-LAST:event_efectuadaBActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
@@ -471,55 +495,105 @@ public class Autorizar extends javax.swing.JPanel {
     }
 
     private void aprobarBActionPerformed(java.awt.event.ActionEvent evt) {
+        showUsersinTable();
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         int cita = 0;
         int comp = 0;
-        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
-            if (citasList.get(cita).getId_cita()==selectedIDCita){
-                Cita c = citasList.get(cita);
-                citaDAO.actualizarEstado(c, "APROBADA");
-                showUsersinTable();
-                break;
-            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
-                Cita c = complimentList.get(cita);
-                complimentDAO.actualizarEstado(c, "APROBADA");
-                citaDAO.deComplimentACita(c);
-                complimentDAO.eliminar(c);
-                showUsersinTable();
-                break;
-            }else if (citasList.get(cita).getId_cita()==i+1) {
+        boolean uwu=false;
+        for (int i = 0; i < selectedIDCita + complimentList.size(); i++) {
+            showUsersinTable();
+            System.out.println("cita:" + cita);
+            System.out.println("compliment:" + comp);
+            System.out.println("i:" + i);
+            System.out.println("selectedIDCita:" + selectedIDCita);
+            try {
+                if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                    Cita c = citasList.get(cita);
+                    citaDAO.actualizarEstado(c, "APROBADA");
+                    uwu=true;
+                }
+            } catch (Exception e) {
+
+            }
+            if(uwu){
+                i = selectedIDCita;
+            }
+            try {
+                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                    Cita c = complimentList.get(cita);
+                    complimentDAO.actualizarEstado(c, "APROBADA");
+                    citaDAO.deComplimentACita(c);
+                    complimentDAO.eliminar(c);
+                    citasList = (ArrayList<Cita>) citaDAO.obtener();
+                    complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+                    uwu=true;
+                }
+            } catch (Exception d) {
+                
+            }
+            if(uwu){
+                i = selectedIDCita;
+            }
+            if (citasList.get(cita).getId_cita() == i + 1) {
                 cita++;
-            }else{
+            } else {
                 comp++;
             }
         }
+        showUsersinTable();
     }
 
     private void rechazarBActionPerformed(java.awt.event.ActionEvent evt) {
+        showUsersinTable();
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         int cita = 0;
         int comp = 0;
-        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
-            if (citasList.get(cita).getId_cita()==selectedIDCita){
-                Cita c = citasList.get(cita);
-                citaDAO.actualizarEstado(c, "RECHAZADA");
-                complimentDAO.registrar(c);
-                citaDAO.eliminar(c);
-                showUsersinTable();
-                break;
-            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
-                Cita c = complimentList.get(cita);
-                complimentDAO.actualizarEstado(c, "RECHAZADA");
-                showUsersinTable();
-                break;
-            }else if (citasList.get(cita).getId_cita()==i+1) {
+        boolean uwu = false;
+        for (int i = 0; i < selectedIDCita; i++) {
+            showUsersinTable();
+            System.out.println("cita:" + cita);
+            System.out.println("compliment:" + comp);
+            System.out.println("i:" + i);
+            System.out.println("selectedIDCita:" + selectedIDCita);
+            if(citasList.size()!=0) {
+                if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                    Cita c = citasList.get(cita);
+                    citaDAO.actualizarEstado(c, "RECHAZADA");
+                    complimentDAO.registrar(c);
+                    citaDAO.eliminar(c);
+                    citasList = (ArrayList<Cita>) citaDAO.obtener();
+                    complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+                    uwu=true;
+                    System.out.println(uwu);
+                }
+            }
+            System.out.println(uwu);
+            if(uwu){
+                i = selectedIDCita;
+            }
+            try {
+                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                    Cita c = complimentList.get(cita);
+                    complimentDAO.actualizarEstado(c, "RECHAZADA");
+                    uwu=true;
+                    System.out.println(uwu);
+                }
+            } catch (Exception d) {
+                
+            }
+            System.out.println(uwu);
+            if(uwu){
+                i = selectedIDCita;
+            }
+            if (citasList.get(cita).getId_cita() == i + 1) {
                 cita++;
-            }else{
+            } else {
                 comp++;
             }
         }
+        showUsersinTable();
     }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {

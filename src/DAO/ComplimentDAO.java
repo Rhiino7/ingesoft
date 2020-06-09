@@ -32,8 +32,8 @@ public class ComplimentDAO {
         boolean registrar = false;
         Statement stm = null;
         Connection con = null;
-
-        String sql = "INSERT INTO COMPLIMENT values('" + complimentList.size()+1 + "','" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        int a = complimentList.size()+1;
+        String sql = "INSERT INTO COMPLIMENT values('" + a + "','" + c.getId_cita() + "','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
