@@ -60,7 +60,7 @@ public class ComplimentDAO {
 
         //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
         //Ahora si tiene ID :)
-        String sql = "SELECT * FROM COMPLIMENT ORDER BY ID_COMPLIMENT";
+        String sql = "SELECT * FROM COMPLIMENT ORDER BY ID_APPOINTMENT";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -75,24 +75,24 @@ public class ComplimentDAO {
 
                 Cita c = new Cita();
 
-                c.setId_cita(rs.getInt(1));
+                c.setId_cita(rs.getInt(2));
 
-                int sID = rs.getInt(2);
+                int sID = rs.getInt(3);
                 for (Sucursal s : sucursales){
                     if (s.getId_sucursal() == sID) c.setSucursal(s);
                 }
 
-                int uID = rs.getInt(3);
+                int uID = rs.getInt(4);
                 for (Usuario u : usuarios){
                     if (u.getIdentificacion() == uID) c.setUsuario(u);
                 }
 
-                c.setFecha(LocalDate.parse(rs.getString(4)));
+                c.setFecha(LocalDate.parse(rs.getString(5)));
 
-                String[] hora = rs.getString(5).split(":");
+                String[] hora = rs.getString(6).split(":");
                 c.setHora(LocalTime.of(Integer.parseInt(hora[0]), Integer.parseInt(hora[1])));
-                c.setMotivo(rs.getInt(6));
-                c.setEstado(rs.getInt(7));
+                c.setMotivo(rs.getInt(7));
+                c.setEstado(rs.getInt(8));
                 listaCita.add(c);
             }
             stm.close();
@@ -110,11 +110,11 @@ public class ComplimentDAO {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
-        String sql = "UPDATE COMPLIMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
+        String sql = "UPDATE COMPLIMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "',ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
-                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();
-        try {
+                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
+        try {System.out.println(sql);
             co = Conexion.conectar();
             stm = co.createStatement();
             stm.execute(sql);
@@ -151,13 +151,13 @@ public class ComplimentDAO {
             case "PENDIENTE":
                 c.setEstado(0);
                 this.actualizar(c);
-                cit.registrar(c);
+                cit.deComplimentACita(c);
                 this.eliminar(c);
                 break;
             case "APROBADA":
                 c.setEstado(1);
                 this.actualizar(c);
-                cit.registrar(c);
+                cit.deComplimentACita(c);
                 this.eliminar(c);
                 break;
             case "CANCELADA":

@@ -16,11 +16,10 @@ import javax.swing.*;
 import javax.swing.table.*;
 
 public class Autorizar extends javax.swing.JPanel {
-
+    
     CitaDAO citaDAO = new CitaDAO();
     ComplimentDAO complimentDAO = new ComplimentDAO();
-    ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
-    ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+    
     int selectedIDCita = 0;
 
     public Autorizar() {
@@ -29,29 +28,34 @@ public class Autorizar extends javax.swing.JPanel {
     }
 
     public void showUsersinTable() {
-        Object[][] citasMatrix = new Object[citasList.size()][9];
+        
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        Object[][] citasMatrix = new Object[citasList.size()+complimentList.size()][9];
+        
+        int cita = 0;
+        int comp = 0;
+        String estado = "none";
+        String motivo = "otro";
+        
+        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
 
-        Cita citaEx;
+            if (citasList.get(cita).getId_cita()==i+1) {
+                
+                if (citasList.get(cita).getEstado() == 0) {
+                    estado = "Pendiente";
+                } else if (citasList.get(cita).getEstado() == 1) {
+                    estado = "Aprobada";
+                } else if (citasList.get(cita).getEstado() == 2) {
+                    estado = "Cancelada";
+                } else if (citasList.get(cita).getEstado() == 3) {
+                    estado = "Rechazada";
+                } else if (citasList.get(cita).getEstado() == 4) {
+                    estado = "Cumplida";
+                }
 
-        for (int i = 0; i < citasList.size(); i++) {
-            citaEx = citasList.get(i);
-            String estado = "none";
-            String motivo = "otro";
-            //estados
-            if (citasList.get(i).getEstado() == 0) {
-                estado = "Pendiente";
-            } else if (citasList.get(i).getEstado() == 1) {
-                estado = "Aprobada";
-            } else if (citasList.get(i).getEstado() == 2) {
-                estado = "Cancelada";
-            } else if (citasList.get(i).getEstado() == 3) {
-                estado = "Rechazada";
-            } else if (citasList.get(i).getEstado() == 4) {
-                estado = "Cumplida";
-            }
-
-            //motivo
-            /*
+                //motivo
+                /*
             0.Creacion cuenta bancaria
             1.creditos de vivienda
             2.Cambio o perdida de tarjeta
@@ -61,35 +65,93 @@ public class Autorizar extends javax.swing.JPanel {
             6.Productos Complementarios
             7.Asesoria
             8.Otros*/
-            if (citasList.get(i).getMotivo() == 0) {
-                motivo = "Creacion cuenta bancaria";
-            } else if (citasList.get(i).getMotivo() == 1) {
-                motivo = "Creditos de vivienda";
-            } else if (citasList.get(i).getMotivo() == 2) {
-                motivo = "Cambio o perdida de tarjeta";
-            } else if (citasList.get(i).getMotivo() == 3) {
-                motivo = "Creditos de Negocio";
-            } else if (citasList.get(i).getMotivo() == 4) {
-                motivo = "Inversiones";
-            } else if (citasList.get(i).getMotivo() == 5) {
-                motivo = "Seguros";
-            } else if (citasList.get(i).getMotivo() == 6) {
-                motivo = "Productos Complementarios";
-            } else if (citasList.get(i).getMotivo() == 7) {
-                motivo = "Asesoria";
-            } else {
-                motivo = "otro";
-            }
+                if (citasList.get(cita).getMotivo() == 0) {
+                    motivo = "Creacion cuenta bancaria";
+                } else if (citasList.get(cita).getMotivo() == 1) {
+                    motivo = "Creditos de vivienda";
+                } else if (citasList.get(cita).getMotivo() == 2) {
+                    motivo = "Cambio o perdida de tarjeta";
+                } else if (citasList.get(cita).getMotivo() == 3) {
+                    motivo = "Creditos de Negocio";
+                } else if (citasList.get(cita).getMotivo() == 4) {
+                    motivo = "Inversiones";
+                } else if (citasList.get(cita).getMotivo() == 5) {
+                    motivo = "Seguros";
+                } else if (citasList.get(cita).getMotivo() == 6) {
+                    motivo = "Productos Complementarios";
+                } else if (citasList.get(cita).getMotivo() == 7) {
+                    motivo = "Asesoria";
+                } else {
+                    motivo = "otro";
+                }
 
-            citasMatrix[i][0] = citasList.get(i).getId_cita();
-            citasMatrix[i][1] = citasList.get(i).getUsuario().getNombre();
-            citasMatrix[i][2] = citasList.get(i).getUsuario().getApellido();
-            citasMatrix[i][3] = citasList.get(i).getUsuario().getIdentificacion();
-            citasMatrix[i][4] = citasList.get(i).getFecha();
-            citasMatrix[i][5] = citasList.get(i).getHora();
-            citasMatrix[i][6] = citasList.get(i).getSucursal().getLugar_s();
-            citasMatrix[i][7] = motivo;
-            citasMatrix[i][8] = estado;
+                citasMatrix[i][0] = citasList.get(cita).getId_cita();
+                citasMatrix[i][1] = citasList.get(cita).getUsuario().getNombre();
+                citasMatrix[i][2] = citasList.get(cita).getUsuario().getApellido();
+                citasMatrix[i][3] = citasList.get(cita).getUsuario().getIdentificacion();
+                citasMatrix[i][4] = citasList.get(cita).getFecha();
+                citasMatrix[i][5] = citasList.get(cita).getHora();
+                citasMatrix[i][6] = citasList.get(cita).getSucursal().getLugar_s();
+                citasMatrix[i][7] = motivo;
+                citasMatrix[i][8] = estado;
+                
+                cita++;
+            }else{
+                
+                if (complimentList.get(comp).getEstado() == 0) {
+                    estado = "Pendiente";
+                } else if (complimentList.get(comp).getEstado() == 1) {
+                    estado = "Aprobada";
+                } else if (complimentList.get(comp).getEstado() == 2) {
+                    estado = "Cancelada";
+                } else if (complimentList.get(comp).getEstado() == 3) {
+                    estado = "Rechazada";
+                } else if (complimentList.get(comp).getEstado() == 4) {
+                    estado = "Cumplida";
+                }
+
+                //motivo
+                /*
+            0.Creacion cuenta bancaria
+            1.creditos de vivienda
+            2.Cambio o perdida de tarjeta
+            3.Creditos de Negocio
+            4.Inversiones
+            5.Seguros
+            6.Productos Complementarios
+            7.Asesoria
+            8.Otros*/
+                if (complimentList.get(comp).getMotivo() == 0) {
+                    motivo = "Creacion cuenta bancaria";
+                } else if (complimentList.get(comp).getMotivo() == 1) {
+                    motivo = "Creditos de vivienda";
+                } else if (complimentList.get(comp).getMotivo() == 2) {
+                    motivo = "Cambio o perdida de tarjeta";
+                } else if (complimentList.get(comp).getMotivo() == 3) {
+                    motivo = "Creditos de Negocio";
+                } else if (complimentList.get(comp).getMotivo() == 4) {
+                    motivo = "Inversiones";
+                } else if (complimentList.get(comp).getMotivo() == 5) {
+                    motivo = "Seguros";
+                } else if (complimentList.get(comp).getMotivo() == 6) {
+                    motivo = "Productos Complementarios";
+                } else if (complimentList.get(comp).getMotivo() == 7) {
+                    motivo = "Asesoria";
+                } else {
+                    motivo = "otro";
+                }
+
+                citasMatrix[i][0] = complimentList.get(comp).getId_cita();
+                citasMatrix[i][1] = complimentList.get(comp).getUsuario().getNombre();
+                citasMatrix[i][2] = complimentList.get(comp).getUsuario().getApellido();
+                citasMatrix[i][3] = complimentList.get(comp).getUsuario().getIdentificacion();
+                citasMatrix[i][4] = complimentList.get(comp).getFecha();
+                citasMatrix[i][5] = complimentList.get(comp).getHora();
+                citasMatrix[i][6] = complimentList.get(comp).getSucursal().getLugar_s();
+                citasMatrix[i][7] = motivo;
+                citasMatrix[i][8] = estado;
+                comp++;
+            }
         }
 
         jTable1.setModel(
@@ -379,34 +441,85 @@ public class Autorizar extends javax.swing.JPanel {
 
     private void efectuadaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efectuadaBActionPerformed
         // TODO add your handling code here:
-        Cita c = citasList.get(selectedIDCita - 1);
-        citaDAO.actualizarEstado(c, "CUMPLIDA");
-        showUsersinTable();
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        int cita = 0;
+        int comp = 0;
+        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
+            if (citasList.get(cita).getId_cita()==selectedIDCita){
+                Cita c = citasList.get(cita);
+                citaDAO.actualizarEstado(c, "CUMPLIDA");
+                complimentDAO.registrar(c);
+                citaDAO.eliminar(c);
+                showUsersinTable();
+                break;
+            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
+                Cita c = complimentList.get(cita);
+                complimentDAO.actualizarEstado(c, "CUMPLIDA");
+                showUsersinTable();
+                break;
+            }else if (citasList.get(cita).getId_cita()==i+1) {
+                cita++;
+            }else{
+                comp++;
+            }
+        }
     }//GEN-LAST:event_efectuadaBActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
-        
+
     }
 
     private void aprobarBActionPerformed(java.awt.event.ActionEvent evt) {
-        try{
-            Cita c = citasList.get(selectedIDCita - 1);
-            citaDAO.actualizarEstado(c, "APROBADA");
-            showUsersinTable();
-        }catch(Exception e){
-            for (Cita c : complimentList){
-                //@ToDo
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        int cita = 0;
+        int comp = 0;
+        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
+            if (citasList.get(cita).getId_cita()==selectedIDCita){
+                Cita c = citasList.get(cita);
+                citaDAO.actualizarEstado(c, "APROBADA");
+                showUsersinTable();
+                break;
+            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
+                Cita c = complimentList.get(cita);
+                complimentDAO.actualizarEstado(c, "APROBADA");
+                citaDAO.deComplimentACita(c);
+                complimentDAO.eliminar(c);
+                showUsersinTable();
+                break;
+            }else if (citasList.get(cita).getId_cita()==i+1) {
+                cita++;
+            }else{
+                comp++;
             }
-            Cita c = complimentList.get(selectedIDCita - 1);
-            citaDAO.actualizarEstado(c, "APROBADA");
-            showUsersinTable();
         }
     }
 
     private void rechazarBActionPerformed(java.awt.event.ActionEvent evt) {
-        Cita c = citasList.get(selectedIDCita - 1);
-        citaDAO.actualizarEstado(c, "RECHAZADA");
-        showUsersinTable();
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        int cita = 0;
+        int comp = 0;
+        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
+            if (citasList.get(cita).getId_cita()==selectedIDCita){
+                Cita c = citasList.get(cita);
+                citaDAO.actualizarEstado(c, "RECHAZADA");
+                complimentDAO.registrar(c);
+                citaDAO.eliminar(c);
+                showUsersinTable();
+                break;
+            }else if (complimentList.get(comp).getId_cita()==selectedIDCita) {
+                Cita c = complimentList.get(cita);
+                complimentDAO.actualizarEstado(c, "RECHAZADA");
+                showUsersinTable();
+                break;
+            }else if (citasList.get(cita).getId_cita()==i+1) {
+                cita++;
+            }else{
+                comp++;
+            }
+        }
     }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {

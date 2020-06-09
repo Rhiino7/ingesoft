@@ -17,6 +17,33 @@ import DAO.ComplimentDAO.*;
 
 public class CitaDAO {
 
+    public boolean deComplimentACita (Cita c){
+        CitaDAO citaDAO = new CitaDAO();
+        ComplimentDAO complimentDAO = new ComplimentDAO();
+        
+        boolean registrar = false;
+        Statement stm = null;
+        Connection con = null;
+        
+        String sql = "INSERT INTO APPOINTMENT values('"+ c.getId_cita() +"','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+                + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
+
+        System.out.println(sql);
+
+        try {
+            con = Conexion.conectar();
+            stm = con.createStatement();
+            stm.execute(sql);
+            registrar = true;
+            stm.close();
+            con.close();
+        } catch (SQLException e) {
+            System.out.println("Error: metodo registrar");
+            e.printStackTrace();
+        }
+        return registrar;
+    }
+    
     public boolean registrar(Cita c){
         
         CitaDAO citaDAO = new CitaDAO();
@@ -27,8 +54,9 @@ public class CitaDAO {
         boolean registrar = false;
         Statement stm = null;
         Connection con = null;
-
-        String sql = "INSERT INTO APPOINTMENT values('"+ citasList.size()+1 +"','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
+        int a = citasList.size() + complimentList.size()+1;
+        
+        String sql = "INSERT INTO APPOINTMENT values('"+ a +"','" + c.getSucursal().getId_sucursal() + "','" + c.getUsuario().getIdentificacion()
                 + "','" + c.getFecha().toString() + "','" + c.getHora().toString() + "','" + c.getMotivo() + "','" + c.getEstado() + "');";
 
         System.out.println(sql);
@@ -55,7 +83,7 @@ public class CitaDAO {
 
         //String sql = "SELECT * FROM CITA ORDER BY ID_CITA"; No tiene ID XD
         //Ahora si tiene ID :)
-        String sql = "SELECT * FROM APPOINTMENT ORDER BY DATE";
+        String sql = "SELECT * FROM APPOINTMENT ORDER BY ID_APPOINTMENT";
 
         List<Cita> listaCita = new ArrayList<>();
 
@@ -105,10 +133,11 @@ public class CitaDAO {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
-        String sql = "UPDATE APPOINTMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
+        String sql = "UPDATE APPOINTMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "',ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
-                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();
+                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
+        System.out.println(sql);
         try {
             co = Conexion.conectar();
             stm = co.createStatement();
