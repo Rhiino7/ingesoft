@@ -12,6 +12,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.table.*;
 
@@ -200,18 +201,42 @@ public class Autorizar extends javax.swing.JPanel {
     }
 
     public void searchInTable() {
-
+        RowFilter<TableModel, Object> idFilter = RowFilter.regexFilter("", 3);
+        if (!identificacionTextField.getText().equals("")){
+            idFilter = RowFilter.regexFilter(identificacionTextField.getText(), 3);
+        }
+        
+        RowFilter<TableModel, Object> fechaFilter = RowFilter.regexFilter("", 4);
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        if (jDateChooser1.getDate() != null){
+            fechaFilter = RowFilter.regexFilter(f.format(jDateChooser1.getDate()), 4);
+        }
+        
+        RowFilter<TableModel, Object> horaFilter = RowFilter.regexFilter("", 5);
+        if (!horaS.getSelectedItem().toString().equals(" ")){
+            horaFilter = RowFilter.regexFilter(horaS.getSelectedItem().toString(), 5);
+        }
+        
+        RowFilter<TableModel, Object> aprobadaFilter = RowFilter.regexFilter("", 8);
+        if (jCheckBox1.isSelected()){
+            aprobadaFilter = RowFilter.regexFilter("[^(Aprobada)]", 8);
+        }
+        
+        List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
+        
+        filters.add(idFilter);
+        filters.add(fechaFilter);
+        filters.add(horaFilter);
+        filters.add(aprobadaFilter);
+        
+        RowFilter<TableModel, Object>  compoundRowFilter = RowFilter.andFilter(filters);
+        
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
-        SimpleDateFormat hourToString = new SimpleDateFormat("HH:mm");
-        SimpleDateFormat dateToString = new SimpleDateFormat("yyyy-MM-dd");
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
+        
+        tr.setRowFilter(compoundRowFilter);
+
         jTable1.setRowSorter(tr);
-
-//        String textDate = dateToString.format(jDateChooser1.getDate());
-//        String textHour = hourToString.format(jSpinner1.getValue());
-        String textID = identificacionTextField.getText();
-
-        tr.setRowFilter(RowFilter.regexFilter(textID));
     }
 
     /**
@@ -233,16 +258,13 @@ public class Autorizar extends javax.swing.JPanel {
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        Date date = new Date();
-        SpinnerDateModel sm =
-        new SpinnerDateModel (date, null, null, Calendar.HOUR_OF_DAY);
-        jSpinner1 = new javax.swing.JSpinner(sm);
         aprobarB = new javax.swing.JButton();
         rechazarB = new javax.swing.JButton();
         searchButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         efectuadaB = new javax.swing.JButton();
+        horaS = new javax.swing.JComboBox<>();
 
         setPreferredSize(new java.awt.Dimension(650, 500));
 
@@ -307,12 +329,6 @@ public class Autorizar extends javax.swing.JPanel {
         jLabel6.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel6.setText("Hora");
 
-        JSpinner.DateEditor de = new JSpinner.DateEditor(jSpinner1, "HH:mm");
-        jSpinner1.setEditor(de);
-        jSpinner1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jSpinner1.setMinimumSize(new java.awt.Dimension(30, 30));
-        jSpinner1.setPreferredSize(new java.awt.Dimension(31, 30));
-
         aprobarB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         aprobarB.setText("Aprobar");
         aprobarB.addActionListener(new java.awt.event.ActionListener() {
@@ -361,6 +377,14 @@ public class Autorizar extends javax.swing.JPanel {
             }
         });
 
+        horaS.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        horaS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00" }));
+        horaS.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                horaSActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -378,29 +402,33 @@ public class Autorizar extends javax.swing.JPanel {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(50, 50, 50)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel3)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(identificacionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel5)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(jCheckBox1)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(identificacionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(horaS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGap(63, 63, 63)
+                                        .addComponent(jCheckBox1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
                                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(100, 100, 100)))))
-                .addContainerGap(85, Short.MAX_VALUE))
+                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -429,13 +457,13 @@ public class Autorizar extends javax.swing.JPanel {
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                    .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jSpinner1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(horaS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -499,6 +527,10 @@ public class Autorizar extends javax.swing.JPanel {
         complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         showUsersinTable();
     }//GEN-LAST:event_efectuadaBActionPerformed
+
+    private void horaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_horaSActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -633,6 +665,7 @@ public class Autorizar extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton aprobarB;
     private javax.swing.JButton efectuadaB;
+    private javax.swing.JComboBox<String> horaS;
     private javax.swing.JTextField identificacionTextField;
     private javax.swing.JCheckBox jCheckBox1;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -643,7 +676,6 @@ public class Autorizar extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JSpinner jSpinner1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JButton rechazarB;
