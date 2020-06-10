@@ -202,38 +202,38 @@ public class Autorizar extends javax.swing.JPanel {
 
     public void searchInTable() {
         RowFilter<TableModel, Object> idFilter = RowFilter.regexFilter("", 3);
-        if (!identificacionTextField.getText().equals("")){
+        if (!identificacionTextField.getText().equals("")) {
             idFilter = RowFilter.regexFilter(identificacionTextField.getText(), 3);
         }
-        
+
         RowFilter<TableModel, Object> fechaFilter = RowFilter.regexFilter("", 4);
         DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        if (jDateChooser1.getDate() != null){
+        if (jDateChooser1.getDate() != null) {
             fechaFilter = RowFilter.regexFilter(f.format(jDateChooser1.getDate()), 4);
         }
-        
+
         RowFilter<TableModel, Object> horaFilter = RowFilter.regexFilter("", 5);
-        if (!horaS.getSelectedItem().toString().equals(" ")){
+        if (!horaS.getSelectedItem().toString().equals(" ")) {
             horaFilter = RowFilter.regexFilter(horaS.getSelectedItem().toString(), 5);
         }
-        
+
         RowFilter<TableModel, Object> aprobadaFilter = RowFilter.regexFilter("", 8);
-        if (jCheckBox1.isSelected()){
+        if (jCheckBox1.isSelected()) {
             aprobadaFilter = RowFilter.regexFilter("[^(Aprobada)]", 8);
         }
-        
+
         List<RowFilter<TableModel, Object>> filters = new ArrayList<RowFilter<TableModel, Object>>();
-        
+
         filters.add(idFilter);
         filters.add(fechaFilter);
         filters.add(horaFilter);
         filters.add(aprobadaFilter);
-        
-        RowFilter<TableModel, Object>  compoundRowFilter = RowFilter.andFilter(filters);
-        
+
+        RowFilter<TableModel, Object> compoundRowFilter = RowFilter.andFilter(filters);
+
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
-        
+
         tr.setRowFilter(compoundRowFilter);
 
         jTable1.setRowSorter(tr);
@@ -510,10 +510,15 @@ public class Autorizar extends javax.swing.JPanel {
             if (uwu) {
                 i = selectedIDCita;
             } else {
-                if (citasList.get(cita).getId_cita() == i + 1) {
-                    cita++;
-                } else {
-                    comp++;
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == i + 1) {
+                        cita++;
+                    }
+                }
+                if (complimentList.size() != 0 && comp < complimentList.size()) {
+                    if(complimentList.get(comp).getId_cita() == i + 1){
+                        comp++;
+                    }
                 }
             }
         }
@@ -553,7 +558,7 @@ public class Autorizar extends javax.swing.JPanel {
                     citaDAO.actualizarEstado(c, "APROBADA");
                     uwu = true;
                     System.out.println(uwu);
-                    
+
                 }
             }
             if (complimentList.size() != 0 && comp < complimentList.size()) {
@@ -569,10 +574,15 @@ public class Autorizar extends javax.swing.JPanel {
             if (uwu) {
                 i = selectedIDCita;
             } else {
-                if (citasList.get(cita).getId_cita() == i + 1) {
-                    cita++;
-                } else {
-                    comp++;
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == i + 1) {
+                        cita++;
+                    }
+                }
+                if (complimentList.size() != 0 && comp < complimentList.size()) {
+                    if(complimentList.get(comp).getId_cita() == i + 1){
+                        comp++;
+                    }
                 }
             }
         }
@@ -619,10 +629,15 @@ public class Autorizar extends javax.swing.JPanel {
             if (uwu) {
                 i = selectedIDCita;
             } else {
-                if (citasList.get(cita).getId_cita() == i + 1) {
-                    cita++;
-                } else {
-                    comp++;
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == i + 1) {
+                        cita++;
+                    }
+                }
+                if (complimentList.size() != 0 && comp < complimentList.size()) {
+                    if(complimentList.get(comp).getId_cita() == i + 1){
+                        comp++;
+                    }
                 }
             }
         }
