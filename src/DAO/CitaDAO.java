@@ -133,7 +133,7 @@ public class CitaDAO {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
-        String sql = "UPDATE APPOINTMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "',ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
+        String sql = "UPDATE APPOINTMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
                 + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";

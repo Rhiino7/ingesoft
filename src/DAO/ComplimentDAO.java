@@ -110,7 +110,7 @@ public class ComplimentDAO {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
-        String sql = "UPDATE COMPLIMENT SET ID_APPOINTMENT='"+ c.getId_cita() + "',ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
+        String sql = "UPDATE COMPLIMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
                 + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
@@ -150,13 +150,11 @@ public class ComplimentDAO {
         switch(e) {
             case "PENDIENTE":
                 c.setEstado(0);
-                this.actualizar(c);
                 cit.deComplimentACita(c);
                 this.eliminar(c);
                 break;
             case "APROBADA":
                 c.setEstado(1);
-                this.actualizar(c);
                 cit.deComplimentACita(c);
                 this.eliminar(c);
                 break;
@@ -183,7 +181,7 @@ public class ComplimentDAO {
         Connection co = null;
         Statement stm = null;
         boolean eliminar = false;
-        String sql = "DELETE FROM COMPLIMENT WHERE ID_COMPLIMENT=" + c.getId_cita();
+        String sql = "DELETE FROM COMPLIMENT WHERE ID_APPOINTMENT=" + c.getId_cita();
         try {
             co = Conexion.conectar();
             stm = co.createStatement();
