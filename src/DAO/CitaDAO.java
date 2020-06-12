@@ -218,6 +218,11 @@ public class CitaDAO {
                 com.registrar(c);
                 this.eliminar(c);
                 break;
+            case "NO CUMPLIDA":
+                c.setEstado(5);
+                com.registrar(c);
+                this.eliminar(c);
+                break;
             default:
                 System.out.println("Estado invalido");
                 return false;

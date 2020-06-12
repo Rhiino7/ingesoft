@@ -170,6 +170,10 @@ public class ComplimentDAO {
                 c.setEstado(4);
                 this.actualizar(c);
                 break;
+            case "NO CUMPLIDA":
+                c.setEstado(5);
+                this.actualizar(c);
+                break;
             default:
                 System.out.println("Estado invalido");
                 return false;

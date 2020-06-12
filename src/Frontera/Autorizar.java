@@ -57,6 +57,8 @@ public class Autorizar extends javax.swing.JPanel {
                         estado = "Rechazada";
                     } else if (citasList.get(cita).getEstado() == 4) {
                         estado = "Cumplida";
+                    }else if (citasList.get(cita).getEstado() == 5){
+                        estado = "No cumplida";
                     }
 
                     //motivo
@@ -116,6 +118,8 @@ public class Autorizar extends javax.swing.JPanel {
                         estado = "Rechazada";
                     } else if (complimentList.get(comp).getEstado() == 4) {
                         estado = "Cumplida";
+                    }else if (complimentList.get(comp).getEstado() == 5) {
+                        estado = "No cumplida";
                     }
 
                     //motivo
@@ -263,8 +267,9 @@ public class Autorizar extends javax.swing.JPanel {
         searchButton = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        efectuadaB = new javax.swing.JButton();
+        noEfectuadaB = new javax.swing.JButton();
         horaS = new javax.swing.JComboBox<>();
+        efectuadaB = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(650, 500));
 
@@ -368,12 +373,12 @@ public class Autorizar extends javax.swing.JPanel {
         jLabel7.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel7.setText("Buscar");
 
-        efectuadaB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        efectuadaB.setText("Efectuada");
-        efectuadaB.setToolTipText("Cambia el estado de la cita a efectuada/realiozada con exito");
-        efectuadaB.addActionListener(new java.awt.event.ActionListener() {
+        noEfectuadaB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        noEfectuadaB.setText("No Efectuada");
+        noEfectuadaB.setToolTipText("Cambia el estado de la cita a efectuada/realiozada con exito");
+        noEfectuadaB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                efectuadaBActionPerformed(evt);
+                noEfectuadaBActionPerformed(evt);
             }
         });
 
@@ -385,50 +390,19 @@ public class Autorizar extends javax.swing.JPanel {
             }
         });
 
+        efectuadaB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        efectuadaB.setText("Efectuada");
+        efectuadaB.setToolTipText("Cambia el estado de la cita a efectuada/realiozada con exito");
+        efectuadaB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                efectuadaBActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGap(166, 166, 166)
-                        .addComponent(efectuadaB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(aprobarB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rechazarB, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(50, 50, 50)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(identificacionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(horaS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel5)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addGap(63, 63, 63)
-                                        .addComponent(jCheckBox1)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(100, 100, 100)))))
-                .addContainerGap(88, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,6 +413,46 @@ public class Autorizar extends javax.swing.JPanel {
                             .addComponent(jLabel2))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(efectuadaB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(noEfectuadaB)
+                .addGap(8, 8, 8)
+                .addComponent(aprobarB, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(rechazarB, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(identificacionTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(horaS, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(63, 63, 63)
+                                .addComponent(jCheckBox1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(173, 173, 173)
+                        .addComponent(jLabel7)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 215, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -463,20 +477,83 @@ public class Autorizar extends javax.swing.JPanel {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(horaS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(aprobarB)
-                    .addComponent(efectuadaB)
-                    .addComponent(rechazarB))
+                    .addComponent(noEfectuadaB)
+                    .addComponent(rechazarB)
+                    .addComponent(efectuadaB))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void noEfectuadaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_noEfectuadaBActionPerformed
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        int cita = 0;
+        int comp = 0;
+        boolean uwu = false;
+        for (int i = 0; i < selectedIDCita; i++) {
+            System.out.println("cita:" + cita);
+            System.out.println("compliment:" + comp);
+            System.out.println("i:" + i);
+            System.out.println("selectedIDCita:" + selectedIDCita);
+            if (citasList.size() != 0 && cita < citasList.size()) {
+                if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                    Cita c = citasList.get(cita);
+                    citaDAO.actualizarEstado(c, "NO CUMPLIDA");
+                    citasList = (ArrayList<Cita>) citaDAO.obtener();
+                    complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+                    uwu = true;
+                    System.out.println(uwu);
+                }
+            }
+            if (complimentList.size() != 0 && comp < complimentList.size()) {
+                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                    Cita c = complimentList.get(comp);
+                    complimentDAO.actualizarEstado(c, "NO CUMPLIDA");
+                    uwu = true;
+                    System.out.println(uwu);
+                }
+            }
+
+            System.out.println(uwu);
+            if (uwu) {
+                i = selectedIDCita;
+            } else {
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == i + 1) {
+                        cita++;
+                    }
+                }
+                if (complimentList.size() != 0 && comp < complimentList.size()) {
+                    if (complimentList.get(comp).getId_cita() == i + 1) {
+                        comp++;
+                    }
+                }
+            }
+        }
+        try {
+            //Ponemos a "Dormir" el programa durante los ms que queremos
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        citasList = (ArrayList<Cita>) citaDAO.obtener();
+        complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        showUsersinTable();
+    }//GEN-LAST:event_noEfectuadaBActionPerformed
+
+    private void horaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaSActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_horaSActionPerformed
+
     private void efectuadaBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_efectuadaBActionPerformed
+        // TODO add your handling code here:
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         int cita = 0;
@@ -531,11 +608,8 @@ public class Autorizar extends javax.swing.JPanel {
         citasList = (ArrayList<Cita>) citaDAO.obtener();
         complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         showUsersinTable();
+        
     }//GEN-LAST:event_efectuadaBActionPerformed
-
-    private void horaSActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_horaSActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_horaSActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {
 
@@ -693,6 +767,7 @@ public class Autorizar extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton noEfectuadaB;
     private javax.swing.JButton rechazarB;
     private javax.swing.JButton searchButton;
     // End of variables declaration//GEN-END:variables
