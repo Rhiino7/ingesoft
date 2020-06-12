@@ -516,7 +516,7 @@ public class Autorizar extends javax.swing.JPanel {
                     }
                 }
                 if (complimentList.size() != 0 && comp < complimentList.size()) {
-                    if(complimentList.get(comp).getId_cita() == i + 1){
+                    if (complimentList.get(comp).getId_cita() == i + 1) {
                         comp++;
                     }
                 }
@@ -580,7 +580,7 @@ public class Autorizar extends javax.swing.JPanel {
                     }
                 }
                 if (complimentList.size() != 0 && comp < complimentList.size()) {
-                    if(complimentList.get(comp).getId_cita() == i + 1){
+                    if (complimentList.get(comp).getId_cita() == i + 1) {
                         comp++;
                     }
                 }
@@ -603,53 +603,53 @@ public class Autorizar extends javax.swing.JPanel {
         int cita = 0;
         int comp = 0;
         boolean uwu = false;
-        for (int i = 0; i < selectedIDCita; i++) {
-            System.out.println("cita:" + cita);
-            System.out.println("compliment:" + comp);
-            System.out.println("i:" + i);
-            System.out.println("selectedIDCita:" + selectedIDCita);
-            if (citasList.size() != 0 && cita < citasList.size()) {
-                if (citasList.get(cita).getId_cita() == selectedIDCita) {
-                    Cita c = citasList.get(cita);
-                    citaDAO.actualizarEstado(c, "RECHAZADA");
-                    uwu = true;
-                    System.out.println(uwu);
-                }
-            }
-            if (complimentList.size() != 0 && comp < complimentList.size()) {
-                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
-                    Cita c = complimentList.get(comp);
-                    complimentDAO.actualizarEstado(c, "RECHAZADA");
-                    uwu = true;
-                    System.out.println(uwu);
-                }
-            }
-
-            System.out.println(uwu);
-            if (uwu) {
-                i = selectedIDCita;
-            } else {
+            for (int i = 0; i < selectedIDCita; i++) {
+                System.out.println("cita:" + cita);
+                System.out.println("compliment:" + comp);
+                System.out.println("i:" + i);
+                System.out.println("selectedIDCita:" + selectedIDCita);
                 if (citasList.size() != 0 && cita < citasList.size()) {
-                    if (citasList.get(cita).getId_cita() == i + 1) {
-                        cita++;
+                    if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                        Cita c = citasList.get(cita);
+                        citaDAO.actualizarEstado(c, "RECHAZADA");
+                        uwu = true;
+                        System.out.println(uwu);
                     }
                 }
                 if (complimentList.size() != 0 && comp < complimentList.size()) {
-                    if(complimentList.get(comp).getId_cita() == i + 1){
-                        comp++;
+                    if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                        Cita c = complimentList.get(comp);
+                        complimentDAO.actualizarEstado(c, "RECHAZADA");
+                        uwu = true;
+                        System.out.println(uwu);
+                    }
+                }
+
+                System.out.println(uwu);
+                if (uwu) {
+                    i = selectedIDCita;
+                } else {
+                    if (citasList.size() != 0 && cita < citasList.size()) {
+                        if (citasList.get(cita).getId_cita() == i + 1) {
+                            cita++;
+                        }
+                    }
+                    if (complimentList.size() != 0 && comp < complimentList.size()) {
+                        if (complimentList.get(comp).getId_cita() == i + 1) {
+                            comp++;
+                        }
                     }
                 }
             }
-        }
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        citasList = (ArrayList<Cita>) citaDAO.obtener();
-        complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-        showUsersinTable();
+            try {
+                //Ponemos a "Dormir" el programa durante los ms que queremos
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            citasList = (ArrayList<Cita>) citaDAO.obtener();
+            complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+            showUsersinTable();
     }
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {

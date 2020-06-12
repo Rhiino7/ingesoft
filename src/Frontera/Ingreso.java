@@ -12,7 +12,7 @@ import javax.swing.WindowConstants;
 public class Ingreso extends javax.swing.JPanel {
     
     //Una manera de que se cierre la ventana:
-    private PrincipalFrame principalFrame;
+    public PrincipalFrame principalFrame;
 
     /**
      * Creates new form FirstPanel

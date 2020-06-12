@@ -12,21 +12,27 @@ import DAO.CitaDAO;
 import DAO.ComplimentDAO;
 import DAO.UsuarioDAO;
 import Entidad.Usuario;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
  * @author cdgn2
  */
 public class Citaciones extends javax.swing.JPanel {
-    
+
     CitaDAO citaDAO = new CitaDAO();
     ComplimentDAO complimentDAO = new ComplimentDAO();
     UsuarioDAO udao = new UsuarioDAO();
     private Usuario usuario;
-    
+    int selectedIDCita;
+    //CancelarPopUp cancel = new CancelarPopUp();
+
     public void showUsersinTable() {
-        
+
         List<Usuario> usuarios = udao.obtener();
         for (Usuario u : usuarios) {
             if (u.getUsuario().equals(usuario.getUsuario())) { //No deberian haber dos nombres de usuario iguales
@@ -34,42 +40,40 @@ public class Citaciones extends javax.swing.JPanel {
                 break;
             }
         }
-        
+
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
-        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
-        
-        int citas=0;
-        int j=0;
+
+        int citas = 0;
+        int j = 0;
         for (int i = 0; i < citasList.size(); i++) {
-            if (citasList.get(i).getId_cita() == i + 1 && citasList.get(i).getUsuario().getIdentificacion() == this.usuario.getIdentificacion()) {
+            if (citasList.get(i).getUsuario().getIdentificacion() == this.usuario.getIdentificacion()) {
                 citas++;
             }
         }
-        
-        Object[][] citasMatrix = new Object[citas][5];
 
-        
+        Object[][] citasMatrix = new Object[citas][6];
+
         String estado = "none";
         String motivo = "otro";
 
         for (int i = 0; i < citasList.size(); i++) {
             System.out.println("i: " + i);
-                if (citasList.get(i).getId_cita() == i + 1 && citasList.get(i).getUsuario().getIdentificacion() == this.usuario.getIdentificacion()) {
-                    System.out.println("cita que compara: " + citasList.get(i).getId_cita());
-                    if (citasList.get(i).getEstado() == 0) {
-                        estado = "Pendiente";
-                    } else if (citasList.get(i).getEstado() == 1) {
-                        estado = "Aprobada";
-                    } else if (citasList.get(i).getEstado() == 2) {
-                        estado = "Cancelada";
-                    } else if (citasList.get(i).getEstado() == 3) {
-                        estado = "Rechazada";
-                    } else if (citasList.get(i).getEstado() == 4) {
-                        estado = "Cumplida";
-                    }
+            if (citasList.get(i).getUsuario().getIdentificacion() == this.usuario.getIdentificacion()) {
+                System.out.println("cita que compara: " + citasList.get(i).getId_cita());
+                if (citasList.get(i).getEstado() == 0) {
+                    estado = "Pendiente";
+                } else if (citasList.get(i).getEstado() == 1) {
+                    estado = "Aprobada";
+                } else if (citasList.get(i).getEstado() == 2) {
+                    estado = "Cancelada";
+                } else if (citasList.get(i).getEstado() == 3) {
+                    estado = "Rechazada";
+                } else if (citasList.get(i).getEstado() == 4) {
+                    estado = "Cumplida";
+                }
 
-                    //motivo
-                    /*
+                //motivo
+                /*
             0.Creacion cuenta bancaria
             1.creditos de vivienda
             2.Cambio o perdida de tarjeta
@@ -79,33 +83,35 @@ public class Citaciones extends javax.swing.JPanel {
             6.Productos Complementarios
             7.Asesoria
             8.Otros*/
-                    if (citasList.get(i).getMotivo() == 0) {
-                        motivo = "Creacion cuenta bancaria";
-                    } else if (citasList.get(i).getMotivo() == 1) {
-                        motivo = "Creditos de vivienda";
-                    } else if (citasList.get(i).getMotivo() == 2) {
-                        motivo = "Cambio o perdida de tarjeta";
-                    } else if (citasList.get(i).getMotivo() == 3) {
-                        motivo = "Creditos de Negocio";
-                    } else if (citasList.get(i).getMotivo() == 4) {
-                        motivo = "Inversiones";
-                    } else if (citasList.get(i).getMotivo() == 5) {
-                        motivo = "Seguros";
-                    } else if (citasList.get(i).getMotivo() == 6) {
-                        motivo = "Productos Complementarios";
-                    } else if (citasList.get(i).getMotivo() == 7) {
-                        motivo = "Asesoria";
-                    } else {
-                        motivo = "otro";
-                    }
-
-                    
-                    citasMatrix[j][0] = citasList.get(i).getFecha();
-                    citasMatrix[j][1] = citasList.get(i).getHora();
-                    citasMatrix[j][2] = citasList.get(i).getSucursal().getLugar_s();
-                    citasMatrix[j][3] = motivo;
-                    citasMatrix[j][4] = estado;
-                    j++;
+                if (citasList.get(i).getMotivo() == 0) {
+                    motivo = "Creacion cuenta bancaria";
+                } else if (citasList.get(i).getMotivo() == 1) {
+                    motivo = "Creditos de vivienda";
+                } else if (citasList.get(i).getMotivo() == 2) {
+                    motivo = "Cambio o perdida de tarjeta";
+                } else if (citasList.get(i).getMotivo() == 3) {
+                    motivo = "Creditos de Negocio";
+                } else if (citasList.get(i).getMotivo() == 4) {
+                    motivo = "Inversiones";
+                } else if (citasList.get(i).getMotivo() == 5) {
+                    motivo = "Seguros";
+                } else if (citasList.get(i).getMotivo() == 6) {
+                    motivo = "Productos Complementarios";
+                } else if (citasList.get(i).getMotivo() == 7) {
+                    motivo = "Asesoria";
+                } else {
+                    motivo = "otro";
+                }
+                
+                System.out.println(citasList.get(i).toString());
+                
+                citasMatrix[j][0] = citasList.get(i).getId_cita();
+                citasMatrix[j][1] = citasList.get(i).getFecha();
+                citasMatrix[j][2] = citasList.get(i).getHora();
+                citasMatrix[j][3] = citasList.get(i).getSucursal().getLugar_s();
+                citasMatrix[j][4] = motivo;
+                citasMatrix[j][5] = estado;
+                j++;
 
             }
 
@@ -115,7 +121,7 @@ public class Citaciones extends javax.swing.JPanel {
                 new DefaultTableModel(
                         citasMatrix,
                         new Object[]{
-                            "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                            "ID", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
                         }
                 ));
 
@@ -211,10 +217,15 @@ public class Citaciones extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jButton2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jButton2.setText("Cancelar");
+        jButton2.setText("Cancelar Cita");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
@@ -253,7 +264,59 @@ public class Citaciones extends javax.swing.JPanel {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+
+        int cita = 0;
+        boolean uwu = false;
+        boolean tiempo = false;
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate fecha;
+        fecha = LocalDate.now();
+        fecha = fecha.plusDays(1);
+        
+            for (int i = 0; i < selectedIDCita; i++) {
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                        Cita c = citasList.get(cita);
+                        if(c.getFecha().compareTo(fecha)>0){
+                            citaDAO.actualizarEstado(c, "CANCELADA");
+                            uwu = true;
+                        }else{
+                            JOptionPane.showMessageDialog(jTable1, "Usted solo puede cancelar una cita con un dia de anticipacion", "Cancelacion no efectuada", JOptionPane.ERROR_MESSAGE);
+                            System.out.println("esto solo se deberia imprimir una vez?");
+                            uwu=true;
+                        }
+                    }
+                }
+
+                System.out.println(uwu);
+                if (uwu) {
+                    i = selectedIDCita;
+                } else {
+                    if (citasList.size() != 0 && cita < citasList.size()) {
+                        if (citasList.get(cita).getId_cita() == i + 1) {
+                            cita++;
+                        }
+                    }
+                }
+            }
+            try {
+                //Ponemos a "Dormir" el programa durante los ms que queremos
+                Thread.sleep(1000);
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+            citasList = (ArrayList<Cita>) citaDAO.obtener();
+            showUsersinTable();
+
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int selectedRow = jTable1.getSelectedRow();
+        String idCitaTabla = jTable1.getValueAt(selectedRow, 0).toString();
+        selectedIDCita = Integer.parseInt(idCitaTabla);
+    }//GEN-LAST:event_jTable1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
