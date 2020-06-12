@@ -8,13 +8,13 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InformeFecha extends Informe {
+public class InformeEstado extends Informe {
 
-    private final LocalDate filtro;
+    private final int filtro;
 
-    public InformeFecha(LocalDate filtroFecha) {
+    public InformeEstado(int filtroEstado) {
         this.genFecha = LocalDate.now();
-        this.filtro = filtroFecha;
+        this.filtro = filtroEstado;
         this.citas = new ArrayList<>();
         this.setCitas();
     }
@@ -25,7 +25,7 @@ public class InformeFecha extends Informe {
         citaList.addAll(new ComplimentDAO().obtener());
 
         for (Cita cita : citaList) {
-            if (cita.getFecha() == this.filtro) this.citas.add(cita);
+            if (cita.getEstado() == this.filtro) this.citas.add(cita);
         }
     }
 
@@ -34,9 +34,9 @@ public class InformeFecha extends Informe {
         citas.clear();
 
         for (Cita cita : citaList) {
-            if (cita.getFecha() == this.filtro) this.citas.add(cita);
+            if (cita.getEstado() == this.filtro) this.citas.add(cita);
         }
     }
 
-    public LocalDate getFiltro() { return filtro; }
+    public int getFiltro() { return filtro; }
 }
