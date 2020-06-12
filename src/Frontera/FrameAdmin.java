@@ -36,6 +36,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         autorizarB = new javax.swing.JButton();
         reasignarB = new javax.swing.JButton();
         informeB = new javax.swing.JButton();
+        cerrarSesionB = new javax.swing.JButton();
         principalAdminPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -77,6 +78,17 @@ public class FrameAdmin extends javax.swing.JFrame {
             }
         });
         jToolBar1.add(informeB);
+
+        cerrarSesionB.setText("Cerrar Sesión");
+        cerrarSesionB.setFocusable(false);
+        cerrarSesionB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cerrarSesionB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cerrarSesionB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cerrarSesionBActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(cerrarSesionB);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -136,9 +148,17 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.setVisible(true);
     }//GEN-LAST:event_informeBActionPerformed
 
+    private void cerrarSesionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBActionPerformed
+        this.setVisible(false);
+        PrincipalFrame principalFrame = new PrincipalFrame();
+        principalFrame.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_cerrarSesionBActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton autorizarB;
+    private javax.swing.JButton cerrarSesionB;
     private javax.swing.JButton informeB;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToolBar jToolBar1;
