@@ -62,10 +62,10 @@ public class Usuario{
 
     @Override
     public String toString() {
-        return "nombre: " + nombre
-                + "apellido " + apellido
-                + "identifiacion " + identificacion
-                + "contrasenia" + contrasenia;
+        return "nombre: " + this.nombre
+                + "apellido " + this.apellido
+                + "identifiacion " + this.identificacion
+                + "contrasenia" + this.contrasenia;
     }
 
 }

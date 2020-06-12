@@ -15,15 +15,17 @@ public class FrameUsuario extends javax.swing.JFrame {
     
     private Usuario usuario; //Para facilitar se le pasa el usuario que ingreso sesion.
     private Agendar agendar;
-    private Citaciones citas = new Citaciones();
+    private Citaciones citas;
     
     int estado = 0;
     /**
      * Creates new form FrameUsuario
      */
-    public FrameUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public FrameUsuario(Usuario u) {
+        this.usuario = u;
+        System.out.println(usuario.toString());
         agendar = new Agendar(usuario);
+        citas = new Citaciones(usuario);
         initComponents();
         setLocationRelativeTo(null);
     }

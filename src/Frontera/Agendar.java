@@ -32,6 +32,7 @@ public class Agendar extends javax.swing.JPanel {
         initComponents();
         dateSet();
         this.usuario = usuario;
+        System.out.println(usuario);
         List<Sucursal> sucursales = sdao.obtener();
         for (Sucursal s : sucursales) {
             sucursalCB.addItem(s.getLugar_s());
