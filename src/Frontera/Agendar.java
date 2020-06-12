@@ -11,6 +11,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.SpinnerDateModel;
@@ -38,7 +39,12 @@ public class Agendar extends javax.swing.JPanel {
     }
 
     public void dateSet(){
-        fechaDC.getJCalendar().setMinSelectableDate(new Date());
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate fecha;
+        fecha = LocalDate.now();
+        fecha = fecha.plusDays(1);
+        Date date = Date.from(fecha.atStartOfDay(defaultZoneId).toInstant());
+        fechaDC.getJCalendar().setMinSelectableDate(date);
     }
     
     @SuppressWarnings("unchecked")
