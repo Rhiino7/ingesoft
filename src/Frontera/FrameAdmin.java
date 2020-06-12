@@ -79,6 +79,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         });
         jToolBar1.add(informeB);
 
+        cerrarSesionB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         cerrarSesionB.setText("Cerrar Sesión");
         cerrarSesionB.setFocusable(false);
         cerrarSesionB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
