@@ -70,6 +70,8 @@ public class Citaciones extends javax.swing.JPanel {
                     estado = "Rechazada";
                 } else if (citasList.get(i).getEstado() == 4) {
                     estado = "Cumplida";
+                }else if (citasList.get(i).getEstado() == 6){
+                    estado = "Reasignada";
                 }
 
                 //motivo

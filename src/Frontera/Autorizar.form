@@ -162,7 +162,7 @@
                 <Column editable="false" title="Hora" type="java.lang.String"/>
                 <Column editable="false" title="Lugar" type="java.lang.String"/>
                 <Column editable="false" title="Motivo" type="java.lang.String"/>
-                <Column editable="true" title="Estado" type="java.lang.String"/>
+                <Column editable="false" title="Estado" type="java.lang.String"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

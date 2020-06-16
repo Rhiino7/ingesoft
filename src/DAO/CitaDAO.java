@@ -223,6 +223,10 @@ public class CitaDAO {
                 com.registrar(c);
                 this.eliminar(c);
                 break;
+            case "REASIGNADA":
+                c.setEstado(6);
+                this.actualizar(c);
+                break;
             default:
                 System.out.println("Estado invalido");
                 return false;

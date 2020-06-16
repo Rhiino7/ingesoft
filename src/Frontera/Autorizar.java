@@ -59,6 +59,8 @@ public class Autorizar extends javax.swing.JPanel {
                         estado = "Cumplida";
                     }else if (citasList.get(cita).getEstado() == 5){
                         estado = "No cumplida";
+                    }else if (citasList.get(cita).getEstado() == 6){
+                        estado = "Reasignada";
                     }
 
                     //motivo
@@ -120,6 +122,8 @@ public class Autorizar extends javax.swing.JPanel {
                         estado = "Cumplida";
                     }else if (complimentList.get(comp).getEstado() == 5) {
                         estado = "No cumplida";
+                    }else if (complimentList.get(cita).getEstado() == 6){
+                        estado = "Reasignada";
                     }
 
                     //motivo
@@ -289,7 +293,7 @@ public class Autorizar extends javax.swing.JPanel {
                 java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, true
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {

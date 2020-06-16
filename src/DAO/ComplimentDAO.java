@@ -106,7 +106,7 @@ public class ComplimentDAO {
         return listaCita;
     }
 
-    public boolean actualizar(Cita c) {
+        public boolean actualizar(Cita c) {
         Connection co = null;
         Statement stm = null;
         boolean actualizar = false;
@@ -174,9 +174,15 @@ public class ComplimentDAO {
                 c.setEstado(5);
                 this.actualizar(c);
                 break;
+            case "REASIGNADA":
+                c.setEstado(6);
+                cit.deComplimentACita(c);
+                this.eliminar(c);
+                break;
             default:
                 System.out.println("Estado invalido");
                 return false;
+            
         }
         return true;
     }

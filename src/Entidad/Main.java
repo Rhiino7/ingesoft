@@ -22,6 +22,7 @@ public class Main implements Runnable {
         PrincipalFrame principalFrame = new PrincipalFrame();        
         principalFrame.setVisible(true);
         principalFrame.setLocationRelativeTo(null);
+        
     };
     
     /**
