@@ -5,19 +5,29 @@
  */
 package Frontera;
 
+import DAO.CitaDAO;
+import DAO.SucursalDAO;
+import DAO.UsuarioDAO;
+import Entidad.Cita;
 import Entidad.Usuario;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
  * @author cdgn2
  */
 public class FrameUsuario extends javax.swing.JFrame {
-    
+
     private Usuario usuario; //Para facilitar se le pasa el usuario que ingreso sesion.
     private Agendar agendar;
     private Citaciones citas;
-    
+    private UsuarioDAO udao = new UsuarioDAO();
+    private CitaDAO cdao = new CitaDAO();
+    private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+
     int estado = 0;
+
     /**
      * Creates new form FrameUsuario
      */
@@ -28,6 +38,30 @@ public class FrameUsuario extends javax.swing.JFrame {
         citas = new Citaciones(usuario);
         initComponents();
         setLocationRelativeTo(null);
+
+        
+        List<Usuario> usuarios = udao.obtener();
+        for (Usuario a : usuarios) {
+            if (a.getUsuario().equals(usuario.getUsuario())) { //No deberian haber dos nombres de usuario iguales
+                usuario = a;
+                break;
+            }
+        }
+
+        for (int i = 0; i < citasList.size(); i++) {
+
+            if (citasList.get(i).getUsuario().getIdentificacion() == this.usuario.getIdentificacion()) {
+                Cita aux = citasList.get(i);
+
+                if (aux.getEstado() == 6) {
+                    ReasignarPopUp1 pop = new ReasignarPopUp1();
+                    pop.setVisible(true);
+                    
+                }
+                break;
+            }
+        }
+        
     }
 
     /**
