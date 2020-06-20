@@ -11,6 +11,10 @@ import DAO.UsuarioDAO;
 import Entidad.Cita;
 import Entidad.Sucursal;
 import Entidad.Usuario;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -31,7 +35,7 @@ public class Informe extends javax.swing.JPanel {
 
     public Informe() {
         initComponents();
-        
+
         //dateSet();
         this.usuario = usuario;
         System.out.println(usuario);
@@ -39,8 +43,7 @@ public class Informe extends javax.swing.JPanel {
         for (Sucursal s : sucursales) {
             sucursalCB.addItem(s.getLugar_s());
         }
-        
-        
+
     }
 
     /*
@@ -72,7 +75,7 @@ public class Informe extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        generarB = new javax.swing.JButton();
 
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creacion cuenta bancaria", "creditos de vivienda", "Cambio o perdida de tarjeta","Creditos de Negocio","Inversiones","Seguros","Productos Complementarios","Asesoria", "Otros" }));
@@ -101,11 +104,11 @@ public class Informe extends javax.swing.JPanel {
         jLabel5.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel5.setText("Fecha:");
 
-        jButton1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jButton1.setText("Generar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        generarB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        generarB.setText("Generar");
+        generarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                generarBActionPerformed(evt);
             }
         });
 
@@ -134,7 +137,7 @@ public class Informe extends javax.swing.JPanel {
                             .addComponent(jLabel5))
                         .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1)
+                        .addComponent(generarB)
                         .addGap(144, 144, 144)))
                 .addGap(130, 130, 130))
         );
@@ -162,20 +165,41 @@ public class Informe extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton1)
+                .addComponent(generarB)
                 .addContainerGap(137, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void generarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBActionPerformed
 
+        //codigo para generar el txt
+        try {
+            PrintWriter writer = new PrintWriter("Informes\\Informe.txt", "UTF-8");
+            writer.println("texto");
+            writer.println("texto");
+            writer.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        mostrar("Informes\\Informe.txt");
+
+    }//GEN-LAST:event_generarBActionPerformed
+
+    private void mostrar(String archivo){
+        try{
+            File objetoFile = new File(archivo);
+            Desktop.getDesktop().open(objetoFile);
+        }catch(IOException ex){
+            System.out.println("ex");
+                    
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> estadoCB;
     private com.toedter.calendar.JDateChooser fechaDC;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton generarB;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
