@@ -174,7 +174,6 @@ public class FrameUsuario extends javax.swing.JFrame {
         PrincipalFrame principalFrame = new PrincipalFrame();
         principalFrame.setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_cerrarSesionBActionPerformed
 
 

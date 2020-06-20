@@ -5,17 +5,52 @@
  */
 package Frontera;
 
+import DAO.CitaDAO;
+import DAO.SucursalDAO;
+import DAO.UsuarioDAO;
+import Entidad.Cita;
+import Entidad.Sucursal;
+import Entidad.Usuario;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
  *
  * @author cdgn2
  */
 public class Informe extends javax.swing.JPanel {
 
-    /**
-     * Creates new form Citaciones
-     */
+    private Usuario usuario; //Se meteria en el constructor de Agendar y de FrameUsuario para poder asignarlo en cita
+    private SucursalDAO sdao = new SucursalDAO();
+    private UsuarioDAO udao = new UsuarioDAO();
+    private CitaDAO cdao = new CitaDAO();
+    private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+
     public Informe() {
         initComponents();
+        
+        //dateSet();
+        this.usuario = usuario;
+        System.out.println(usuario);
+        List<Sucursal> sucursales = sdao.obtener();
+        for (Sucursal s : sucursales) {
+            sucursalCB.addItem(s.getLugar_s());
+        }
+        
+        
+    }
+
+    /*
+    public void dateSet() {
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        LocalDate fecha;
+        fecha = LocalDate.now();
+        fecha = fecha.plusDays(1);
+        Date date = Date.from(fecha.atStartOfDay(defaultZoneId).toInstant());
+        fechaDC.getJCalendar().setMinSelectableDate(date);
     }
 
     /**
@@ -28,9 +63,9 @@ public class Informe extends javax.swing.JPanel {
     private void initComponents() {
 
         jComboBox1 = new javax.swing.JComboBox<>();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
+        fechaDC = new com.toedter.calendar.JDateChooser();
+        sucursalCB = new javax.swing.JComboBox<>();
+        estadoCB = new javax.swing.JComboBox<>();
         jTextField1 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -40,18 +75,16 @@ public class Informe extends javax.swing.JPanel {
         jButton1 = new javax.swing.JButton();
 
         jComboBox1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creacion cuenta bancaria", "creditos de vivienda", "Cambio o perdida de tarjeta","Creditos de Negocio","Inversiones","Seguros","Productos Complementarios","Asesoria", "Otros" }));
 
-        jDateChooser1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        fechaDC.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
 
-        jComboBox2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        sucursalCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
 
-        jComboBox3.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        estadoCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        estadoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Aprobada", "Cancelada", "Rechazada", "Cumplida", "No cumplida", "Reasignada" }));
 
         jTextField1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jTextField1.setText("jTextField1");
 
         jLabel1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         jLabel1.setText("Identificacion:");
@@ -92,12 +125,12 @@ public class Informe extends javax.swing.JPanel {
                         .addGap(91, 91, 91)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
-                            .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(sucursalCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel5))
                         .addGap(116, 116, 116))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -114,7 +147,7 @@ public class Informe extends javax.swing.JPanel {
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -123,11 +156,11 @@ public class Informe extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sucursalCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addContainerGap(137, Short.MAX_VALUE))
@@ -140,16 +173,16 @@ public class Informe extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> estadoCB;
+    private com.toedter.calendar.JDateChooser fechaDC;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> sucursalCB;
     // End of variables declaration//GEN-END:variables
 }
