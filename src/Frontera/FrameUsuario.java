@@ -167,6 +167,7 @@ public class FrameUsuario extends javax.swing.JFrame {
         principalUsuarioPanel.removeAll();
         principalUsuarioPanel.add(citas);
         principalUsuarioPanel.setVisible(true);
+        citas.showUsersinTable();
     }//GEN-LAST:event_citacionesBActionPerformed
 
     private void cerrarSesionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBActionPerformed

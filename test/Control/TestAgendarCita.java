@@ -33,7 +33,7 @@ public class TestAgendarCita {
     private int HORA_NULA = 2;
     private int FECHA_NO_INGRESADA = 3;
     private int FECHA_ANTERIOR = 4;
-    private int CITA_DISPONIBLE = 5;
+    private int CITA_DISPONIBLE = 0;
     private static Cita cita;
     private static Sucursal sucursal;
 
@@ -127,7 +127,6 @@ public class TestAgendarCita {
     
     @Test
     public void verificarDisponibilidad(){
-        int prueba = 5;
         assertEquals(validar.verificarSolicitarCita(cita), CITA_DISPONIBLE);
     }
 }

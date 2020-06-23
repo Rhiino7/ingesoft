@@ -82,7 +82,6 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
                 }
             }
         
-        
         if(unu){
             jl1 = "Nombre: " + citasList.get(id).getUsuario().getNombre() + " " + citasList.get(id).getUsuario().getApellido();
             jl2 = "Motivo: " + citasList.get(id).getMotivo();

@@ -130,6 +130,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.removeAll();
         principalAdminPanel.add(autorizar);
         principalAdminPanel.setVisible(true);
+        autorizar.showUsersinTable();
     }//GEN-LAST:event_autorizarBActionPerformed
 
     private void reasignarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reasignarBActionPerformed
@@ -138,6 +139,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.removeAll();
         principalAdminPanel.add(reasignar);
         principalAdminPanel.setVisible(true);
+        reasignar.showUsersinTable();
     }//GEN-LAST:event_reasignarBActionPerformed
 
     private void informeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informeBActionPerformed
