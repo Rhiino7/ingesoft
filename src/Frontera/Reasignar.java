@@ -27,8 +27,8 @@ import javax.swing.table.TableRowSorter;
  */
 public class Reasignar extends javax.swing.JPanel {
 
-    CitaDAO citaDAO = new CitaDAO();
-    ComplimentDAO complimentDAO = new ComplimentDAO();
+    public CitaDAO citaDAO = new CitaDAO();
+    public ComplimentDAO complimentDAO = new ComplimentDAO();
 
     int selectedIDCita = 0;
     
@@ -459,7 +459,7 @@ public class Reasignar extends javax.swing.JPanel {
 
     private void ReasignarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReasignarBActionPerformed
         // TODO add your handling code here:
-        ReasignarPopUpAdmin pop = new ReasignarPopUpAdmin(selectedIDCita,this);
+        ReasignarPopUpAdmin pop = new ReasignarPopUpAdmin(selectedIDCita, this);
         pop.setVisible(true);
     }//GEN-LAST:event_ReasignarBActionPerformed
 

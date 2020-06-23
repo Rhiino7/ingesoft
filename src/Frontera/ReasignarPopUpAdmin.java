@@ -37,18 +37,32 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
         ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         reasignar = r;
+//        citaDAO = reasignar.citaDAO;
+//        complimentDAO = reasignar.complimentDAO;
         initComponents();
         this.selectedIDCita = citaID;
+        System.out.println(selectedIDCita + " AQUI ES EL POP UP");
         String jl1, jl2, jl3;
         boolean uwu= false;
-        int cita =0;
+        boolean unu = false;
+        int cita = 0;
+        int comp = 0;
         for (int i = 0; i < selectedIDCita; i++) {
                 if (citasList.size() != 0 && cita < citasList.size()) {
                     if (citasList.get(cita).getId_cita() == selectedIDCita) {
                         id = cita;
                         uwu = true;
+                        unu = true;
                     }
                 }
+                
+                if(complimentList.size() != 0 && comp < complimentList.size()){
+                    if(complimentList.get(comp).getId_cita() == selectedIDCita){
+                        id = comp;
+                        uwu = true;
+                    }
+                }
+                
 
                 System.out.println(uwu);
                 if (uwu) {
@@ -59,11 +73,25 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
                             cita++;
                         }
                     }
+                    
+                    if (complimentList.size() != 0 && comp < complimentList.size()) {
+                        if (complimentList.get(comp).getId_cita() == i + 1) {
+                            comp++;
+                        }
+                    }
                 }
             }
-        jl1 = "Nombre: " + citasList.get(id).getUsuario().getNombre() + " " + citasList.get(id).getUsuario().getApellido();
-        jl2 = "Motivo: " + citasList.get(id).getMotivo();
-        jl3 = "Sucursal: " + citasList.get(id).getSucursal().getNombre_s();
+        
+        
+        if(unu){
+            jl1 = "Nombre: " + citasList.get(id).getUsuario().getNombre() + " " + citasList.get(id).getUsuario().getApellido();
+            jl2 = "Motivo: " + citasList.get(id).getMotivo();
+            jl3 = "Sucursal: " + citasList.get(id).getSucursal().getNombre_s();
+        }else{
+            jl1 = "Nombre: " + complimentList.get(id).getUsuario().getNombre() + " " + complimentList.get(id).getUsuario().getApellido();
+            jl2 = "Motivo: " + complimentList.get(id).getMotivo();
+            jl3 = "Sucursal: " + complimentList.get(id).getSucursal().getNombre_s();
+        }
         jLabel1.setText(jl1);
         jLabel2.setText(jl2);
         jLabel3.setText(jl3);
@@ -218,8 +246,12 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
                     String hora = horaS.getSelectedItem().toString();
                     c.setFecha(LocalDate.parse(fecha2));
                     c.setHora(LocalTime.parse(hora));
+                    
+                    System.out.println("----------------------------");
                     citaDAO.actualizar(c);
+                    System.out.println(c.getUsuario());
                     citaDAO.actualizarEstado(c, "REASIGNADA");
+                    System.out.println(c.getEstado());
                     uwu = true;
                     System.out.println(uwu);
 
