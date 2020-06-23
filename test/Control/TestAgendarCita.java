@@ -68,7 +68,7 @@ public class TestAgendarCita {
         u.setNombre("naruto");
         u.setIdentificacion(147852369);
         Sucursal sucursal = new Sucursal(1, "Sucursal", "Cra 29 # 14 - 47 sur", "La fragua", "123456");
-        cita = new Cita(sucursal, u, LocalDate.of(2020, Month.MAY, 27), LocalTime.of(9, 0), 0);
+        cita = new Cita(-1, sucursal, u, LocalDate.of(2020, Month.JULY, 27), LocalTime.of(9, 0), 0);
         
     }
 

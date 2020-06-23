@@ -128,11 +128,11 @@ public class TestLogin {
     public void testUsuarioCorrecto() {
         Usuario u = new Usuario();
         u.setUsuario("juan");
-        u.setContrasenia("1234");
+        u.setContrasenia("12345");
         assertEquals(validarLogin.verificarLogin(u), USUARIO_AUTORIZADO);
 
         u.setUsuario("pedro");
-        u.setContrasenia("1234567");
+        u.setContrasenia("12345");
         assertEquals(validarLogin.verificarLogin(u), USUARIO_AUTORIZADO);
 
         u.setUsuario("maria");

@@ -630,6 +630,8 @@ public class Autorizar extends javax.swing.JPanel {
             System.out.println("compliment:" + comp);
             System.out.println("i:" + i);
             System.out.println("selectedIDCita:" + selectedIDCita);
+            
+            
             if (citasList.size() != 0 && cita < citasList.size()) {
                 if (citasList.get(cita).getId_cita() == selectedIDCita) {
                     Cita c = citasList.get(cita);
