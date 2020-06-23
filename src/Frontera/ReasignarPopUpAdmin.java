@@ -11,11 +11,14 @@ import Entidad.Cita;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.SpinnerDateModel;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
 
 /**
@@ -228,66 +231,79 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
         int cita = 0;
         int comp = 0;
         boolean uwu = false;
-        for (int i = 0; i < selectedIDCita; i++) {
-            System.out.println("cita:" + cita);
-            System.out.println("compliment:" + comp);
-            System.out.println("i:" + i);
-            System.out.println("selectedIDCita:" + selectedIDCita);
-            if (citasList.size() != 0 && cita < citasList.size()) {
-                if (citasList.get(cita).getId_cita() == selectedIDCita) {
-                    Cita c = citasList.get(cita);
-                    Date fecha = fechaDC.getDate();
-                    if (fecha == null) {
-                        fecha = new Date(1900, 1, 1);
-                    }
-                    DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                    String fecha2 = f.format(fecha);
-                    String hora = horaS.getSelectedItem().toString();
-                    c.setFecha(LocalDate.parse(fecha2));
-                    c.setHora(LocalTime.parse(hora));
-                    
-                    System.out.println("----------------------------");
-                    citaDAO.actualizar(c);
-                    System.out.println(c.getUsuario());
-                    citaDAO.actualizarEstado(c, "REASIGNADA");
-                    System.out.println(c.getEstado());
-                    uwu = true;
-                    System.out.println(uwu);
 
-                }
-            }
-            if (complimentList.size() != 0 && comp < complimentList.size()) {
-                if (complimentList.get(comp).getId_cita() == selectedIDCita) {
-                    Cita c = complimentList.get(comp);
-                    
-                    Date fecha = fechaDC.getDate();
-                    if (fecha == null) {
-                        fecha = new Date(1900, 1, 1);
-                    }
-                    DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-                    String fecha2 = f.format(fecha);
-                    String hora = horaS.getSelectedItem().toString();
-                    c.setFecha(LocalDate.parse(fecha2));
-                    c.setHora(LocalTime.parse(hora));
-                    complimentDAO.actualizar(c);
-                    complimentDAO.actualizarEstado(c, "REASIGNADA");
-                    uwu = true;
-                    System.out.println(uwu);
-                }
-            }
+        Date fecha = null;
+        try {
+            fecha = fechaDC.getDate();
+            System.out.println(fecha.getTime());
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Ingrese una fecha valida.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        }
 
-            System.out.println(uwu);
-            if (uwu) {
-                i = selectedIDCita;
-            } else {
+        LocalDateTime fechaLocalTime = LocalDateTime.ofInstant(fecha.toInstant(), ZoneId.systemDefault());
+        if (fechaLocalTime.isBefore(LocalDateTime.now())) {
+            JOptionPane.showMessageDialog(this, "Ingrese una fecha valida no anterior a la fecha actual.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            for (int i = 0; i < selectedIDCita; i++) {
+                System.out.println("cita:" + cita);
+                System.out.println("compliment:" + comp);
+                System.out.println("i:" + i);
+                System.out.println("selectedIDCita:" + selectedIDCita);
                 if (citasList.size() != 0 && cita < citasList.size()) {
-                    if (citasList.get(cita).getId_cita() == i + 1) {
-                        cita++;
+                    if (citasList.get(cita).getId_cita() == selectedIDCita) {
+                        Cita c = citasList.get(cita);
+
+//                        if (fecha == null) {
+//                            fecha = new Date(1900, 1, 1);
+//                        }
+                        DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                        String fecha2 = f.format(fecha);
+                        String hora = horaS.getSelectedItem().toString();
+                        c.setFecha(LocalDate.parse(fecha2));
+                        c.setHora(LocalTime.parse(hora));
+
+                        System.out.println("----------------------------");
+                        citaDAO.actualizar(c);
+                        System.out.println(c.getUsuario());
+                        citaDAO.actualizarEstado(c, "REASIGNADA");
+                        System.out.println(c.getEstado());
+                        uwu = true;
+                        System.out.println(uwu);
+
                     }
                 }
                 if (complimentList.size() != 0 && comp < complimentList.size()) {
-                    if (complimentList.get(comp).getId_cita() == i + 1) {
-                        comp++;
+                    if (complimentList.get(comp).getId_cita() == selectedIDCita) {
+                        Cita c = complimentList.get(comp);
+
+//                        if (fecha == null) {
+//                            fecha = new Date(1900, 1, 1);
+//                        }
+                        DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                        String fecha2 = f.format(fecha);
+                        String hora = horaS.getSelectedItem().toString();
+                        c.setFecha(LocalDate.parse(fecha2));
+                        c.setHora(LocalTime.parse(hora));
+                        complimentDAO.actualizar(c);
+                        complimentDAO.actualizarEstado(c, "REASIGNADA");
+                        uwu = true;
+                        System.out.println(uwu);
+                    }
+                }
+
+                System.out.println(uwu);
+                if (uwu) {
+                    i = selectedIDCita;
+                } else {
+                    if (citasList.size() != 0 && cita < citasList.size()) {
+                        if (citasList.get(cita).getId_cita() == i + 1) {
+                            cita++;
+                        }
+                    }
+                    if (complimentList.size() != 0 && comp < complimentList.size()) {
+                        if (complimentList.get(comp).getId_cita() == i + 1) {
+                            comp++;
+                        }
                     }
                 }
             }

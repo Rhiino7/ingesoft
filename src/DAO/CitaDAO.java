@@ -136,12 +136,13 @@ public class CitaDAO {
         String sql = "UPDATE APPOINTMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
-                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
+                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion();//  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
         System.out.println(sql);
         try {
             co = Conexion.conectar();
             stm = co.createStatement();
             stm.execute(sql);
+            System.out.println("La base de datos se actualizo.");
             actualizar = true;
         } catch (SQLException e) {
             System.out.println("error metodo actualizar");

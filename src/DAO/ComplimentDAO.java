@@ -113,12 +113,13 @@ public class ComplimentDAO {
         String sql = "UPDATE COMPLIMENT SET ID_BRANCH='" + c.getSucursal().getId_sucursal() + "',ID_USER='"
                 + c.getUsuario().getIdentificacion() + "',DATE='" + c.getFecha().toString() + "',TIME='"
                 + c.getHora().toString() + "',STATE='" + c.getEstado() + "'"
-                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion()  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
+                + "WHERE ID_BRANCH=" + c.getSucursal().getId_sucursal() + " AND ID_USER=" + c.getUsuario().getIdentificacion(); //  + " AND DATE='" + c.getFecha() + "' AND TIME='" + c.getHora() + "'";
         try {System.out.println(sql);
             co = Conexion.conectar();
             stm = co.createStatement();
             stm.execute(sql);
             actualizar = true;
+            System.out.println("La base de datos se actualizo.");
         } catch (SQLException e) {
             System.out.println("error metodo actualizar");
             e.printStackTrace();
