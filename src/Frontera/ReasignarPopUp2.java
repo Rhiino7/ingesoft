@@ -4,21 +4,86 @@
  * and open the template in the editor.
  */
 package Frontera;
+
+import DAO.CitaDAO;
+import DAO.ComplimentDAO;
+import Entidad.Cita;
+import Entidad.Usuario;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.SpinnerDateModel;
 import java.util.Calendar;
+import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.WindowConstants;
+
 /**
  *
  * @author cdgn2
  */
 public class ReasignarPopUp2 extends javax.swing.JDialog {
 
+    Usuario u;
+    Cita c;
+    CitaDAO cdao = new CitaDAO();
+    private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+    ComplimentDAO complimentDAO = new ComplimentDAO();
+
     /**
      * Creates new form ReasignarPopUp
      */
-    public ReasignarPopUp2() {
+    public ReasignarPopUp2(Usuario usuario) {
         initComponents();
+        this.u = usuario;
+        for (int i = 0; i < citasList.size(); i++) {
+
+            if (citasList.get(i).getUsuario().getIdentificacion() == this.u.getIdentificacion()) {
+                Cita aux = citasList.get(i);
+
+                if (aux.getEstado() == 6) {
+                    this.c = aux;
+                    break;
+                }
+            }
+        }
+
+        jTextField1.setText(c.getUsuario().getNombre() + " " + c.getUsuario().getApellido());
+        String motivo;
+        int mot = c.getMotivo();
+        if (mot == 0) {
+            motivo = "Creacion cuenta bancaria";
+            jTextField2.setText(motivo);
+        } else if (mot == 1) {
+            motivo = "Creditos de vivienda";
+            jTextField2.setText(motivo);
+        } else if (mot == 2) {
+            motivo = "Cambio o perdida de tarjeta";
+            jTextField2.setText(motivo);
+        } else if (mot == 3) {
+            motivo = "Creditos de Negocio";
+            jTextField2.setText(motivo);
+        } else if (mot == 4) {
+            motivo = "Inversiones";
+            jTextField2.setText(motivo);
+        } else if (mot == 5) {
+            motivo = "Seguros";
+            jTextField2.setText(motivo);
+        } else if (mot == 6) {
+            motivo = "Productos Complementarios";
+            jTextField2.setText(motivo);
+        } else if (mot == 7) {
+            motivo = "Asesoria";
+            jTextField2.setText(motivo);
+        } else {
+            motivo = "otro";
+            jTextField2.setText(motivo);
+        }
+        jTextField3.setText(c.getSucursal().getNombre_s());
+        jTextField4.setText(c.getFecha().toString());
+        jTextField5.setText(c.getHora().toString());
+
     }
 
     /**
@@ -193,16 +258,92 @@ public class ReasignarPopUp2 extends javax.swing.JDialog {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
+        citasList = (ArrayList<Cita>) cdao.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        int cita = 0;
+        int comp = 0;
+        boolean uwu = false;
+        for (int i = 0; i < c.getId_cita(); i++) {
+            System.out.println("cita:" + cita);
+            System.out.println("compliment:" + comp);
+            System.out.println("i:" + i);
+            System.out.println("c.getId_cita():" + c.getId_cita());
+            
+            
+            if (citasList.size() != 0 && cita < citasList.size()) {
+                if (citasList.get(cita).getId_cita() == c.getId_cita()) {
+                    Cita c = citasList.get(cita);
+                    cdao.actualizarEstado(c, "APROBADA");
+                    uwu = true;
+                    System.out.println(uwu);
+
+                }
+            }
+            if (complimentList.size() != 0 && comp < complimentList.size()) {
+                if (complimentList.get(comp).getId_cita() == c.getId_cita()) {
+                    Cita c = complimentList.get(comp);
+                    complimentDAO.actualizarEstado(c, "APROBADA");
+                    uwu = true;
+                    System.out.println(uwu);
+                }
+            }
+
+            System.out.println(uwu);
+            if (uwu) {
+                i = c.getId_cita();
+            } else {
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == i + 1) {
+                        cita++;
+                    }
+                }
+                if (complimentList.size() != 0 && comp < complimentList.size()) {
+                    if (complimentList.get(comp).getId_cita() == i + 1) {
+                        comp++;
+                    }
+                }
+            }
+        }
+        citasList = (ArrayList<Cita>) cdao.obtener();
+        complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+
+        int cita = 0;
+        boolean uwu = false;
+        
+            for (int i = 0; i < c.getId_cita(); i++) {
+                if (citasList.size() != 0 && cita < citasList.size()) {
+                    if (citasList.get(cita).getId_cita() == c.getId_cita()) {
+                        
+                            cdao.actualizarEstado(c, "CANCELADA");
+                            uwu = true;
+                    }
+                }
+
+                System.out.println(uwu);
+                if (uwu) {
+                    i = c.getId_cita();
+                } else {
+                    if (citasList.size() != 0 && cita < citasList.size()) {
+                        if (citasList.get(cita).getId_cita() == i + 1) {
+                            cita++;
+                        }
+                    }
+                }
+            }
+            citasList = (ArrayList<Cita>) cdao.obtener();
+            this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseEntered
         // TODO add your handling code here:
         jButton3.setText("  UwU   ");
-        
+
     }//GEN-LAST:event_jButton3MouseEntered
 
     private void jButton4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseEntered

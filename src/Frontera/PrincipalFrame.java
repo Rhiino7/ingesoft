@@ -4,13 +4,13 @@ package Frontera;
 import Entidad.Sistema;
 import Entidad.Usuario;
 import java.util.ArrayList;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class PrincipalFrame extends javax.swing.JFrame {
 
-    public Registro registro = new Registro();
-    public Ingreso ingreso = new Ingreso(this);
+    public Ingreso ingreso;
     //private Agendar agendar = new Agendar();
     
     public static Sistema sistema = new Sistema();
@@ -20,7 +20,15 @@ public class PrincipalFrame extends javax.swing.JFrame {
      */
     public PrincipalFrame() {
         initComponents();
-        //inicializacion();
+        
+        ingreso = new Ingreso(this, principalPanel);
+        
+        principalPanel.setVisible(false);
+        principalPanel.removeAll();
+        principalPanel.add(ingreso);
+        principalPanel.setVisible(true);
+        
+        //JFrame.setDefaultLookAndFeelDecorated(true);
     }
 
     /**
@@ -33,121 +41,49 @@ public class PrincipalFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        jToolBar1 = new javax.swing.JToolBar();
-        ingresoB = new javax.swing.JButton();
-        registroB = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         principalPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Bank App");
+        setIconImages(null);
+        setPreferredSize(new java.awt.Dimension(900, 557));
+        getContentPane().setLayout(new java.awt.GridLayout(1, 0));
 
-        jToolBar1.setRollover(true);
+        jPanel1.setLayout(new javax.swing.OverlayLayout(jPanel1));
 
-        ingresoB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        ingresoB.setText("Ingreso");
-        ingresoB.setFocusable(false);
-        ingresoB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ingresoB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        ingresoB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ingresoBActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(ingresoB);
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 35)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Grupo 2.1.png"))); // NOI18N
+        jLabel2.setAlignmentX(0.5F);
+        jPanel1.add(jLabel2);
 
-        registroB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        registroB.setText("Registro");
-        registroB.setFocusable(false);
-        registroB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        registroB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        registroB.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                registroBActionPerformed(evt);
-            }
-        });
-        jToolBar1.add(registroB);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/bancolombia.jpg"))); // NOI18N
+        jLabel1.setVerticalAlignment(javax.swing.SwingConstants.TOP);
+        jLabel1.setAlignmentX(0.5F);
+        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jLabel1.setMinimumSize(new java.awt.Dimension(332, 178));
+        jLabel1.setPreferredSize(new java.awt.Dimension(332, 178));
+        jPanel1.add(jLabel1);
 
+        getContentPane().add(jPanel1);
+
+        principalPanel.setBackground(new java.awt.Color(116, 79, 198));
         principalPanel.setPreferredSize(new java.awt.Dimension(600, 500));
-        principalPanel.setLayout(new java.awt.BorderLayout());
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(principalPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 650, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(principalPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
+        principalPanel.setLayout(new java.awt.GridBagLayout());
+        getContentPane().add(principalPanel);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ingresoBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ingresoBActionPerformed
-        // TODO add your handling code here:
-        principalPanel.setVisible(false);
-        principalPanel.removeAll();
-        principalPanel.add(ingreso);
-        //principalPanel.add(agendar);
-        principalPanel.setVisible(true);
-    }//GEN-LAST:event_ingresoBActionPerformed
-
-    private void registroBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registroBActionPerformed
-        // TODO add your handling code here:
-        principalPanel.setVisible(false);
-        principalPanel.removeAll();
-        principalPanel.add(registro);
-        principalPanel.setVisible(true);
-    }//GEN-LAST:event_registroBActionPerformed
-    
-    /*
-    public void inicializacion(){
-        
-        ArrayList<Usuario> usuarios;
-        usuarios = new ArrayList<>();
-        
-        Usuario a = new Usuario("Juan", "Cardona", 1010038260,"juan","1234",false);
-        Usuario b = new Usuario("Pedro", "Nieto", 1010038259,"pedro","1234567",false);
-        Usuario c = new Usuario("Maria del Mar", "Rojas", 1010038258,"maria","12345",false);
-        Usuario d = new Usuario("Carlos", "Galvis", 1010038257,"CarlosKC26","Carlosdgn2000",true);
-        
-        
-        usuarios.add(a);
-        usuarios.add(b);
-        usuarios.add(c);
-        usuarios.add(d);
-        
-        sistema.setUsuarios(usuarios);
-        
-        for (Usuario u: sistema.getUsuarios()){
-            System.out.println(u.getUsuario());
-            System.out.println(u.getContrasenia());
-            System.out.println("--------------");
-                    
-        }
-    }
-    */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ingresoB;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel principalPanel;
-    private javax.swing.JButton registroB;
     // End of variables declaration//GEN-END:variables
 }
