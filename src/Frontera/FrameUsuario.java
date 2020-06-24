@@ -58,7 +58,7 @@ public class FrameUsuario extends javax.swing.JFrame {
                 Cita aux = citasList.get(i);
 
                 if (aux.getEstado() == 6) {
-                    ReasignarPopUp1 pop = new ReasignarPopUp1();
+                    ReasignarPopUp1 pop = new ReasignarPopUp1(this.usuario);
                     pop.setVisible(true);
                     
                 }

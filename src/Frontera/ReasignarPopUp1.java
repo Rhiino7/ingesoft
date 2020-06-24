@@ -5,17 +5,21 @@
  */
 package Frontera;
 
+import Entidad.Usuario;
+
 /**
  *
  * @author cdgn2
  */
 public class ReasignarPopUp1 extends javax.swing.JDialog {
 
+    Usuario u;
     /**
      * Creates new form AgendarPopUp
      */
-    public ReasignarPopUp1() {
+    public ReasignarPopUp1(Usuario usuario) {
         initComponents();
+        this.u=usuario;
     }
 
     /**
@@ -83,6 +87,9 @@ public class ReasignarPopUp1 extends javax.swing.JDialog {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.setVisible(false);
         this.dispose();
+        ReasignarPopUp2 pop = new ReasignarPopUp2(u);
+        pop.setVisible(true);
+        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
