@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerDateModel;
 import javax.swing.JSpinner;
 import javax.swing.RowFilter;
@@ -459,6 +460,9 @@ public class Reasignar extends javax.swing.JPanel {
 
     private void ReasignarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ReasignarBActionPerformed
         // TODO add your handling code here:
+        if(selectedIDCita == 0){
+            JOptionPane.showMessageDialog(this, "Seleccione una cita de la tabla.", "Ninguna cita fue seleccionada", JOptionPane.INFORMATION_MESSAGE);
+        }
         ReasignarPopUpAdmin pop = new ReasignarPopUpAdmin(selectedIDCita, this);
         pop.setVisible(true);
     }//GEN-LAST:event_ReasignarBActionPerformed

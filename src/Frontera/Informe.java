@@ -24,6 +24,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -204,80 +205,87 @@ public class Informe extends javax.swing.JPanel {
 
     private void generarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBActionPerformed
 
-        
-        //AQUI SE TIENE QUE HACER EL CODIGO PARA EL TXT
-        
-        //codigo para generar el txt
-        try {
-            PrintWriter writer = new PrintWriter("Informes\\Informe.txt", "UTF-8");
-            BufferedWriter bfw = new BufferedWriter(writer);
+        LocalDate testFecha = LocalDate.parse("3800-02-01");
+        if (jTable1.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontraron citas el dia seleccionado\.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        } else if (fechaDC.isValid() || fechaDC.equals(testFecha)) {
+            JOptionPane.showMessageDialog(this, "Ingrese una fecha valida.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                PrintWriter writer = new PrintWriter("Informes\\Informe.txt", "UTF-8");
+                BufferedWriter bfw = new BufferedWriter(writer);
 
-            RowFilter<TableModel, Object> fechaFilter = RowFilter.regexFilter("", 4);
-            DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-            if (fechaDC.getDate() != null) {
-                fechaFilter = RowFilter.regexFilter(f.format(fechaDC.getDate()), 4);
-            }
-
-            String fecha = f.format(fechaDC.getDate());
-            bfw.write("FECHA DEL INFORME: ");
-            bfw.write(fecha);
-            bfw.newLine();
-            bfw.write("CLIENTES: ");
-            bfw.newLine();
-            bfw.write("---------------------------------");
-            bfw.newLine();
-            for (int i = 0; i < jTable1.getRowCount(); i++) {
-
-                bfw.write("HORA:    ");
-                bfw.write((jTable1.getValueAt(i, 5).toString()));
-
-                bfw.newLine();
-
-                for (int j = 0; j < jTable1.getColumnCount(); j++) {
-                    switch (j) {
-                        case 1: {
-                            bfw.write("NOMBRES Y APELLIDO:          ");
-                            bfw.write((String) jTable1.getValueAt(i, 1)+" ");
-                            bfw.write((String) jTable1.getValueAt(i, 2));
-                            bfw.newLine();
-                            break;
-                        }
-                        case 2: {
-                            break;
-                        }
-                        case 7: {
-                            bfw.write("TIPO CITACION:          ");
-                            bfw.write((String) jTable1.getValueAt(i, 7));
-                            bfw.newLine();
-                            break;
-                        }
-                        case 8: {
-                            bfw.write("ESTADO CITA:          ");
-                            bfw.write((String) jTable1.getValueAt(i, 8));
-                            bfw.newLine();
-                            break;
-                        }
-                        default: {
-                            break;
-                        }
-                    }
-//                    bfw.write((String) jTable1.getValueAt(i, j));
+                RowFilter<TableModel, Object> fechaFilter = RowFilter.regexFilter("", 4);
+                DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                if (fechaDC.getDate() != null) {
+                    fechaFilter = RowFilter.regexFilter(f.format(fechaDC.getDate()), 4);
                 }
+
+                String fecha = f.format(fechaDC.getDate());
+                bfw.write("FECHA DEL INFORME: ");
+                bfw.write(fecha);
+                bfw.newLine();
+                bfw.write("CLIENTES: ");
                 bfw.newLine();
                 bfw.write("---------------------------------");
                 bfw.newLine();
-            }
-            
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+
+                    bfw.write("HORA:    ");
+                    bfw.write((jTable1.getValueAt(i, 5).toString()));
+
+                    bfw.newLine();
+
+                    for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                        switch (j) {
+                            case 1: {
+                                bfw.write("NOMBRES Y APELLIDO:          ");
+                                bfw.write((String) jTable1.getValueAt(i, 1) + " ");
+                                bfw.write((String) jTable1.getValueAt(i, 2));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 2: {
+                                break;
+                            }
+                            case 6: {
+                                bfw.write("SUCURSAL:                    ");
+                                bfw.write((String) jTable1.getValueAt(i, 6));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 7: {
+                                bfw.write("TIPO CITACION:               ");
+                                bfw.write((String) jTable1.getValueAt(i, 7));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 8: {
+                                bfw.write("ESTADO CITA:                 ");
+                                bfw.write((String) jTable1.getValueAt(i, 8));
+                                bfw.newLine();
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+//                    bfw.write((String) jTable1.getValueAt(i, j));
+                    }
+                    bfw.newLine();
+                    bfw.write("---------------------------------");
+                    bfw.newLine();
+                }
+
 //            writer.format(TOOL_TIP_TEXT_KEY, args);
 //            writer.println("texto");
-            bfw.close();
+                bfw.close();
 //            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mostrar("Informes\\Informe.txt");
         }
-
-        mostrar("Informes\\Informe.txt");
-
     }//GEN-LAST:event_generarBActionPerformed
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
@@ -286,7 +294,7 @@ public class Informe extends javax.swing.JPanel {
 
     private void fechaDCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaDCKeyReleased
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_fechaDCKeyReleased
 
     private void fechaDCMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaDCMouseExited
@@ -309,24 +317,23 @@ public class Informe extends javax.swing.JPanel {
         filtrarTable(search);
     }//GEN-LAST:event_vistaPreviaB1ActionPerformed
 
-    private void mostrar(String archivo){
-        try{
+    private void mostrar(String archivo) {
+        try {
             File objetoFile = new File(archivo);
             Desktop.getDesktop().open(objetoFile);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println("ex");
-                    
+
         }
     }
-    
-    
+
     public void filtrarTable(String search) {
         DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
         jTable1.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(search));
     }
-    
+
     public void showUsersinTable() {
 
         ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
@@ -356,9 +363,9 @@ public class Informe extends javax.swing.JPanel {
                         estado = "Rechazada";
                     } else if (citasList.get(cita).getEstado() == 4) {
                         estado = "Cumplida";
-                    }else if (citasList.get(cita).getEstado() == 5){
+                    } else if (citasList.get(cita).getEstado() == 5) {
                         estado = "No cumplida";
-                    }else if (citasList.get(cita).getEstado() == 6){
+                    } else if (citasList.get(cita).getEstado() == 6) {
                         estado = "Reasignada";
                     }
 
@@ -419,9 +426,9 @@ public class Informe extends javax.swing.JPanel {
                         estado = "Rechazada";
                     } else if (complimentList.get(comp).getEstado() == 4) {
                         estado = "Cumplida";
-                    }else if (complimentList.get(comp).getEstado() == 5) {
+                    } else if (complimentList.get(comp).getEstado() == 5) {
                         estado = "No cumplida";
-                    }else if (complimentList.get(cita).getEstado() == 6){
+                    } else if (complimentList.get(cita).getEstado() == 6) {
                         estado = "Reasignada";
                     }
 
@@ -498,11 +505,8 @@ public class Informe extends javax.swing.JPanel {
         }
          */
     }
-    
-    
-    
-    
-    
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JDateChooser fechaDC;
     private javax.swing.JButton generarB;
