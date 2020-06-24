@@ -71,13 +71,13 @@ public class TestAutorizarCita {
         u.setIdentificacion(147852369);
         Sucursal sucursal1 = new Sucursal(1, "Sucursal1", "Cra 29 # 14 - 47 sur", "La fragua", "123456");
         Sucursal sucursal2 = new Sucursal(2, "Sucursal2", "Cra 30 # 41 - 14", "Restrepo", "123457");
-        cita1 = new Cita(-1, sucursal1, a, LocalDate.of(2020, Month.JUNE, 25), LocalTime.of(9, 0), 0);
-        cita2 = new Cita(-2, sucursal2, u, LocalDate.of(2020, Month.JUNE, 26), LocalTime.of(10, 0), 1);
-        cita3 = new Cita(-3, sucursal1, a, LocalDate.of(2020, Month.JUNE, 27), LocalTime.of(11, 0), 2);
-        cita4 = new Cita(-4, sucursal2, u, LocalDate.of(2020, Month.JUNE, 28), LocalTime.of(12, 0), 3);
-        cita5 = new Cita(-5, sucursal1, u, LocalDate.of(2020, Month.JUNE, 29), LocalTime.of(13, 0), 4);
-        cita6 = new Cita(-6, sucursal2, a, LocalDate.of(2020, Month.JUNE, 30), LocalTime.of(14, 0), 5);
-        cita7 = new Cita(-7, sucursal1, u, LocalDate.of(2020, Month.JUNE, 30), LocalTime.of(15, 0), 6);
+        cita1 = new Cita(-1, sucursal1, a, LocalDate.of(2020, Month.JULY, 25), LocalTime.of(9, 0), 0);
+        cita2 = new Cita(-2, sucursal2, u, LocalDate.of(2020, Month.JULY, 26), LocalTime.of(10, 0), 1);
+        cita3 = new Cita(-3, sucursal1, a, LocalDate.of(2020, Month.JULY, 27), LocalTime.of(11, 0), 2);
+        cita4 = new Cita(-4, sucursal2, u, LocalDate.of(2020, Month.JULY, 28), LocalTime.of(12, 0), 3);
+        cita5 = new Cita(-5, sucursal1, u, LocalDate.of(2020, Month.JULY, 29), LocalTime.of(13, 0), 4);
+        cita6 = new Cita(-6, sucursal2, a, LocalDate.of(2020, Month.JULY, 30), LocalTime.of(14, 0), 5);
+        cita7 = new Cita(-7, sucursal1, u, LocalDate.of(2020, Month.JULY, 30), LocalTime.of(15, 0), 6);
         
     }
 
