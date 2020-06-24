@@ -19,6 +19,8 @@ import java.util.Calendar;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JSpinner;
+import javax.swing.LookAndFeel;
+import javax.swing.UIManager;
 
 public class Agendar extends javax.swing.JPanel {
 
@@ -27,8 +29,10 @@ public class Agendar extends javax.swing.JPanel {
     private UsuarioDAO udao = new UsuarioDAO();
     private CitaDAO cdao = new CitaDAO();
     private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+    private LookAndFeel previousLF;
 
     public Agendar(Usuario usuario) {
+        previousLF = UIManager.getLookAndFeel();
         initComponents();
         dateSet();
         this.usuario = usuario;
@@ -61,9 +65,15 @@ public class Agendar extends javax.swing.JPanel {
         agendarB = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
         sucursalCB = new javax.swing.JComboBox<>();
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
         horaS = new javax.swing.JComboBox<>();
         jLabel2 = new javax.swing.JLabel();
         motivoCB = new javax.swing.JComboBox<>();
@@ -97,7 +107,7 @@ public class Agendar extends javax.swing.JPanel {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(43, Short.MAX_VALUE)
+                .addContainerGap(25, Short.MAX_VALUE)
                 .addComponent(jLabel5)
                 .addContainerGap())
         );
@@ -111,7 +121,7 @@ public class Agendar extends javax.swing.JPanel {
         agendarB.setText("Agendar");
         agendarB.setBorder(null);
         agendarB.setFocusable(false);
-        agendarB.setPreferredSize(new java.awt.Dimension(90, 40));
+        agendarB.setPreferredSize(new java.awt.Dimension(120, 50));
         agendarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 agendarBActionPerformed(evt);
@@ -123,6 +133,9 @@ public class Agendar extends javax.swing.JPanel {
 
         jPanel5.setPreferredSize(new java.awt.Dimension(500, 224));
 
+        try {
+            UIManager.setLookAndFeel(previousLF);
+        } catch (Exception e) {}
         sucursalCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         sucursalCB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -136,6 +149,9 @@ public class Agendar extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel1.setText("Fecha");
 
+        try{
+            UIManager.setLookAndFeel(previousLF);
+        } catch (Exception e) {}
         horaS.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
         horaS.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "09:00", "09:15", "09:30", "09:45", "10:00", "10:15", "10:30", "10:45", "11:00", "11:15", "11:30", "11:45", "12:00", "12:15", "12:30", "12:45", "13:00", "13:15", "13:30", "13:45", "14:00", "14:15", "14:30", "14:45", "15:00" }));
         horaS.addActionListener(new java.awt.event.ActionListener() {
@@ -229,7 +245,7 @@ public class Agendar extends javax.swing.JPanel {
                 .addGap(0, 0, 0)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE))
+                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 

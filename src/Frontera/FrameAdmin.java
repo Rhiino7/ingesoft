@@ -4,6 +4,9 @@
  * and open the template in the editor.
  */
 package Frontera;
+
+import java.awt.Color;
+
 /**
  *
  * @author cdgn2
@@ -13,6 +16,10 @@ public class FrameAdmin extends javax.swing.JFrame {
     private Autorizar autorizar = new Autorizar();
     private Reasignar reasignar = new Reasignar();
     private Informe informe = new Informe();
+            
+    private boolean autorizarActive = false;
+    private boolean reasignarActive = false;
+    private boolean informeActive = false;
     /**
      * Creates new form FrameUsuario
      */
@@ -41,8 +48,10 @@ public class FrameAdmin extends javax.swing.JFrame {
         cerrarSesionB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(1100, 750));
 
-        principalAdminPanel.setMinimumSize(new java.awt.Dimension(700, 500));
+        principalAdminPanel.setMinimumSize(new java.awt.Dimension(700, 700));
+        principalAdminPanel.setPreferredSize(new java.awt.Dimension(750, 700));
         principalAdminPanel.setLayout(new java.awt.BorderLayout());
 
         menuPanel.setBackground(new java.awt.Color(9, 12, 2));
@@ -56,7 +65,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jPanel3.setLayout(new java.awt.GridLayout(4, 0));
 
         autorizarB.setBackground(new java.awt.Color(9, 12, 2));
-        autorizarB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        autorizarB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         autorizarB.setForeground(new java.awt.Color(255, 255, 255));
         autorizarB.setText("AUTORIZAR");
         autorizarB.setBorder(null);
@@ -64,6 +73,14 @@ public class FrameAdmin extends javax.swing.JFrame {
         autorizarB.setFocusable(false);
         autorizarB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         autorizarB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        autorizarB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                autorizarBMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                autorizarBMouseExited(evt);
+            }
+        });
         autorizarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 autorizarBActionPerformed(evt);
@@ -72,7 +89,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jPanel3.add(autorizarB);
 
         reasignarB.setBackground(new java.awt.Color(9, 12, 2));
-        reasignarB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        reasignarB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         reasignarB.setForeground(new java.awt.Color(255, 255, 255));
         reasignarB.setText("REASIGNAR");
         reasignarB.setBorder(null);
@@ -80,6 +97,14 @@ public class FrameAdmin extends javax.swing.JFrame {
         reasignarB.setFocusable(false);
         reasignarB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         reasignarB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        reasignarB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reasignarBMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reasignarBMouseExited(evt);
+            }
+        });
         reasignarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 reasignarBActionPerformed(evt);
@@ -88,7 +113,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jPanel3.add(reasignarB);
 
         informeB.setBackground(new java.awt.Color(9, 12, 2));
-        informeB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        informeB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         informeB.setForeground(new java.awt.Color(255, 255, 255));
         informeB.setText("INFORME");
         informeB.setBorder(null);
@@ -96,6 +121,14 @@ public class FrameAdmin extends javax.swing.JFrame {
         informeB.setFocusable(false);
         informeB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         informeB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        informeB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                informeBMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                informeBMouseExited(evt);
+            }
+        });
         informeB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 informeBActionPerformed(evt);
@@ -104,7 +137,7 @@ public class FrameAdmin extends javax.swing.JFrame {
         jPanel3.add(informeB);
 
         cerrarSesionB.setBackground(new java.awt.Color(9, 12, 2));
-        cerrarSesionB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        cerrarSesionB.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         cerrarSesionB.setForeground(new java.awt.Color(255, 255, 255));
         cerrarSesionB.setText("CERRAR SESIÓN");
         cerrarSesionB.setBorder(null);
@@ -112,6 +145,14 @@ public class FrameAdmin extends javax.swing.JFrame {
         cerrarSesionB.setFocusable(false);
         cerrarSesionB.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cerrarSesionB.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        cerrarSesionB.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cerrarSesionBMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                cerrarSesionBMouseExited(evt);
+            }
+        });
         cerrarSesionB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cerrarSesionBActionPerformed(evt);
@@ -123,10 +164,8 @@ public class FrameAdmin extends javax.swing.JFrame {
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuPanelLayout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,8 +182,8 @@ public class FrameAdmin extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(principalAdminPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(principalAdminPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -165,6 +204,22 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.add(autorizar);
         principalAdminPanel.setVisible(true);
         autorizar.showUsersinTable();
+        
+        float[] color = new float[3];
+        Color.RGBtoHSB(240,240,240, color);
+        
+        autorizarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        autorizarActive = true;
+        autorizarB.setForeground(Color.black);
+        
+        Color.RGBtoHSB(9, 12, 2, color);
+        
+        reasignarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        reasignarActive = false;
+        reasignarB.setForeground(Color.white);
+        informeB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        informeActive = false;
+        informeB.setForeground(Color.white);
     }//GEN-LAST:event_autorizarBActionPerformed
 
     private void reasignarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reasignarBActionPerformed
@@ -174,6 +229,22 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.add(reasignar);
         principalAdminPanel.setVisible(true);
         reasignar.showUsersinTable();
+        
+        float[] color = new float[3];
+        Color.RGBtoHSB(240,240,240, color);
+        
+        reasignarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        reasignarActive = true;
+        reasignarB.setForeground(Color.black);
+        
+        Color.RGBtoHSB(9, 12, 2, color);
+        
+        autorizarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        autorizarActive = false;
+        autorizarB.setForeground(Color.white);
+        informeB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        informeActive = false;
+        informeB.setForeground(Color.white);
     }//GEN-LAST:event_reasignarBActionPerformed
 
     private void informeBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_informeBActionPerformed
@@ -183,6 +254,22 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalAdminPanel.removeAll();
         principalAdminPanel.add(informe);
         principalAdminPanel.setVisible(true);
+        
+        float[] color = new float[3];
+        Color.RGBtoHSB(240,240,240, color);
+        
+        informeB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        informeActive = true;
+        informeB.setForeground(Color.black);
+        
+        Color.RGBtoHSB(9, 12, 2, color);
+        
+        autorizarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        autorizarActive = false;
+        autorizarB.setForeground(Color.white);
+        reasignarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        reasignarActive = false;
+        reasignarB.setForeground(Color.white);
     }//GEN-LAST:event_informeBActionPerformed
 
     private void cerrarSesionBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBActionPerformed
@@ -191,6 +278,72 @@ public class FrameAdmin extends javax.swing.JFrame {
         principalFrame.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_cerrarSesionBActionPerformed
+
+    private void autorizarBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_autorizarBMouseEntered
+        float[] color = new float[3];
+        if (!autorizarActive){
+            Color.RGBtoHSB(86, 90, 91, color);
+            autorizarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_autorizarBMouseEntered
+
+    private void autorizarBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_autorizarBMouseExited
+        float[] color = new float[3];
+        
+        if (!autorizarActive){
+            Color.RGBtoHSB(9, 12, 2, color);
+            autorizarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_autorizarBMouseExited
+
+    private void reasignarBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reasignarBMouseEntered
+        float[] color = new float[3];
+        if (!reasignarActive){
+            Color.RGBtoHSB(86, 90, 91, color);
+            reasignarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_reasignarBMouseEntered
+
+    private void reasignarBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reasignarBMouseExited
+        float[] color = new float[3];
+        
+        if (!reasignarActive){
+            Color.RGBtoHSB(9, 12, 2, color);
+            reasignarB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_reasignarBMouseExited
+
+    private void informeBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_informeBMouseEntered
+        float[] color = new float[3];
+        if (!informeActive){
+            Color.RGBtoHSB(86, 90, 91, color);
+            informeB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_informeBMouseEntered
+
+    private void informeBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_informeBMouseExited
+        float[] color = new float[3];
+        
+        if (!informeActive){
+            Color.RGBtoHSB(9, 12, 2, color);
+            informeB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        }
+    }//GEN-LAST:event_informeBMouseExited
+
+    private void cerrarSesionBMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBMouseEntered
+        float[] color = new float[3];
+        
+        Color.RGBtoHSB(86, 90, 91, color);
+        cerrarSesionB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+    }//GEN-LAST:event_cerrarSesionBMouseEntered
+
+    private void cerrarSesionBMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cerrarSesionBMouseExited
+        float[] color = new float[3];
+        
+        Color.RGBtoHSB(9, 12, 2, color);
+        cerrarSesionB.setBackground(Color.getHSBColor(color[0],color[1],color[2]));
+        
+    }//GEN-LAST:event_cerrarSesionBMouseExited
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
