@@ -1,2 +1,10 @@
-texto
-texto
+FECHA DEL INFORME: 2020-06-24
+CLIENTES: 
+---------------------------------
+HORA:    09:00
+NOMBRES Y APELLIDO:          Naruto Uzumaki
+SUCURSAL:                    Exito Suba
+TIPO CITACION:               Creacion cuenta bancaria
+ESTADO CITA:                 Aprobada
+
+---------------------------------

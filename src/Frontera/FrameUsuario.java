@@ -95,7 +95,7 @@ public class FrameUsuario extends javax.swing.JFrame {
         cerrarSesionB = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(950, 700));
+        setPreferredSize(new java.awt.Dimension(970, 700));
 
         principalUsuarioPanel.setMinimumSize(new java.awt.Dimension(700, 650));
         principalUsuarioPanel.setLayout(new java.awt.BorderLayout());

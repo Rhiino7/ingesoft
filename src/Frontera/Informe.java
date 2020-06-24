@@ -6,20 +6,31 @@
 package Frontera;
 
 import DAO.CitaDAO;
+import DAO.ComplimentDAO;
 import DAO.SucursalDAO;
 import DAO.UsuarioDAO;
 import Entidad.Cita;
 import Entidad.Sucursal;
 import Entidad.Usuario;
 import java.awt.Desktop;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.LookAndFeel;
+import javax.swing.RowFilter;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 
 /**
  *
@@ -30,20 +41,15 @@ public class Informe extends javax.swing.JPanel {
     private Usuario usuario; //Se meteria en el constructor de Agendar y de FrameUsuario para poder asignarlo en cita
     private SucursalDAO sdao = new SucursalDAO();
     private UsuarioDAO udao = new UsuarioDAO();
-    private CitaDAO cdao = new CitaDAO();
-    private ArrayList<Cita> citasList = (ArrayList<Cita>) cdao.obtener();
+    CitaDAO citaDAO = new CitaDAO();
+    ComplimentDAO complimentDAO = new ComplimentDAO();
+    
+    private LookAndFeel previousLF;
 
     public Informe() {
+        previousLF = UIManager.getLookAndFeel();
         initComponents();
-
-        //dateSet();
-        this.usuario = usuario;
-        System.out.println(usuario);
-        List<Sucursal> sucursales = sdao.obtener();
-        for (Sucursal s : sucursales) {
-            sucursalCB.addItem(s.getLugar_s());
-        }
-
+        showUsersinTable();
     }
 
     /*
@@ -65,148 +71,506 @@ public class Informe extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jComboBox1 = new javax.swing.JComboBox<>();
-        fechaDC = new com.toedter.calendar.JDateChooser();
-        sucursalCB = new javax.swing.JComboBox<>();
-        estadoCB = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
+        jTable1 = new javax.swing.JTable();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        try {
+            UIManager.setLookAndFeel(previousLF);
+        } catch (Exception e) {}
         generarB = new javax.swing.JButton();
+        try {
+            UIManager.setLookAndFeel(previousLF);
+        } catch (Exception e) {}
+        vistaPreviaB1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        fechaDC = new com.toedter.calendar.JDateChooser();
 
-        jComboBox1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Creacion cuenta bancaria", "creditos de vivienda", "Cambio o perdida de tarjeta","Creditos de Negocio","Inversiones","Seguros","Productos Complementarios","Asesoria", "Otros" }));
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel2.setText("Vista previa de las citas:");
 
-        fechaDC.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        try {
+            UIManager.setLookAndFeel(previousLF);
+        } catch (Exception e) {}
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
 
-        sucursalCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+            },
+            new String [] {
+                "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false, false
+            };
 
-        estadoCB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        estadoCB.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pendiente", "Aprobada", "Cancelada", "Rechazada", "Cumplida", "No cumplida", "Reasignada" }));
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
-        jTextField1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jTable1.setMaximumSize(new java.awt.Dimension(2147483647, 400));
+        jTable1.setOpaque(false);
+        jTable1.setPreferredSize(new java.awt.Dimension(600, 400));
+        jTable1.setRowHeight(25);
+        jTable1.setRowMargin(0);
+        jTable1.setSelectionBackground(new java.awt.Color(116, 79, 198));
+        jTable1.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTable1.getTableHeader().setReorderingAllowed(false);
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTable1);
 
-        jLabel1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel1.setText("Identificacion:");
+        jPanel1.setLayout(new java.awt.GridLayout(1, 0, 25, 0));
 
-        jLabel2.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel2.setText("Estado:");
-
-        jLabel3.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel3.setText("Motivo");
-
-        jLabel4.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel4.setText("Sucursal:");
-
-        jLabel5.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
-        jLabel5.setText("Fecha:");
-
-        generarB.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        generarB.setBackground(new java.awt.Color(9, 12, 2));
+        generarB.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        generarB.setForeground(new java.awt.Color(255, 255, 255));
         generarB.setText("Generar");
+        generarB.setBorder(null);
         generarB.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 generarBActionPerformed(evt);
             }
         });
+        jPanel1.add(generarB);
+
+        vistaPreviaB1.setBackground(new java.awt.Color(9, 12, 2));
+        vistaPreviaB1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        vistaPreviaB1.setForeground(new java.awt.Color(255, 255, 255));
+        vistaPreviaB1.setText("Vista Previa");
+        vistaPreviaB1.setBorder(null);
+        vistaPreviaB1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                vistaPreviaB1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(vistaPreviaB1);
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        jLabel3.setText("enseñando las citas filtrando por la fecha ingresada:");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel5.setText("Fecha");
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        jLabel1.setText("Generación del informe en un documento de texto");
+
+        fechaDC.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        fechaDC.addContainerListener(new java.awt.event.ContainerAdapter() {
+            public void componentAdded(java.awt.event.ContainerEvent evt) {
+                fechaDCComponentAdded(evt);
+            }
+        });
+        fechaDC.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                fechaDCMouseClicked(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                fechaDCMouseExited(evt);
+            }
+        });
+        fechaDC.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                fechaDCKeyReleased(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(132, 132, 132))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(405, 405, 405))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(fechaDC, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap())))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addGap(7, 7, 7)
+                .addComponent(jLabel3)
+                .addGap(14, 14, 14)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(25, 25, 25)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(37, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(141, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel3)
-                            .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(91, 91, 91)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sucursalCB, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel4)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel5))
-                        .addGap(116, 116, 116))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(generarB)
-                        .addGap(144, 144, 144)))
-                .addGap(130, 130, 130))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 688, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel2))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(estadoCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jLabel4))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(sucursalCB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(fechaDC, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(generarB)
-                .addContainerGap(137, Short.MAX_VALUE))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(0, 0, 0))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void generarBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generarBActionPerformed
 
-        //codigo para generar el txt
-        try {
-            PrintWriter writer = new PrintWriter("Informes\\Informe.txt", "UTF-8");
-            writer.println("texto");
-            writer.println("texto");
-            writer.close();
-        } catch (Exception e) {
-            e.printStackTrace();
+        LocalDate testFecha = LocalDate.parse("3800-02-01");
+        if (jTable1.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No se encontraron citas el dia seleccionado.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        } else if (fechaDC.isValid() || fechaDC.equals(testFecha)) {
+            JOptionPane.showMessageDialog(this, "Ingrese una fecha valida.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            try {
+                PrintWriter writer = new PrintWriter("Informes\\Informe.txt", "UTF-8");
+                BufferedWriter bfw = new BufferedWriter(writer);
+
+                RowFilter<TableModel, Object> fechaFilter = RowFilter.regexFilter("", 4);
+                DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+                if (fechaDC.getDate() != null) {
+                    fechaFilter = RowFilter.regexFilter(f.format(fechaDC.getDate()), 4);
+                }
+
+                String fecha = f.format(fechaDC.getDate());
+                bfw.write("FECHA DEL INFORME: ");
+                bfw.write(fecha);
+                bfw.newLine();
+                bfw.write("CLIENTES: ");
+                bfw.newLine();
+                bfw.write("---------------------------------");
+                bfw.newLine();
+                for (int i = 0; i < jTable1.getRowCount(); i++) {
+
+                    bfw.write("HORA:    ");
+                    bfw.write((jTable1.getValueAt(i, 5).toString()));
+
+                    bfw.newLine();
+
+                    for (int j = 0; j < jTable1.getColumnCount(); j++) {
+                        switch (j) {
+                            case 1: {
+                                bfw.write("NOMBRES Y APELLIDO:          ");
+                                bfw.write((String) jTable1.getValueAt(i, 1) + " ");
+                                bfw.write((String) jTable1.getValueAt(i, 2));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 2: {
+                                break;
+                            }
+                            case 6: {
+                                bfw.write("SUCURSAL:                    ");
+                                bfw.write((String) jTable1.getValueAt(i, 6));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 7: {
+                                bfw.write("TIPO CITACION:               ");
+                                bfw.write((String) jTable1.getValueAt(i, 7));
+                                bfw.newLine();
+                                break;
+                            }
+                            case 8: {
+                                bfw.write("ESTADO CITA:                 ");
+                                bfw.write((String) jTable1.getValueAt(i, 8));
+                                bfw.newLine();
+                                break;
+                            }
+                            default: {
+                                break;
+                            }
+                        }
+//                    bfw.write((String) jTable1.getValueAt(i, j));
+                    }
+                    bfw.newLine();
+                    bfw.write("---------------------------------");
+                    bfw.newLine();
+                }
+
+//            writer.format(TOOL_TIP_TEXT_KEY, args);
+//            writer.println("texto");
+                bfw.close();
+//            writer.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            mostrar("Informes\\Informe.txt");
         }
-
-        mostrar("Informes\\Informe.txt");
-
     }//GEN-LAST:event_generarBActionPerformed
 
-    private void mostrar(String archivo){
-        try{
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void fechaDCKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_fechaDCKeyReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_fechaDCKeyReleased
+
+    private void fechaDCMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaDCMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaDCMouseExited
+
+    private void fechaDCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fechaDCMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaDCMouseClicked
+
+    private void fechaDCComponentAdded(java.awt.event.ContainerEvent evt) {//GEN-FIRST:event_fechaDCComponentAdded
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fechaDCComponentAdded
+
+    private void vistaPreviaB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_vistaPreviaB1ActionPerformed
+        // TODO add your handling code here:
+        DateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+        String search = f.format(fechaDC.getDate());
+        System.out.println(search);
+        filtrarTable(search);
+    }//GEN-LAST:event_vistaPreviaB1ActionPerformed
+
+    private void mostrar(String archivo) {
+        try {
             File objetoFile = new File(archivo);
             Desktop.getDesktop().open(objetoFile);
-        }catch(IOException ex){
+        } catch (IOException ex) {
             System.out.println("ex");
-                    
+
         }
     }
-    
+
+    public void filtrarTable(String search) {
+        DefaultTableModel table = (DefaultTableModel) jTable1.getModel();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(table);
+        jTable1.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(search));
+    }
+
+    public void showUsersinTable() {
+
+        ArrayList<Cita> citasList = (ArrayList<Cita>) citaDAO.obtener();
+        ArrayList<Cita> complimentList = (ArrayList<Cita>) complimentDAO.obtener();
+        Object[][] citasMatrix = new Object[citasList.size() + complimentList.size()][9];
+
+        int cita = 0;
+        int comp = 0;
+        String estado = "none";
+        String motivo = "otro";
+        System.out.println(citasList.size() + " + " + complimentList.size() + " = " + (citasList.size() + complimentList.size()));
+
+        for (int i = 0; i < citasList.size() + complimentList.size(); i++) {
+            System.out.println("i: " + i);
+            System.out.println("cita: " + cita);
+            System.out.println("comp: " + comp);
+            if (cita < citasList.size()) {
+                if (citasList.get(cita).getId_cita() == i + 1) {
+                    System.out.println("cita que compara: " + citasList.get(cita).getId_cita());
+                    if (citasList.get(cita).getEstado() == 0) {
+                        estado = "Pendiente";
+                    } else if (citasList.get(cita).getEstado() == 1) {
+                        estado = "Aprobada";
+                    } else if (citasList.get(cita).getEstado() == 2) {
+                        estado = "Cancelada";
+                    } else if (citasList.get(cita).getEstado() == 3) {
+                        estado = "Rechazada";
+                    } else if (citasList.get(cita).getEstado() == 4) {
+                        estado = "Cumplida";
+                    } else if (citasList.get(cita).getEstado() == 5) {
+                        estado = "No cumplida";
+                    } else if (citasList.get(cita).getEstado() == 6) {
+                        estado = "Reasignada";
+                    }
+
+                    //motivo
+                    /*
+            0.Creacion cuenta bancaria
+            1.creditos de vivienda
+            2.Cambio o perdida de tarjeta
+            3.Creditos de Negocio
+            4.Inversiones
+            5.Seguros
+            6.Productos Complementarios
+            7.Asesoria
+            8.Otros*/
+                    if (citasList.get(cita).getMotivo() == 0) {
+                        motivo = "Creacion cuenta bancaria";
+                    } else if (citasList.get(cita).getMotivo() == 1) {
+                        motivo = "Creditos de vivienda";
+                    } else if (citasList.get(cita).getMotivo() == 2) {
+                        motivo = "Cambio o perdida de tarjeta";
+                    } else if (citasList.get(cita).getMotivo() == 3) {
+                        motivo = "Creditos de Negocio";
+                    } else if (citasList.get(cita).getMotivo() == 4) {
+                        motivo = "Inversiones";
+                    } else if (citasList.get(cita).getMotivo() == 5) {
+                        motivo = "Seguros";
+                    } else if (citasList.get(cita).getMotivo() == 6) {
+                        motivo = "Productos Complementarios";
+                    } else if (citasList.get(cita).getMotivo() == 7) {
+                        motivo = "Asesoria";
+                    } else {
+                        motivo = "otro";
+                    }
+
+                    citasMatrix[i][0] = citasList.get(cita).getId_cita();
+                    citasMatrix[i][1] = citasList.get(cita).getUsuario().getNombre();
+                    citasMatrix[i][2] = citasList.get(cita).getUsuario().getApellido();
+                    citasMatrix[i][3] = citasList.get(cita).getUsuario().getIdentificacion();
+                    citasMatrix[i][4] = citasList.get(cita).getFecha();
+                    citasMatrix[i][5] = citasList.get(cita).getHora();
+                    citasMatrix[i][6] = citasList.get(cita).getSucursal().getLugar_s();
+                    citasMatrix[i][7] = motivo;
+                    citasMatrix[i][8] = estado;
+
+                    cita++;
+                }
+            }
+            if (comp < complimentList.size()) {
+                if (complimentList.get(comp).getId_cita() == i + 1) {
+                    System.out.println("comp que compara: " + complimentList.get(comp).getId_cita());
+                    if (complimentList.get(comp).getEstado() == 0) {
+                        estado = "Pendiente";
+                    } else if (complimentList.get(comp).getEstado() == 1) {
+                        estado = "Aprobada";
+                    } else if (complimentList.get(comp).getEstado() == 2) {
+                        estado = "Cancelada";
+                    } else if (complimentList.get(comp).getEstado() == 3) {
+                        estado = "Rechazada";
+                    } else if (complimentList.get(comp).getEstado() == 4) {
+                        estado = "Cumplida";
+                    } else if (complimentList.get(comp).getEstado() == 5) {
+                        estado = "No cumplida";
+                    } else if (complimentList.get(cita).getEstado() == 6) {
+                        estado = "Reasignada";
+                    }
+
+                    //motivo
+                    /*
+            0.Creacion cuenta bancaria
+            1.creditos de vivienda
+            2.Cambio o perdida de tarjeta
+            3.Creditos de Negocio
+            4.Inversiones
+            5.Seguros
+            6.Productos Complementarios
+            7.Asesoria
+            8.Otros*/
+                    if (complimentList.get(comp).getMotivo() == 0) {
+                        motivo = "Creacion cuenta bancaria";
+                    } else if (complimentList.get(comp).getMotivo() == 1) {
+                        motivo = "Creditos de vivienda";
+                    } else if (complimentList.get(comp).getMotivo() == 2) {
+                        motivo = "Cambio o perdida de tarjeta";
+                    } else if (complimentList.get(comp).getMotivo() == 3) {
+                        motivo = "Creditos de Negocio";
+                    } else if (complimentList.get(comp).getMotivo() == 4) {
+                        motivo = "Inversiones";
+                    } else if (complimentList.get(comp).getMotivo() == 5) {
+                        motivo = "Seguros";
+                    } else if (complimentList.get(comp).getMotivo() == 6) {
+                        motivo = "Productos Complementarios";
+                    } else if (complimentList.get(comp).getMotivo() == 7) {
+                        motivo = "Asesoria";
+                    } else {
+                        motivo = "otro";
+                    }
+
+                    citasMatrix[i][0] = complimentList.get(comp).getId_cita();
+                    citasMatrix[i][1] = complimentList.get(comp).getUsuario().getNombre();
+                    citasMatrix[i][2] = complimentList.get(comp).getUsuario().getApellido();
+                    citasMatrix[i][3] = complimentList.get(comp).getUsuario().getIdentificacion();
+                    citasMatrix[i][4] = complimentList.get(comp).getFecha();
+                    citasMatrix[i][5] = complimentList.get(comp).getHora();
+                    citasMatrix[i][6] = complimentList.get(comp).getSucursal().getLugar_s();
+                    citasMatrix[i][7] = motivo;
+                    citasMatrix[i][8] = estado;
+                    comp++;
+                }
+            }
+
+        }
+
+        jTable1.setModel(
+                new DefaultTableModel(
+                        citasMatrix,
+                        new Object[]{
+                            "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
+                        }
+                ));
+        /*
+        DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
+
+        Object[] fila = new Object[8];
+
+        for (int i = 0; i < citasList.size(); i++)
+        {
+            fila[0] = citasList.get(i).getUsuario().getNombre();            //Columna Nombre
+            fila[1] = citasList.get(i).getUsuario().getApellido();          //Columna Apellido
+            fila[2] = citasList.get(i).getUsuario().getIdentificacion();    //Columna Identificacion
+            fila[3] = citasList.get(i).getFecha();                          //Columna Fecha
+            fila[4] = citasList.get(i).getHora();                           //Columna Hora
+            fila[5] = citasList.get(i).getSucursal();                       //Columna Lugar
+            fila[6] = null;                                                 //Hace falta meter la columna de Motivo
+            fila[7] = citasList.get(i).getEstado();                         //Columna Estado
+
+            tModel.addRow(fila);
+        }
+         */
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> estadoCB;
     private com.toedter.calendar.JDateChooser fechaDC;
     private javax.swing.JButton generarB;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JComboBox<String> sucursalCB;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JButton vistaPreviaB1;
     // End of variables declaration//GEN-END:variables
 }

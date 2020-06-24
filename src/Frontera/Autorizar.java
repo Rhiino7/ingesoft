@@ -182,7 +182,6 @@ public class Autorizar extends javax.swing.JPanel {
                             "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
                         }
                 ));
-
         /*
         DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
 
@@ -303,13 +302,13 @@ public class Autorizar extends javax.swing.JPanel {
 
         setPreferredSize(new java.awt.Dimension(650, 600));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        jLabel1.setText(" Citas:");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 20)); // NOI18N
+        jLabel1.setText("Citas");
 
         try {
             UIManager.setLookAndFeel(previousLF);
         } catch (Exception e) {}
-        jTable1.setFont(new java.awt.Font("Calibri", 0, 16)); // NOI18N
+        jTable1.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -333,7 +332,10 @@ public class Autorizar extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        jTable1.setMaximumSize(new java.awt.Dimension(2147483647, 400));
+        jTable1.setMinimumSize(new java.awt.Dimension(120, 400));
         jTable1.setOpaque(false);
+        jTable1.setPreferredSize(new java.awt.Dimension(600, 400));
         jTable1.setRowHeight(25);
         jTable1.setRowMargin(0);
         jTable1.setSelectionBackground(new java.awt.Color(116, 79, 198));
@@ -365,7 +367,7 @@ public class Autorizar extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
