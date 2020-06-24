@@ -1,2 +1,15 @@
-texto
-texto
+FECHA DEL INFORME: 2020-06-25
+CLIENTES: 
+---------------------------------
+HORA:    09:00
+NOMBRES Y APELLIDO:          samuel quintero
+TIPO CITACION:          Creditos de vivienda
+ESTADO CITA:          Aprobada
+
+---------------------------------
+HORA:    09:00
+NOMBRES Y APELLIDO:          Pedro Nieto
+TIPO CITACION:          Creacion cuenta bancaria
+ESTADO CITA:          Pendiente
+
+---------------------------------

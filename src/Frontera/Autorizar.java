@@ -179,7 +179,6 @@ public class Autorizar extends javax.swing.JPanel {
                             "ID Cita", "Nombre", "Apellido", "Identificación", "Fecha", "Hora", "Lugar", "Motivo", "Estado"
                         }
                 ));
-
         /*
         DefaultTableModel tModel = (DefaultTableModel) jTable1.getModel();
 
