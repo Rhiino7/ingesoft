@@ -207,7 +207,7 @@ public class Informe extends javax.swing.JPanel {
 
         LocalDate testFecha = LocalDate.parse("3800-02-01");
         if (jTable1.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(this, "No se encontraron citas el dia seleccionado\.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "No se encontraron citas el dia seleccionado.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
         } else if (fechaDC.isValid() || fechaDC.equals(testFecha)) {
             JOptionPane.showMessageDialog(this, "Ingrese una fecha valida.", "Fecha invalida", JOptionPane.INFORMATION_MESSAGE);
         } else {
