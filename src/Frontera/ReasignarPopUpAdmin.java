@@ -309,12 +309,6 @@ public class ReasignarPopUpAdmin extends javax.swing.JDialog {
                 }
             }
         }
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         citasList = (ArrayList<Cita>) citaDAO.obtener();
         complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         reasignar.showUsersinTable();

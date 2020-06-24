@@ -366,12 +366,6 @@ public class Citaciones extends javax.swing.JPanel {
                     }
                 }
             }
-            try {
-                //Ponemos a "Dormir" el programa durante los ms que queremos
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
             citasList = (ArrayList<Cita>) citaDAO.obtener();
             showUsersinTable();
 

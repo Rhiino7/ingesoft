@@ -304,12 +304,6 @@ public class ReasignarPopUp2 extends javax.swing.JDialog {
                 }
             }
         }
-        try {
-            //Ponemos a "Dormir" el programa durante los ms que queremos
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
         citasList = (ArrayList<Cita>) cdao.obtener();
         complimentList = (ArrayList<Cita>) complimentDAO.obtener();
         this.dispose();
@@ -341,12 +335,6 @@ public class ReasignarPopUp2 extends javax.swing.JDialog {
                         }
                     }
                 }
-            }
-            try {
-                //Ponemos a "Dormir" el programa durante los ms que queremos
-                Thread.sleep(1000);
-            } catch (Exception e) {
-                System.out.println(e);
             }
             citasList = (ArrayList<Cita>) cdao.obtener();
             this.dispose();
